@@ -1,0 +1,70 @@
+/* Buttons */
+.sws-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 20px;
+    min-height: 42px;
+    border: 1px solid transparent;
+    border-radius: var(--sws-radius);
+    background: transparent;
+    color: var(--sws-text);
+    font: 600 0.94rem/1 var(--sws-font-sans);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    text-decoration: none;
+}
+
+.sws-btn-primary {
+    background: var(--sws-accent);
+    border-color: var(--sws-accent);
+    color: var(--sws-on-brand);
+}
+
+.sws-btn-primary:hover {
+    background: var(--sws-accent-hover);
+    border-color: var(--sws-accent-hover);
+    color: var(--sws-on-brand);
+}
+
+.sws-btn-ghost {
+    border-color: var(--sws-border);
+}
+
+.sws-btn-ghost:hover {
+    border-color: var(--sws-accent);
+    color: var(--sws-accent);
+}
+
+.sws-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--sws-border);
+    border-radius: var(--sws-radius);
+    background: var(--sws-surface);
+    color: var(--sws-text-muted);
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.sws-icon-btn:hover {
+    color: var(--sws-accent);
+    border-color: var(--sws-accent);
+}
+
+.sws-page .sws-i-sun,
+.sws-page .sws-i-moon {
+    display: none;
+}
+
+.sws-page[data-theme="dark"] .sws-i-sun {
+    display: block;
+}
+
+.sws-page[data-theme="light"] .sws-i-moon {
+    display: block;
+}

@@ -1,0 +1,6 @@
+/* Base */
+.sws-page *,
+.sws-page *::before,
+.sws-page *::after {
+    box-sizing: border-box;
+}

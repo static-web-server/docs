@@ -1,0 +1,195 @@
+@import "./vars.css";
+@import "./base.css";
+@import "./page.css";
+@import "./layout.css";
+@import "./button.css";
+@import "./header.css";
+@import "./nav.css";
+@import "./hero.css";
+@import "./code_window.css";
+@import "./card.css";
+@import "./install.css";
+@import "./feature.css";
+@import "./footer.css";
+
+/* =====================================================================
+   SWS Landing Page — all styles scoped under .sws-page
+   ===================================================================== */
+
+.sws-accent {
+    color: var(--sws-accent);
+}
+
+.sws-lead {
+    margin: 18px 0 0;
+    color: var(--sws-text-muted);
+    font-size: clamp(1rem, 1.3vw, 1.1rem);
+    max-width: 52ch;
+}
+
+.sws-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-block-start: 24px;
+}
+
+.sws-actions.sws-center {
+    justify-content: center;
+}
+
+.sws-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    margin: 24px 0 0;
+    padding: 0;
+    list-style: none;
+    color: var(--sws-text-muted);
+    font-size: 0.9rem;
+}
+
+.sws-meta li::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 8px;
+    border-radius: 1px;
+    background: var(--sws-accent);
+    vertical-align: middle;
+}
+
+/* Two-col (Config) */
+.sws-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(28px, 5vw, 56px);
+    align-items: center;
+}
+
+.sws-check-list {
+    margin: 22px 0 22px;
+    padding: 0;
+    list-style: none;
+}
+
+.sws-check-list li {
+    position: relative;
+    padding-left: 26px;
+    margin-bottom: 10px;
+    font-size: 0.96rem;
+}
+
+.sws-check-list li::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 0.45em;
+    width: 12px;
+    height: 6px;
+    border-left: 2px solid var(--sws-accent);
+    border-bottom: 2px solid var(--sws-accent);
+    transform: rotate(-45deg);
+}
+
+.sws-link-arrow {
+    display: inline-block;
+    font-weight: 600;
+    color: var(--sws-accent);
+}
+
+.sws-link-arrow:hover {
+    color: var(--sws-accent-hover);
+}
+
+/* Platforms */
+.sws-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 18px;
+    padding: 0;
+    list-style: none;
+}
+
+.sws-pills li {
+    padding: 3px 15px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--sws-text);
+    background: var(--sws-bg);
+    border: 1px solid var(--sws-border);
+    border-radius: var(--sws-radius);
+}
+
+.sws-note {
+    margin: 0;
+    color: var(--sws-text-muted);
+    font-size: 0.94rem;
+}
+
+.sws-note code {
+    padding: 0 5px;
+    font-size: 0.85em;
+    background: var(--sws-surface-2);
+    border: 1px solid var(--sws-border-soft);
+    border-radius: 4px;
+}
+
+
+
+/* Responsive */
+@media (max-width: 920px) {
+    .sws-grid-4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .sws-hero-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sws-two-col {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 680px) {
+    .sws-nav {
+        display: none;
+    }
+}
+
+@media (max-width: 520px) {
+    .sws-grid-4 {
+        grid-template-columns: 1fr;
+    }
+
+    .sws-actions .sws-btn {
+        flex: 1;
+    }
+
+    .sws-install-line {
+        flex-wrap: wrap;
+        padding: 12px;
+    }
+
+    .sws-install-line .sws-code {
+        white-space: normal;
+        word-break: break-all;
+    }
+
+    .sws-copy-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .sws-page *,
+    .sws-page *::before,
+    .sws-page *::after {
+        transition-duration: 0.01ms !important;
+    }
+}

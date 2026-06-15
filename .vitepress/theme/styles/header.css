@@ -1,0 +1,42 @@
+/* Header */
+.sws-header {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: var(--sws-bg);
+}
+
+.sws-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4rem;
+    gap: 1rem;
+}
+
+.sws-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    color: var(--sws-text-strong);
+    letter-spacing: -0.01em;
+}
+
+.sws-logo {
+    width: 30px;
+    height: 30px;
+}
+
+.sws-page .sws-logo-dark,
+.sws-page .sws-logo-light {
+    display: none;
+}
+
+.sws-page[data-theme="dark"] .sws-logo-dark {
+    display: block;
+}
+
+.sws-page[data-theme="light"] .sws-logo-light {
+    display: block;
+}

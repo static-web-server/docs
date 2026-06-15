@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "type": "module",
+  "author": "Jose Quintana <https://static-web-server.net/>",
+  "engines": {
+    "node": ">=20",
+    "yarn": "=1.22"
+  },
+  "packageManager": "yarn@1.22.22",
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview",
+    "type": "vue-tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "^14.1.2",
+    "@types/node": "^25.9.3",
+    "typescript": "^6.0.3",
+    "vitepress": "^2.0.0-alpha.17",
+    "vue-tsc": "^3.3.5"
+  }
+}

@@ -1,0 +1,161 @@
+
+/* =====================================================================
+   VitePress default theme variable overrides (SWS brand)
+   ===================================================================== */
+
+:root {
+  --vp-c-brand-1: #597eaf;
+  --vp-c-brand-2: #486d9d;
+  --vp-c-brand-3: #3a5a87;
+  --vp-c-brand-soft: rgba(72, 109, 157, 0.14);
+
+  --vp-font-family-base: "Inter", system-ui, -apple-system, "Segoe UI", "Roboto", sans-serif;
+  --vp-font-family-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --vp-c-bg: #ffffff;
+  --vp-c-bg-soft: #f6f7f9;
+  --vp-c-bg-mute: #eef0f4;
+
+  --vp-c-border: #e1e4ea;
+  --vp-c-divider: #ebedf1;
+
+  --vp-c-text-1: #1c2230;
+  --vp-c-text-2: #5b6473;
+  --vp-c-text-3: #7d8797;
+
+  --vp-button-brand-bg: #486d9d;
+  --vp-button-brand-hover-bg: #597eaf;
+  --vp-button-brand-border: transparent;
+  --vp-button-brand-text: #dad7cd;
+  --vp-button-brand-hover-border: transparent;
+  --vp-button-brand-hover-text: #dad7cd;
+
+  --vp-button-alt-bg: #eef0f4;
+  --vp-button-alt-hover-bg: #e1e4ea;
+  --vp-button-alt-border: #e1e4ea;
+  --vp-button-alt-hover-border: #597eaf;
+  --vp-button-alt-text: #1c2230;
+  --vp-button-alt-hover-text: #486d9d;
+
+  --vp-nav-bg-color: #ffffff;
+  --vp-sidebar-bg-color: #f6f7f9;
+
+  --vp-code-bg: #eef0f4;
+  --vp-code-color: #1c2230;
+  --vp-code-block-bg: #f6f7f9;
+  --vp-code-block-divider-color: #e1e4ea;
+  --vp-code-line-highlight-color: rgba(72, 109, 157, 0.08);
+  --vp-code-copy-code-bg: #eef0f4;
+  --vp-code-copy-code-hover-bg: #e1e4ea;
+}
+
+.dark {
+  --vp-c-bg: #0d1014;
+  --vp-c-bg-soft: #14181f;
+  --vp-c-bg-mute: #1a1f27;
+
+  --vp-c-border: #242a34;
+  --vp-c-divider: #1c2129;
+
+  --vp-c-text-1: #e6e9ee;
+  --vp-c-text-2: #98a1ae;
+  --vp-c-text-3: #7a818f;
+
+  --vp-button-alt-bg: #1a1f27;
+  --vp-button-alt-hover-bg: #242a34;
+  --vp-button-alt-border: #242a34;
+  --vp-button-alt-hover-border: #597eaf;
+  --vp-button-alt-text: #e6e9ee;
+  --vp-button-alt-hover-text: #597eaf;
+
+  --vp-nav-bg-color: #0d1014;
+  --vp-sidebar-bg-color: #14181f;
+
+  --vp-code-bg: #0a0d12;
+  --vp-code-block-bg: #0a0d12;
+  --vp-code-block-divider-color: #20252e;
+  --vp-code-color: #d7dbe2;
+  --vp-code-line-highlight-color: rgba(72, 109, 157, 0.12);
+  --vp-code-copy-code-bg: #1a1f27;
+  --vp-code-copy-code-hover-bg: #242a34;
+}
+
+/* VitePress local search modal */
+:root {
+  --vp-local-search-bg: var(--vp-c-bg);
+  --vp-local-search-result-bg: var(--vp-c-bg-soft);
+  --vp-local-search-highlight-bg: var(--vp-c-brand-1);
+  --vp-local-search-highlight-text: #dad7cd;
+}
+
+/* =====================================================================
+   SWS Landing page component variables (scoped)
+   ===================================================================== */
+
+/* Variables - default (dark) */
+.sws-page {
+  --sws-brand: #486d9d;
+  --sws-brand-hover: #597eaf;
+  --sws-on-brand: #dad7cd;
+
+  --sws-radius: 0.375rem;
+  --sws-maxw: 1100px;
+
+  --sws-font-heading: "Inter", system-ui, -apple-system, "Segoe UI", "Roboto", sans-serif;
+  --sws-font-sans: "Roboto", -apple-system, "Segoe UI", sans-serif;
+  --sws-font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --sws-bg-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cpath d='M 40 0 L 0 0 0 40' fill='none' stroke='rgba(255,255,255,0.035)' stroke-width='1'/%3E%3C/svg%3E");
+
+  /* dark defaults */
+  color-scheme: dark;
+  --sws-bg: #0d1014;
+  --sws-surface: #14181f;
+  --sws-surface-2: #1a1f27;
+  --sws-border: #242a34;
+  --sws-border-soft: #1c2129;
+  --sws-text: #e6e9ee;
+  --sws-text-strong: var(--sws-on-brand);
+  --sws-text-muted: #98a1ae;
+  --sws-text-dim: #7a818f;
+  --sws-accent: var(--sws-brand);
+  --sws-accent-hover: var(--sws-brand-hover);
+  --sws-accent-soft: rgba(19, 137, 227, 0.14);
+  --sws-code-bg: #0a0d12;
+  --sws-code-bar: #11151b;
+  --sws-code-border: #20252e;
+  --sws-code-fg: #d7dbe2;
+  --sws-syn-comment: #a0a3a8;
+  --sws-syn-key: #82aaff;
+  --sws-syn-str: #81a759;
+  --sws-syn-num: #b27146;
+  --sws-syn-bool: #b56473;
+  --sws-syn-cmd: #6287d6;
+  --sws-syn-flag: #4567b1;
+  --sws-syn-url: #9ece6a;
+  --sws-ok: #4ade80;
+  --sws-win-header-bg: #2d2d2d;
+  --sws-win-btn-hover: #444444;
+  --sws-win-btn-close-hover: #c0392b;
+}
+
+.sws-page[data-theme="light"] {
+  color-scheme: light;
+  --sws-on-brand: var(--sws-bg);
+  --sws-bg: #ffffff;
+  --sws-surface: #f6f7f9;
+  --sws-surface-2: #eef0f4;
+  --sws-border: #e1e4ea;
+  --sws-border-soft: #ebedf1;
+  --sws-text: #1c2230;
+  --sws-text-strong: #0a0d14;
+  --sws-text-muted: #5b6473;
+  --sws-text-dim: #7d8797;
+  --sws-accent-soft: rgba(19, 137, 227, 0.10);
+  --sws-code-bg: var(--sws-bg);
+  --sws-code-bar: var(--sws-surface-2);
+  --sws-code-border: var(--sws-border);
+  --sws-ok: #16a34a;
+  --sws-win-header-bg: #ebebeb;
+  --sws-win-btn-hover: #dbdbdb;
+  --sws-win-btn-close-hover: #e0b0b0;
+}

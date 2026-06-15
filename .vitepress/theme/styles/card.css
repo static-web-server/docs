@@ -1,0 +1,36 @@
+/* Cards */
+.sws-card {
+    padding: 22px;
+    background: var(--sws-bg);
+    border: 1px solid var(--sws-border);
+    border-radius: var(--sws-radius);
+    transition: border-color 0.15s, transform 0.15s;
+}
+
+.sws-card:hover {
+    border-color: var(--sws-accent);
+    transform: translateY(-2px);
+}
+
+.sws-card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    margin-bottom: 14px;
+    border-radius: 8px;
+    background: var(--sws-accent-soft);
+    color: var(--sws-accent);
+}
+
+.sws-card h3 {
+    font-size: 1.02rem;
+    font-weight: 600;
+}
+
+.sws-card p {
+    margin: 6px 0 0;
+    color: var(--sws-text-muted);
+    font-size: 0.94rem;
+}
