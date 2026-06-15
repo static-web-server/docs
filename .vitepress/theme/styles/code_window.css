@@ -21,7 +21,7 @@
     font-family: var(--sws-font-sans);
     font-size: 13px;
     font-weight: 500;
-    color: var(--sws-text);
+    color: var(--sws-text-muted);
     opacity: 0.8;
 }
 

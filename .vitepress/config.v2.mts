@@ -4,7 +4,7 @@ import { DefaultTheme } from "vitepress";
 export const v2: DefaultTheme.Config = {
   nav: [
     {
-      text: 'v2 (stable)',
+      text: 'v2 (LTS)',
       link: '/v2/',
       activeMatch: '^/v2+/',
       // items: [

@@ -1,5 +1,5 @@
 ---
-layout: Home
+layout: page
 title: Static Web Server — Static content delivery with speed and reliability
 description: Static Web Server (SWS) — Static content delivery with speed and reliability
 ---

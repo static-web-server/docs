@@ -1,7 +1,8 @@
 /* Layout */
 .sws-container {
     width: 100%;
-    max-width: var(--sws-maxw);
+    /* max-width: var(--sws-maxw); */
+    max-width: calc(var(--vp-layout-max-width) - 64px);
     margin-inline: auto;
     padding-inline: 1.375rem;
 }
@@ -62,4 +63,10 @@
 .sws-hero-grid>*,
 .sws-two-col>* {
     min-width: 0;
+}
+
+@media (min-width: 1460px) {
+    .container {
+        padding-inline: 1.375rem;
+    }
 }

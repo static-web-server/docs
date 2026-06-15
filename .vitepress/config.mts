@@ -17,7 +17,7 @@ export default defineConfig({
   ],
 
   themeConfig: {
-    logo: '/assets/sws.svg',
+    logo: { light: '/assets/sws.svg', dark: '/assets/sws_white.svg' },
     siteTitle: 'Static Web Server',
 
     search: {
@@ -25,7 +25,6 @@ export default defineConfig({
     },
 
     nav: [
-      { text: 'Home', link: '/' },
       ...(v3.nav || []),
       ...(v2.nav || []),
     ],
@@ -39,11 +38,6 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/static-web-server/static-web-server' },
       { icon: 'discord', link: 'https://discord.gg/VWvtZeWAA7' },
     ],
-
-    footer: {
-      message: 'Dual-licensed <a href="https://github.com/static-web-server/static-web-server/blob/master/LICENSE-MIT">MIT</a> / <a href="https://github.com/static-web-server/static-web-server/blob/master/LICENSE-APACHE">Apache-2.0</a>.',
-      copyright: 'Copyright © 2019-2026 Static Web Server',
-    },
 
     editLink: {
       pattern: 'https://github.com/static-web-server/docs/edit/main/src/:path',

@@ -4,7 +4,7 @@ import { DefaultTheme } from "vitepress";
 export const v3: DefaultTheme.Config = {
   nav: [
     {
-      text: 'v3 (latest)',
+      text: 'v3 (dev)',
       link: '/v3/',
       activeMatch: '^/v3+/',
     },

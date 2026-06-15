@@ -1,4 +1,3 @@
-
 /* =====================================================================
    VitePress default theme variable overrides (SWS brand)
    ===================================================================== */
@@ -90,24 +89,78 @@
 
 /* =====================================================================
    SWS Landing page component variables (scoped)
+
+   Theme strategy:
+   1. `.sws-page` base = LIGHT — CSS default, matches web convention
+   2. `html.dark .sws-page` = DARK — VitePress synchronous <head> script
+      sets html.dark before first paint, so zero flash
+   3. `.sws-page[data-theme="dark"]` = DARK — Vue post-hydration explicit
+   4. `.sws-page[data-theme="light"]` = LIGHT explicit override
+   5. Code/terminal windows always dark (readability)
    ===================================================================== */
 
-/* Variables - default (dark) */
-.sws-page {
+/* ── LIGHT defaults (also used by data-theme="light") ─────────────── */
+.sws-page,
+.sws-page[data-theme="light"] {
+  color-scheme: light;
+
   --sws-brand: #486d9d;
   --sws-brand-hover: #597eaf;
-  --sws-on-brand: #dad7cd;
+  --sws-on-brand: #ffffff;
 
   --sws-radius: 0.375rem;
   --sws-maxw: 1100px;
 
   --sws-font-heading: "Inter", system-ui, -apple-system, "Segoe UI", "Roboto", sans-serif;
-  --sws-font-sans: "Roboto", -apple-system, "Segoe UI", sans-serif;
+  --sws-font-sans: "Inter", system-ui, -apple-system, "Segoe UI", "Roboto", sans-serif;
   --sws-font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  /* subtle dark-line pattern on white */
+  --sws-bg-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cpath d='M 40 0 L 0 0 0 40' fill='none' stroke='rgba(0,0,0,0.045)' stroke-width='1'/%3E%3C/svg%3E");
+
+  --sws-bg: #ffffff;
+  --sws-surface: #f6f7f9;
+  --sws-surface-2: #eef0f4;
+  --sws-border: #d4d8e1;
+  --sws-border-soft: #e1e4ea;
+
+  --sws-text: #1c2230;
+  --sws-text-strong: #0a0d14;
+  --sws-text-muted: #5b6473;
+  --sws-text-dim: #7d8797;
+  --sws-accent: var(--sws-brand);
+  --sws-accent-hover: var(--sws-brand-hover);
+  --sws-accent-soft: rgba(72, 109, 157, 0.12);
+  --sws-ok: #16a34a;
+
+  --sws-code-bg: #ffffff;
+  --sws-code-border: #bec6d4;
+  --sws-code-fg: #d7dbe2;
+
+  --sws-win-header-bg: #ebebeb;
+  --sws-win-btn-hover: #dbdbdb;
+  --sws-win-btn-close-hover: #e0b0b0;
+
+  --sws-syn-comment: #a0a3a8;
+  --sws-syn-key: #82aaff;
+  --sws-syn-str: #81a759;
+  --sws-syn-num: #b27146;
+  --sws-syn-bool: #b56473;
+  --sws-syn-cmd: #6287d6;
+  --sws-syn-flag: #4567b1;
+  --sws-syn-url: #9ece6a;
+  --sws-win-btn-hover: #3a404d;
+  --sws-win-btn-close-hover: #c0392b;
+}
+
+/* ── DARK (VitePress html.dark class + explicit data-theme="dark") ─── */
+html.dark .sws-page,
+.sws-page[data-theme="dark"] {
+  color-scheme: dark;
+
+  --sws-on-brand: #dad7cd;
+  /* dark pattern: subtle white lines on dark */
   --sws-bg-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cpath d='M 40 0 L 0 0 0 40' fill='none' stroke='rgba(255,255,255,0.035)' stroke-width='1'/%3E%3C/svg%3E");
 
-  /* dark defaults */
-  color-scheme: dark;
   --sws-bg: #0d1014;
   --sws-surface: #14181f;
   --sws-surface-2: #1a1f27;
@@ -120,42 +173,14 @@
   --sws-accent: var(--sws-brand);
   --sws-accent-hover: var(--sws-brand-hover);
   --sws-accent-soft: rgba(19, 137, 227, 0.14);
+  --sws-ok: #4ade80;
+
+  /* Code/terminal vars remain the same; repeated so both selectors are self-contained */
   --sws-code-bg: #0a0d12;
   --sws-code-bar: #11151b;
   --sws-code-border: #20252e;
   --sws-code-fg: #d7dbe2;
-  --sws-syn-comment: #a0a3a8;
-  --sws-syn-key: #82aaff;
-  --sws-syn-str: #81a759;
-  --sws-syn-num: #b27146;
-  --sws-syn-bool: #b56473;
-  --sws-syn-cmd: #6287d6;
-  --sws-syn-flag: #4567b1;
-  --sws-syn-url: #9ece6a;
-  --sws-ok: #4ade80;
   --sws-win-header-bg: #2d2d2d;
   --sws-win-btn-hover: #444444;
   --sws-win-btn-close-hover: #c0392b;
-}
-
-.sws-page[data-theme="light"] {
-  color-scheme: light;
-  --sws-on-brand: var(--sws-bg);
-  --sws-bg: #ffffff;
-  --sws-surface: #f6f7f9;
-  --sws-surface-2: #eef0f4;
-  --sws-border: #e1e4ea;
-  --sws-border-soft: #ebedf1;
-  --sws-text: #1c2230;
-  --sws-text-strong: #0a0d14;
-  --sws-text-muted: #5b6473;
-  --sws-text-dim: #7d8797;
-  --sws-accent-soft: rgba(19, 137, 227, 0.10);
-  --sws-code-bg: var(--sws-bg);
-  --sws-code-bar: var(--sws-surface-2);
-  --sws-code-border: var(--sws-border);
-  --sws-ok: #16a34a;
-  --sws-win-header-bg: #ebebeb;
-  --sws-win-btn-hover: #dbdbdb;
-  --sws-win-btn-close-hover: #e0b0b0;
 }

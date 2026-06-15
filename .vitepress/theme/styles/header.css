@@ -33,10 +33,18 @@
     display: none;
 }
 
+/* Dark logo: html.dark (pre-hydration) or explicit data-theme="dark" */
+html.dark .sws-page .sws-logo-dark,
 .sws-page[data-theme="dark"] .sws-logo-dark {
     display: block;
 }
 
-.sws-page[data-theme="light"] .sws-logo-light {
+/* Light logo: default (no html.dark, no data-theme) or explicit data-theme="light" */
+.sws-page:not([data-theme="dark"]) .sws-logo-light {
     display: block;
+}
+
+/* When html.dark is active pre-hydration, hide light logo */
+html.dark .sws-page:not([data-theme="light"]) .sws-logo-light {
+    display: none;
 }

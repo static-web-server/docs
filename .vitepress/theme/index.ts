@@ -1,20 +1,17 @@
 // https://vitepress.dev/guide/custom-theme
 import { h } from 'vue'
 import type { Theme } from 'vitepress'
-import { useData } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import Home from './components/Home.vue'
+import HomeNavItems from './components/HomeNavItems.vue'
 import './styles/index.css'
 
 export default {
   extends: DefaultTheme,
   Layout: () => {
-    const { frontmatter } = useData()
-    if (frontmatter.value.layout === 'Home') {
-      return h(Home)
-    }
     return h(DefaultTheme.Layout, null, {
-      // https://vitepress.dev/guide/extending-default-theme#layout-slots
+      'nav-bar-content-before': () => h(HomeNavItems),
+      'page-top': () => h(Home),
     })
   },
   enhanceApp({ app, router, siteData }) {

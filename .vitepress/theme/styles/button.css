@@ -30,6 +30,7 @@
 
 .sws-btn-ghost {
     border-color: var(--sws-border);
+    color: var(--sws-text);
 }
 
 .sws-btn-ghost:hover {

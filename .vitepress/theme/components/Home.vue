@@ -1,27 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { useData } from 'vitepress'
 
-const theme = ref('dark')
-
-onMounted(() => {
-  try {
-    const saved = window.localStorage.getItem('sws-theme')
-    if (saved === 'light' || saved === 'dark') {
-      theme.value = saved
-    }
-  } catch (err) {
-    console.error('Could not read theme preference:', err)
-  }
-})
-
-function toggleTheme() {
-  theme.value = theme.value === 'dark' ? 'light' : 'dark'
-  try {
-    localStorage.setItem('sws-theme', theme.value)
-  } catch (err) {
-    console.error('Could not persist theme preference:', err)
-  }
-}
+const { isDark } = useData()
 
 function handleCopy(event: MouseEvent) {
   const btn = event.currentTarget as HTMLButtonElement
@@ -66,39 +46,7 @@ function fallbackCopy(text: string, onSuccess: () => void) {
 </script>
 
 <template>
-  <div class="sws-page" :data-theme="theme">
-
-    <!-- HEADER -->
-    <header class="sws-header">
-      <div class="sws-container sws-header-row">
-        <a class="sws-brand" href="#top" aria-label="Static Web Server — home">
-          <img class="sws-logo sws-logo-dark" src="/assets/sws_white.svg" alt="" width="30" height="30" />
-          <img class="sws-logo sws-logo-light" src="/assets/sws.svg" alt="" width="30" height="30" />
-          <span>Static Web Server</span>
-        </a>
-
-        <nav class="sws-nav" aria-label="Primary">
-          <a href="#why">Why SWS</a>
-          <a href="#features">Features</a>
-          <a href="#config">Configure</a>
-          <a href="#install">Install</a>
-          <a href="/v3/">Docs</a>
-        </nav>
-
-        <button class="sws-icon-btn" type="button" aria-label="Switch theme" @click="toggleTheme">
-          <svg class="sws-i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-            <circle cx="12" cy="12" r="4" fill="currentColor" />
-            <path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4l1.4-1.4M17 7l1.4-1.4"
-              stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none" />
-          </svg>
-          <svg class="sws-i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-            <path d="M20 14.3A8 8 0 0 1 9.7 4a.5.5 0 0 0-.7-.6 9.5 9.5 0 1 0 12 11.6.5.5 0 0 0-.6-.7z"
-              fill="currentColor" />
-          </svg>
-        </button>
-      </div>
-    </header>
-
+  <div class="sws-page" :data-theme="isDark ? 'dark' : 'light'">
     <main>
       <!-- HERO -->
       <section id="top" class="sws-hero">
@@ -302,8 +250,7 @@ function fallbackCopy(text: string, onSuccess: () => void) {
           </div>
           <br />
           <p>
-            <a class="sws-link-arrow" href="https://static-web-server.net/features/http1/" target="_blank"
-              rel="noopener">
+            <a class="sws-link-arrow" href="/v3/features/http1/">
               See more features →
             </a>
           </p>
@@ -325,8 +272,7 @@ function fallbackCopy(text: string, onSuccess: () => void) {
               <li>One option each per feature set.</li>
               <li>Zero-config quickstart, point it at a folder and go.</li>
             </ul>
-            <a class="sws-link-arrow" href="https://static-web-server.net/configuration/config-file/"
-              target="_blank" rel="noopener">
+            <a class="sws-link-arrow" href="/v3/configuration/file/">
               See all options →
             </a>
           </div>
@@ -417,7 +363,7 @@ function fallbackCopy(text: string, onSuccess: () => void) {
 
           <div class="sws-head sws-center">
             <p class="sws-sub">Or visit <a class="sws-link-arrow"
-                href="https://static-web-server.net/download-and-install/" target="_blank" rel="noopener">
+                href="/v3/download-install/">
                 the installation page
               </a> for other platforms and installation methods.
             </p>
