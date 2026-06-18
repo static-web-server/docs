@@ -4,3 +4,8 @@
 .sws-page *::after {
     box-sizing: border-box;
 }
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-block-start: 4.5rem;
+}

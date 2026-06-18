@@ -3,13 +3,13 @@
    ===================================================================== */
 
 :root {
-  --vp-c-brand-1: #597eaf;
+  --vp-c-brand-1: #4f7fbe;
   --vp-c-brand-2: #486d9d;
   --vp-c-brand-3: #3a5a87;
   --vp-c-brand-soft: rgba(72, 109, 157, 0.14);
 
   --vp-font-family-base: "Inter", system-ui, -apple-system, "Segoe UI", "Roboto", sans-serif;
-  --vp-font-family-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --vp-font-family-mono: "Fira Code", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --vp-c-bg: #ffffff;
   --vp-c-bg-soft: #f6f7f9;
@@ -23,7 +23,7 @@
   --vp-c-text-3: #7d8797;
 
   --vp-button-brand-bg: #486d9d;
-  --vp-button-brand-hover-bg: #597eaf;
+  --vp-button-brand-hover-bg: #4f7fbe;
   --vp-button-brand-border: transparent;
   --vp-button-brand-text: #dad7cd;
   --vp-button-brand-hover-border: transparent;
@@ -32,7 +32,7 @@
   --vp-button-alt-bg: #eef0f4;
   --vp-button-alt-hover-bg: #e1e4ea;
   --vp-button-alt-border: #e1e4ea;
-  --vp-button-alt-hover-border: #597eaf;
+  --vp-button-alt-hover-border: #4f7fbe;
   --vp-button-alt-text: #1c2230;
   --vp-button-alt-hover-text: #486d9d;
 
@@ -46,6 +46,14 @@
   --vp-code-line-highlight-color: rgba(72, 109, 157, 0.08);
   --vp-code-copy-code-bg: #eef0f4;
   --vp-code-copy-code-hover-bg: #e1e4ea;
+
+  /* Global Custom variables */
+  --sws-radius: 0.375rem;
+  --sws-maxw: 1100px;
+
+  --sws-font-heading: var(--vp-font-family-base);
+  --sws-font-sans: var(--vp-font-family-base);
+  --sws-font-mono: var(--vp-font-family-mono);
 }
 
 .dark {
@@ -63,9 +71,9 @@
   --vp-button-alt-bg: #1a1f27;
   --vp-button-alt-hover-bg: #242a34;
   --vp-button-alt-border: #242a34;
-  --vp-button-alt-hover-border: #597eaf;
+  --vp-button-alt-hover-border: #4f7fbe;
   --vp-button-alt-text: #e6e9ee;
-  --vp-button-alt-hover-text: #597eaf;
+  --vp-button-alt-hover-text: #4f7fbe;
 
   --vp-nav-bg-color: #0d1014;
   --vp-sidebar-bg-color: #14181f;
@@ -105,15 +113,16 @@
   color-scheme: light;
 
   --sws-brand: #486d9d;
-  --sws-brand-hover: #597eaf;
+  --sws-brand-hover: #4f7fbe;
   --sws-on-brand: #ffffff;
 
   --sws-radius: 0.375rem;
   --sws-maxw: 1100px;
 
-  --sws-font-heading: "Inter", system-ui, -apple-system, "Segoe UI", "Roboto", sans-serif;
-  --sws-font-sans: "Inter", system-ui, -apple-system, "Segoe UI", "Roboto", sans-serif;
-  --sws-font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --sws-font-heading: var(--vp-font-family-base);
+  --sws-font-sans: var(--vp-font-family-base);
+  --sws-font-mono: var(--vp-font-family-mono);
+  
   /* subtle dark-line pattern on white */
   --sws-bg-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cpath d='M 40 0 L 0 0 0 40' fill='none' stroke='rgba(0,0,0,0.045)' stroke-width='1'/%3E%3C/svg%3E");
 

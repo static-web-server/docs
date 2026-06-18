@@ -11,6 +11,7 @@
 @import "./install.css";
 @import "./feature.css";
 @import "./footer.css";
+@import "./vitepress.css";
 
 /* =====================================================================
    SWS Landing Page — all styles scoped under .sws-page

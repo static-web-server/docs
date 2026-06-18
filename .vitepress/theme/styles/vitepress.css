@@ -1,0 +1,26 @@
+/* Customize Vitepress */
+
+.VPNavBarMenuLink.active {
+    font-weight: bold;
+}
+
+@media (min-width: 1460px) {
+    .container {
+        padding-inline: 1.375rem;
+    }
+}
+
+@media (min-width: 960px) {
+    .VPNavBarSearch {
+        padding-left: 32px;
+        justify-content: end;
+        padding-right: 12px;
+    }
+}
+
+@media (max-width: 960px) {
+    .vp-doc div[class*='language-'],
+    .vp-block {
+        margin: auto;
+    }
+}

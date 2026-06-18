@@ -407,10 +407,9 @@ function fallbackCopy(text: string, onSuccess: () => void) {
         </a>
 
         <nav class="sws-footer-nav" aria-label="Footer">
-          <a href="/v3/" target="_blank" rel="noopener">Docs</a>
+          <a href="/v3/">Docs</a>
           <a href="https://github.com/static-web-server/static-web-server" target="_blank" rel="noopener">GitHub</a>
-          <a href="/v3/download-install/" target="_blank"
-            rel="noopener">Releases</a>
+          <a href="/v3/download-install/">Releases</a>
           <a href="https://hub.docker.com/r/joseluisq/static-web-server" target="_blank" rel="noopener">Docker Hub</a>
           <a href="https://crates.io/crates/static-web-server" target="_blank" rel="noopener">Crates.io</a>
           <a href="https://discord.gg/VWvtZeWAA7" target="_blank" rel="noopener">Discord</a>

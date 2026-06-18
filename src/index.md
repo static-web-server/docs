@@ -1,11 +1,5 @@
 ---
 layout: page
 title: Static Web Server — Static content delivery with speed and reliability
-description: Static Web Server (SWS) — Static content delivery with speed and reliability
+description: Deliver static websites confidently with a modern and Open Source web server designed for secure, efficient, and reliable deployments across platforms.
 ---
-
-<script setup>
-import Home from '@theme/components/Home.vue'
-</script>
-
-<Home />

@@ -64,9 +64,3 @@
 .sws-two-col>* {
     min-width: 0;
 }
-
-@media (min-width: 1460px) {
-    .container {
-        padding-inline: 1.375rem;
-    }
-}
