@@ -1,2 +1,7 @@
+compatibility_date = "2026-06-18"
+
 [assets]
-directory = "./.vitepress/dist"
+directory = ".vitepress/dist"
+
+[build]
+command = "yarn docs:build"
