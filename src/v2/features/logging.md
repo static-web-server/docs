@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Logging
 
 **`SWS`** provides logging support by just specifying a log level in lower case. The values allowed are `error`, `warn`, `info`, `debug` and `trace`. The default value is `error`.
@@ -13,7 +17,7 @@ static-web-server \
     --log-level "trace"
 ```
 
-> Note: The log format is not well defined and is subject to change.
+> **Note:** The log format is not well defined and is subject to change.
 
 ## Log Date-Timestamp
 

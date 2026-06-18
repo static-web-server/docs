@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Directory Listing
 
 **`SWS`** provides a directory listing feature to display the content of directories.
@@ -58,10 +62,10 @@ Below are the possible number code values for sorting or ordering which are grou
 
 - `6`: Unordered
 
-!!! tip "Tips"
-
-    - The `--directory-listing-order` option depends on `--directory-listing` to be enabled.
-    - Use the query `?sort=NUMBER` to customize the sorting via the URI. E.g `https://localhost/?sort=5` (sort by size in descending order)
+> [!INFO] Tips
+>
+> - The `--directory-listing-order` option depends on `--directory-listing` to be enabled.
+> - Use the query `?sort=NUMBER` to customize the sorting via the URI. E.g `https://localhost/?sort=5` (sort by size in descending order)
 
 Example:
 
@@ -78,9 +82,9 @@ static-web-server \
 
 **`SWS`** provides support for specifying an output format either HTML (default) or JSON for the directory listing entries via the string `--directory-listing-format` option or the equivalent [SERVER_DIRECTORY_LISTING_FORMAT](./../configuration/environment-variables.md#server_directory_listing_format) env.
 
-!!! tip "Tips"
-
-    - The `--directory-listing-format` option depends on `--directory-listing` to be enabled.
+> [!TIP] Tips
+>
+> - The `--directory-listing-format` option depends on `--directory-listing` to be enabled.
 
 ### HTML format
 

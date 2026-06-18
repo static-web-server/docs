@@ -24,9 +24,9 @@ Forcing UTF-8 ensures reliable, cross-platform text rendering.
 
 The option is enabled by default and can be controlled by boolean `--text-charset` option or the equivalent [SERVER_TEXT_CHARSET](./../configuration/environment-variables.md#server_text_charset) env.
 
-!!! info "Custom HTTP Headers Take Precedence"
-
-    Users can turn off the default UTF-8 charset if wanted or use [Custom HTTP Headers](./custom-http-headers.md) with glob patterns to selectively apply charset to specific files.
+> [!INFO] Custom HTTP Headers Take Precedence
+>
+> Users can turn off the default UTF-8 charset if wanted or use [Custom HTTP Headers](./custom-http-headers.md) with glob patterns to selectively apply charset to specific files.
 
 ## Usage examples
 

@@ -4,9 +4,9 @@
 
 This feature is disabled by default and can be controlled by the boolean `--https-redirect` option or the equivalent [SERVER_HTTPS_REDIRECT](./../configuration/environment-variables.md#server_https_redirect) env.
 
-!!! info "HTTP/2 required"
-
-    HTTPS redirect requires the [HTTP/2](../features/http2-tls.md) feature to be activated.
+> [!INFO] HTTP/2 required
+>
+> HTTPS redirect requires the [HTTP/2](../features/http2-tls.md) feature to be activated.
 
 ## HTTPS redirect
 
@@ -26,10 +26,10 @@ The string `--https-redirect-from-port` option represents the HTTP host port whe
 
 The string `--https-redirect-from-hosts` option represents a list of hostnames or IPs allowed to redirect from using comma-separated values. Incoming HTTP requests must contain the [HTTP `Host` header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host) and match against this list. It depends on "https-redirect" option to be enabled. The default value is `localhost`.
 
-!!! tip "Tip: define hostnames/IPs to redirect from for increasing security"
-
-    - Via the `--https-redirect-from-hosts` or its env you can tell SWS which hostnames or IPs are allowed to redirect from your SWS server instance to avoid potential spoofing issues.
-    - When a hostname or IP is not found in the whitelist then SWS will respond with a `400 Bad Request` status response.
+> [!TIP] Define hostnames/IPs to redirect from for increasing security
+>
+> - Via the `--https-redirect-from-hosts` or its env you can tell SWS which hostnames or IPs are allowed to redirect from your SWS server instance to avoid potential spoofing issues.
+> - When a hostname or IP is not found in the whitelist then SWS will respond with a `400 Bad Request` status response.
 
 ## Example
 

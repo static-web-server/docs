@@ -9,9 +9,8 @@ The feature is disabled by default and can be controlled by the boolean `--compr
 When the `compression-static` option is enabled and the pre-compressed file is found on the file system then it's served directly.
 Otherwise, if the pre-compressed file is not found then SWS just continues the normal workflow (trying to serve the original file requested instead). Additionally, if for example the [compression](../features/compression.md) option was also enabled then the requested file can be compressed on the fly right after.
 
-!!! info "Compressed file type"
-
-    The pre-compressed file type is determined by the [`Accept-Encoding`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) header value.
+> [!INFO] Compressed file type
+> The pre-compressed file type is determined by the [`Accept-Encoding`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) header value.
 
 Here is an example:
 

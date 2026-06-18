@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # URL Rewrites
 
 **SWS** provides the ability to rewrite request URLs (routes) with Glob pattern-matching support.
@@ -14,9 +18,9 @@ Each table entry should have two key/value pairs:
 - `destination`: file path with optional replacements (placeholders).
 - `redirect`: optional number containing the HTTP response code (redirection).
 
-!!! info "Note"
-
-    The incoming request(s) will reach the `destination` only if the request(s) URI matches the `source` pattern.
+> [!INFO] Note
+>
+> The incoming request(s) will reach the `destination` only if the request(s) URI matches the `source` pattern.
 
 ### Source
 
@@ -24,16 +28,16 @@ It's a [Glob pattern](<https://en.wikipedia.org/wiki/Glob_(programming)>) that s
 
 The glob pattern functionality is powered by the [globset](https://docs.rs/globset/latest/globset/) crate which supports Standard Unix-style glob syntax.
 
-!!! tip "Glob pattern syntax"
+> [!TIP] Glob pattern syntax
+>
+> For more details about the Glob pattern syntax check out https://docs.rs/globset/latest/globset/#syntax
 
-    For more details about the Glob pattern syntax check out https://docs.rs/globset/latest/globset/#syntax
-
-!!! warning "Matching of path separator in `*`"
-
-    Up to version `2.33.1` the wildcard `*` was matching the path separator.
-    For example, `/{*}/{*}/` matched `/assets/images/logo/`.
-
-    In later versions, the default has changed such that `*` does not match the path separator.
+> [!WARNING] Matching of path separator in `*`
+>
+> Up to version `2.33.1` the wildcard `*` was matching the path separator.
+> For example, `/{*}/{*}/` matched `/assets/images/logo/`.
+>
+> In later versions, the default has changed such that `*` does not match the path separator.
 
 ### Destination
 
@@ -45,10 +49,10 @@ Additionally, a `destination` supports replacements for every Glob pattern group
 
 Replacements order start from `0` to `n` and are defined with a dollar sign followed by an index (Glob pattern group occurrence).
 
-!!! tip "Group your Glob patterns"
-
-    When using replacements, also group your Glob pattern by surrounding them with curly braces so every group should map to its corresponding replacement.<br>
-    For example: `source = "**/{*}.{png,gif}"`
+> [!TIP] Group your Glob patterns
+>
+> When using replacements, also group your Glob pattern by surrounding them with curly braces so every group should map to its corresponding replacement.<br>
+> For example: `source = "**/{*}.{png,gif}"`
 
 #### Destination processing
 

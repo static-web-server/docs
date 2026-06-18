@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Custom HTTP Headers
 
 **SWS** allows customizing the server [HTTP Response headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers) on demand.
@@ -13,13 +17,13 @@ Each table entry should have two key/value pairs:
 
 A particular set of HTTP headers can only be applied when a `source` matches against the request URI.
 
-!!! info "Custom HTTP headers take precedence over existing ones"
-
-    Whatever custom HTTP header could **replace** an existing one if it was previously defined (e.g. server default headers) and matches its `source`.
-
-    The header's order is important because determines its precedence.
-
-    **Example:** If the feature `--cache-control-headers=true` is enabled but also a custom `cache-control` header was defined then the custom header will have priority.
+> [!INFO] Custom HTTP headers take precedence over existing ones
+>
+> Whatever custom HTTP header could **replace** an existing one if it was previously defined (e.g. server default headers) and matches its `source`.
+>
+> The header's order is important because determines its precedence.
+>
+> **Example:** If the feature `--cache-control-headers=true` is enabled but also a custom `cache-control` header was defined then the custom header will have priority.
 
 ### Source
 

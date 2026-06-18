@@ -6,9 +6,9 @@ When the [HTTP/2](../features/http2-tls.md) feature is activated *security heade
 
 This feature is disabled by default on HTTP/1 and can be controlled by the boolean `--security-headers` option or the equivalent [SERVER_SECURITY_HEADERS](./../configuration/environment-variables.md#server_security_headers) env.
 
-!!! tip "Customize HTTP headers"
-
-    If you want to customize HTTP headers on demand then have a look at the [Custom HTTP Headers](custom-http-headers.md) section.
+> [!TIP] Customize HTTP headers
+>
+> If you want to customize HTTP headers on demand then have a look at the [Custom HTTP Headers](custom-http-headers.md) section.
 
 ## Headers included
 

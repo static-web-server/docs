@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Windows Service
 
 **`SWS`** can be also executed in a [Windows Service](<https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2003/cc783643(v=ws.10)>) context. Therefore it also provides a subcommand to *install* SWS as a Windows Service.

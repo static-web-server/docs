@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Building from Source
 
 Follow these instructions to either build **`SWS`** project from the source or the HTML documentation.
@@ -16,9 +20,9 @@ cargo build --release
 
 Finally, the release binary should be available at `target/release/static-web-server` or under your toolchain directory chosen.
 
-!!! info "Don't use the project's `Makefile`"
-
-    Please don't use the project's `Makefile` since it's only intended for development and some on-demand tasks.
+> [!INFO] Don't use the project's `Makefile`
+>
+> Please don't use the project's `Makefile` since it's only intended for development and some on-demand tasks.
 
 ## Cargo features
 
@@ -118,9 +122,9 @@ docker run -it --rm \
     -v /tmp/docs:/tmp/docs squidfunk/mkdocs-material build
 ```
 
-!!! tip "Output the docs in a different directory"
-
-    If you want to output the docs in a different directory then append the `--site-dir=/new/dir/path/` argument to the *"squidfunk/mkdocs-material"* `build` command and make sure to provide the new directory path.
+> [!TIP] Output the docs in a different directory
+>
+> If you want to output the docs in a different directory then append the `--site-dir=/new/dir/path/` argument to the *"squidfunk/mkdocs-material"* `build` command and make sure to provide the new directory path.
 
 ### Development server
 
@@ -139,7 +143,7 @@ Now the server will be available at `localhost:8000`
 This project makes use of [mdformat](https://mdformat.readthedocs.io/en/stable/) to format Markdown files.
 The CI job `devel-project-docs` checks that all Markdown files are formatted correctly.
 
-To format documentation changes, you can run `mdformat` manually using [uv](https://docs.astral.sh/uv/getting-started/installation/):
+To format documentation changes, you can run `mdformat` manually using [uv](https://docs.astral.sh/uv/getting-started/installation/) as follows.
 
 ```sh
 uvx --python ">=3.13" --with mdformat-mkdocs mdformat ./*.md docs/

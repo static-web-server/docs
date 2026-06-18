@@ -2,10 +2,10 @@
 
 The server can be configured via the following environment variables.
 
-!!! tip "Remember"
-
-    - Environment variables are equivalent to their command-line arguments.
-    - [Command-line arguments](./command-line-arguments.md) take precedence over their equivalent environment variables.
+> [!TIP] Remember
+>
+> - Environment variables are equivalent to their command-line arguments.
+> - [Command-line arguments](./command-line-arguments.md) take precedence over their equivalent environment variables.
 
 ### SERVER_HOST
 

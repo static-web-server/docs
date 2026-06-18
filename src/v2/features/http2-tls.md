@@ -39,11 +39,11 @@ This is opt-in via the `http2-fips` Cargo feature flag, which is mutually exclus
 
 The "Safe TLS defaults" listed above describe the `http2-ring` provider. The `http2-fips` provider's defaults are restricted to the subset of FIPS-approved ciphers (no ChaCha20-Poly1305) and FIPS-approved key exchange groups.
 
-!!! info "Build requirements"
-
-    - FIPS builds require `cmake`, `go`, and `libclang` (used by `bindgen` when compiling the FIPS module) at build time. The compiled output is still a single statically-linked binary.
-    - Static linking is supported only on Linux x86_64 and aarch64, both `gnu` and `musl` toolchains.
-    - The FIPS feature does not change command-line flags, configuration, or the wire protocol; it only swaps the cryptographic backend.
+> [!INFO] Build requirements
+>
+> - FIPS builds require `cmake`, `go`, and `libclang` (used by `bindgen` when compiling the FIPS module) at build time. The compiled output is still a single statically-linked binary.
+> - Static linking is supported only on Linux x86_64 and aarch64, both `gnu` and `musl` toolchains.
+> - The FIPS feature does not change command-line flags, configuration, or the wire protocol; it only swaps the cryptographic backend.
 
 To build from source with FIPS:
 
@@ -80,12 +80,12 @@ Only the following private key file formats are supported:
 
 ## Example
 
-!!! info "Tips"
-
-    - Either `--host`, `--port` and `--root` have defaults (optional values) so they can be specified or omitted as required.
-    - Don't forget to adjust the proper `--port` value for the HTTP/2 & TLS feature.
-    - When this feature is enabled (`--http2=true`) then the [security headers](./security-headers.md) are also enabled automatically.
-    - The server provides [Termination Signal](https://www.gnu.org/software/libc/manual/html_node/Termination-Signals.html) handling with [Graceful Shutdown](https://cloud.google.com/blog/products/containers-kubernetes/kubernetes-best-practices-terminating-with-grace) ability by default.
+> [!INFO] Tips
+>
+> - Either `--host`, `--port` and `--root` have defaults (optional values) so they can be specified or omitted as required.
+> - Don't forget to adjust the proper `--port` value for the HTTP/2 & TLS feature.
+> - When this feature is enabled (`--http2=true`) then the [security headers](./security-headers.md) are also enabled automatically.
+> - The server provides [Termination Signal](https://www.gnu.org/software/libc/manual/html_node/Termination-Signals.html) handling with [Graceful Shutdown](https://cloud.google.com/blog/products/containers-kubernetes/kubernetes-best-practices-terminating-with-grace) ability by default.
 
 ```sh
 static-web-server \

@@ -1,20 +1,71 @@
+---
+outline: deep
+---
+
 # Download and Install
 
 Latest **{{RELEASE_VERSION}}** release `{{RELEASE_DATE}}` ([changelog](https://github.com/static-web-server/static-web-server/releases/tag/{{RELEASE_VERSION}}), [sha256sum](https://github.com/static-web-server/static-web-server/releases/download/{{RELEASE_VERSION}}/static-web-server-{{RELEASE_VERSION}}-SHA256SUM))
 
+<style scoped>
+.featured-downloads {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.featured-downloads a {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0 .5rem;
+    text-decoration: none;
+}
+.featured-downloads a img {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+}
+.featured-downloads a:hover {
+    background-color: var(--vp-button-brand-hover-bg);
+    color: #fff;
+    border-color: var(--vp-button-brand-hover-bg);
+}
+.featured-downloads a:hover img {
+    filter: invert(1);
+}
+html.dark .featured-downloads a {
+    background-color: var(--vp-button-alt-text);
+    color: var(--vp-button-alt-bg);
+    border-color: var(--vp-button-alt-bg);
+}
+html.dark .featured-downloads a:hover {
+    background-color: var(--vp-button-alt-hover-border);
+    color: var(--vp-button-alt-text);
+    border-color: var(--vp-button-alt-hover-border);
+}
+</style>
+
 <div class="featured-downloads">
-
-<a class="md-button md-button-sm" href="https://github.com/static-web-server/static-web-server/releases/download/{{RELEASE_VERSION}}/static-web-server-{{RELEASE_VERSION}}-x86_64-unknown-linux-gnu.tar.gz">Linux 64-bit</a> <a class="md-button md-button-sm" href="https://github.com/static-web-server/static-web-server/releases/download/{{RELEASE_VERSION}}/static-web-server-{{RELEASE_VERSION}}-x86_64-apple-darwin.tar.gz">macOS 64-bit</a>
-<a class="md-button md-button-sm" href="https://github.com/static-web-server/static-web-server/releases/download/{{RELEASE_VERSION}}/static-web-server-{{RELEASE_VERSION}}-x86_64-pc-windows-msvc.zip">Windows 64-bit</a>
-<a class="md-button md-button-sm" href="https://github.com/static-web-server/static-web-server/releases/download/{{RELEASE_VERSION}}/static-web-server-{{RELEASE_VERSION}}-x86_64-unknown-freebsd.tar.gz">FreeBSD 64-bit</a>
-
+    <a class="sws-btn sws-btn-ghost"
+        href="https://github.com/static-web-server/static-web-server/releases/download/{{RELEASE_VERSION}}/static-web-server-{{RELEASE_VERSION}}-x86_64-unknown-linux-gnu.tar.gz"><img src="/assets/linux.svg" alt="Linux" width="24" height="24"> Linux
+        x64</a> <a class="sws-btn sws-btn-ghost"
+        href="https://github.com/static-web-server/static-web-server/releases/download/{{RELEASE_VERSION}}/static-web-server-{{RELEASE_VERSION}}-x86_64-apple-darwin.tar.gz"><img src="/assets/macos.svg" alt="macOS" width="24" height="24"> macOS
+        x64</a>
+    <a class="sws-btn sws-btn-ghost"
+        href="https://github.com/static-web-server/static-web-server/releases/download/{{RELEASE_VERSION}}/static-web-server-{{RELEASE_VERSION}}-x86_64-pc-windows-msvc.zip"><img src="/assets/windows.svg" alt="Windows" width="24" height="24"> Windows
+        x64</a>
+    <a class="sws-btn sws-btn-ghost"
+        href="https://github.com/static-web-server/static-web-server/releases/download/{{RELEASE_VERSION}}/static-web-server-{{RELEASE_VERSION}}-x86_64-unknown-freebsd.tar.gz"><img src="/assets/freebsd.svg" alt="FreeBSD" width="24" height="24"> FreeBSD
+        x64</a>
 </div>
+
+<hr>
 
 See also [the release history](https://github.com/static-web-server/static-web-server/releases) on GitHub.
 
-!!! info "Docker"
-
-    If you are working with Docker containers then check out [the Docker feature page](https://static-web-server.net/features/docker/).
+> [!NOTE] Docker
+>
+> If you are working with Docker containers then check out [the Docker feature page](https://static-web-server.net/features/docker/).
 
 ## Installation methods
 
