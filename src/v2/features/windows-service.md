@@ -4,7 +4,7 @@ outline: deep
 
 # Windows Service
 
-**`SWS`** can be also executed in a [Windows Service](<https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2003/cc783643(v=ws.10)>) context. Therefore it also provides a subcommand to *install* SWS as a Windows Service.
+**`SWS`** can be also executed in a [Windows Service](<https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2003/cc783643(v=ws.10)>) context. Therefore it also provides a subcommand to _install_ SWS as a Windows Service.
 
 This feature is disabled by default and can be controlled by the boolean `-s, --windows-service` option or the equivalent [SERVER_WINDOWS_SERVICE](./../configuration/environment-variables.md#server_windows_service) env.
 
@@ -21,7 +21,7 @@ This feature is disabled by default and can be controlled by the boolean `-s, --
 
 ## Service privileges
 
-To either install or uninstall the SWS Windows service requires *administrator* privileges, so make sure to open the terminal application as administrator or give your [Powershell](https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-7.2) session enough privileges otherwise you will get an `"Access is denied"` error.
+To either install or uninstall the SWS Windows service requires _administrator_ privileges, so make sure to open the terminal application as administrator or give your [Powershell](https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-7.2) session enough privileges otherwise you will get an `"Access is denied"` error.
 
 We recommend a Powershell session with administrator privileges.
 
@@ -33,7 +33,7 @@ Follow the steps below to adjust your firewall:
 
 1. Configure an [Inbound Port Rule](https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-firewall/create-an-inbound-port-rule) in your Windows firewall so clients can reach the server's port.
 2. In your SWS config file, use the server IP as a host or a non-routable address like `0.0.0.0` if you prefer.
-3. Create a Windows Service following https://static-web-server.net/features/windows-service/ and start it.
+3. Create a Windows Service following the instructions in the [Windows Service section](./windows-service.md) and start it.
 4. Finally, restart the service to apply the changes.
 
 Note that the steps above are general and you have to adjust your firewall rule(s) according to your needs.

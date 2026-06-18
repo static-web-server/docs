@@ -63,7 +63,7 @@ static-web-server -p 8788 -d ./public/ -g trace -z --log-with-ansi
 
 ## Log Remote Addresses
 
-SWS provides *Remote Address (IP)* logging for every request via an `INFO` log level.
+SWS provides _Remote Address (IP)_ logging for every request via an `INFO` log level.
 
 This feature is disabled by default and can be enabled by the boolean `--log-remote-address` option or the equivalent [SERVER_LOG_REMOTE_ADDRESS](./../configuration/environment-variables.md#server_log_remote_address) env.
 
@@ -113,7 +113,7 @@ To restrict the logging to only requests that originate from trusted proxy IPs, 
 > Note: This header should only be trusted when you know your upstream is handling X-Forwarded-For securely and when using the `--trusted-proxies` option.
 
 When used behind a reverse proxy the reported `remote_addr` indicates the proxies IP address and port, not the client's real IP.
-The Proxy server can be configured to provide the [X-Forwarded-For header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For), containing a comma-separated list of IP addresses, starting with the *real remote client IP*, and all following intermediate proxies (if any).
+The Proxy server can be configured to provide the [X-Forwarded-For header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For), containing a comma-separated list of IP addresses, starting with the _real remote client IP_, and all following intermediate proxies (if any).
 
 To enable logging of the real remote IP, enable the `--log-forwarded-for` option or the equivalent [SERVER_LOG_FORWARDED_FOR](../configuration/environment-variables.md#server_log_forwarded_for) env. By default this will log all requests which have a correctly formatted `X-Forwarded-For` header.
 
@@ -150,7 +150,7 @@ Log entry for this request will look like:
 INFO static_web_server::handler: incoming request: method=GET uri=/ real_remote_ip=203.0.113.195
 ```
 
-______________________________________________________________________
+---
 
 If we send the request from `127.0.0.1` instead:
 
@@ -168,7 +168,7 @@ INFO static_web_server::handler: incoming request: method=GET uri=/
 
 Note the absence of the proxies remote address in these examples. If you want to log the remote address and the real remote address, you need to specify both `--log-remote-address` and `--log-forwarded-for`.
 
-______________________________________________________________________
+---
 
 **`SWS`** will parse the `X-Forwarded-For` header and if the provided client IP is invalid, it will be ignored to prevent log poisoning attacks. In such cases the `real_remote_ip` section will not be added.
 

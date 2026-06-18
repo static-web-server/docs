@@ -4,7 +4,7 @@
 
 ## Ignore hidden files (dotfiles)
 
-SWS *does ignore* dotfiles (hidden files) by default for security reasons.
+SWS _does ignore_ dotfiles (hidden files) by default for security reasons.
 
 As a result, SWS will respond with a `404 Not Found` status as well as hidden files won't be shown in the directory listing if enabled.
 

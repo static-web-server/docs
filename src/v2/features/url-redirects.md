@@ -39,7 +39,7 @@ The glob pattern functionality is powered by the [globset](https://docs.rs/globs
 
 > [!TIP] "Glob pattern syntax"
 >
-> For more details about the Glob pattern syntax check out https://docs.rs/globset/latest/globset/#syntax
+> For more details about the Glob pattern syntax check out the [globset documentation](https://docs.rs/globset/latest/globset/#syntax).
 
 > [!WARNING] Matching of path separator in `*`
 >

@@ -201,7 +201,7 @@ Pre-compiled binaries are grouped by CPU architectures or features, depending on
 - [static-web-server-v2.43.0-x86_64-unknown-illumos.tar.gz](https://github.com/static-web-server/static-web-server/releases/download/v2.43.0/static-web-server-v2.43.0-x86_64-unknown-illumos.tar.gz)<br>
 <small>**SHA256SUM:** `f13c671d02587f4a5f4151ac0c4538a77b98ee1988e3ce9013cabc3dda4d3c5f`</small>
 
-#### FIPS
+#### FIPS {#fips-x86_64}
 
 - [static-web-server-v2.43.0-x86_64-unknown-linux-gnu-fips.tar.gz](https://github.com/static-web-server/static-web-server/releases/download/v2.43.0/static-web-server-v2.43.0-x86_64-unknown-linux-gnu-fips.tar.gz)<br>
 <small>**SHA256SUM:** `232b9136c6c5b72ffaf941dc39531aad6ddad7c2abcdb8b63732ed487f9ec095`</small>
@@ -221,7 +221,7 @@ Pre-compiled binaries are grouped by CPU architectures or features, depending on
 - [static-web-server-v2.43.0-aarch64-pc-windows-msvc.zip](https://github.com/static-web-server/static-web-server/releases/download/v2.43.0/static-web-server-v2.43.0-aarch64-pc-windows-msvc.zip)<br>
 <small>**SHA256SUM:** `492b1a3abf65c7ed57b0954796ee942f72c37a0a34c3e55c6809390815710fc3`</small>
 
-#### FIPS
+#### FIPS {#fips-aarch64}
 
 - [static-web-server-v2.43.0-aarch64-unknown-linux-gnu-fips.tar.gz](https://github.com/static-web-server/static-web-server/releases/download/v2.43.0/static-web-server-v2.43.0-aarch64-unknown-linux-gnu-fips.tar.gz)<br>
 <small>**SHA256SUM:** `88b59e644466285fdeedc5a30fa10a7bdd4778293f52d0b022a5db0134362d8d`</small>

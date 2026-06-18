@@ -18,8 +18,8 @@ As an example, we will use the [Apache `htpasswd`](https://httpd.apache.org/docs
 
 ```sh
 htpasswd -nBC10 "username"
-# New password: 
-# Re-type new password: 
+# New password:
+# Re-type new password:
 # username:$2y$10$8phm28BB4YpKPDjOpdTT8eUcfVDw0xc85VZPxg2zae1GR8EQqus3i
 ```
 

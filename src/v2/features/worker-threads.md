@@ -14,11 +14,11 @@ Multiplying this input number by the number of system CPUs.
 
 The formula used is the following:
 
-> worker threads = number of CPUs * n
+> worker threads = number of CPUs \* n
 
-*Where `n` is the input value of `-n, --threads-multiplier`.*
+_Where `n` is the input value of `-n, --threads-multiplier`._
 
-**For example:** If there are `4` available CPUs and the `--threads-multiplier` is `8` then the total of *worker threads* to use will be `32`.
+**For example:** If there are `4` available CPUs and the `--threads-multiplier` is `8` then the total of _worker threads_ to use will be `32`.
 
 > [!TIP] Tip
 >

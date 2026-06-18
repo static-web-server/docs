@@ -29,28 +29,28 @@ Finally, the release binary should be available at `target/release/static-web-se
 When building from the source, all features are enabled by default.
 However, you can disable just the ones you don't need from the lists below.
 
-| Feature | Description |
-| -- | -- |
-| **Default** |  |
-| `default` | Activates the default features by omission. |
-| `all` | Activates all available features including the `experimental` feature. This is the default feature used when building SWS binaries. |
-| `experimental` | Activates all SWS experimental features. Make sure to also provide the required `RUSTFLAGS` if the feature requires so. |
-| [**HTTP2/TLS**](./features/http2-tls.md) |  |
-| `http2` | Activates the HTTP2 and TLS feature. Requires exactly one of `http2-ring` or `http2-fips` to select a TLS crypto provider. |
-| `http2-ring` | Activates the HTTP2/TLS feature with [`ring`](https://github.com/briansmith/ring) as the TLS crypto provider. Included by default. |
-| `http2-fips` | Activates the HTTP2/TLS feature with [`aws-lc-rs`](https://github.com/aws/aws-lc-rs) in FIPS mode as the TLS crypto provider. Requires `cmake`, `go`, and `libclang` at build time. Supported only on linux x86_64/aarch64 (gnu and musl). |
-| [**Compression**](./features/compression.md) |  |
-| `compression` | Activates auto-compression with all supported algorithms. |
-| `compression-brotli` | Activates auto-compression with only the `brotli` algorithm. |
-| `compression-deflate` | Activates auto-compression with only the `deflate` algorithm. |
-| `compression-gzip` | Activates auto-compression with only the `gzip` algorithm. |
-| `compression-zstd` | Activates auto-compression with only the `zstd` algorithm. |
-| [**Directory Listing**](./features/directory-listing.md) |  |
-| `directory-listing` | Activates the directory listing feature. |
-| [**Basic Authorization**](./features/basic-authentication.md) |  |
-| `basic-auth` | Activates the Basic HTTP Authorization Schema feature. |
-| [**Fallback Page**](./features/error-pages.md#fallback-page-for-use-with-client-routers) |  |
-| `fallback-page` | Activates the Fallback Page feature. |
+| Feature                                                                                  | Description                                                                                                                                                                                                                                |
+| ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Default**                                                                              |                                                                                                                                                                                                                                            |
+| `default`                                                                                | Activates the default features by omission.                                                                                                                                                                                                |
+| `all`                                                                                    | Activates all available features including the `experimental` feature. This is the default feature used when building SWS binaries.                                                                                                        |
+| `experimental`                                                                           | Activates all SWS experimental features. Make sure to also provide the required `RUSTFLAGS` if the feature requires so.                                                                                                                    |
+| [**HTTP2/TLS**](./features/http2-tls.md)                                                 |                                                                                                                                                                                                                                            |
+| `http2`                                                                                  | Activates the HTTP2 and TLS feature. Requires exactly one of `http2-ring` or `http2-fips` to select a TLS crypto provider.                                                                                                                 |
+| `http2-ring`                                                                             | Activates the HTTP2/TLS feature with [`ring`](https://github.com/briansmith/ring) as the TLS crypto provider. Included by default.                                                                                                         |
+| `http2-fips`                                                                             | Activates the HTTP2/TLS feature with [`aws-lc-rs`](https://github.com/aws/aws-lc-rs) in FIPS mode as the TLS crypto provider. Requires `cmake`, `go`, and `libclang` at build time. Supported only on linux x86_64/aarch64 (gnu and musl). |
+| [**Compression**](./features/compression.md)                                             |                                                                                                                                                                                                                                            |
+| `compression`                                                                            | Activates auto-compression with all supported algorithms.                                                                                                                                                                                  |
+| `compression-brotli`                                                                     | Activates auto-compression with only the `brotli` algorithm.                                                                                                                                                                               |
+| `compression-deflate`                                                                    | Activates auto-compression with only the `deflate` algorithm.                                                                                                                                                                              |
+| `compression-gzip`                                                                       | Activates auto-compression with only the `gzip` algorithm.                                                                                                                                                                                 |
+| `compression-zstd`                                                                       | Activates auto-compression with only the `zstd` algorithm.                                                                                                                                                                                 |
+| [**Directory Listing**](./features/directory-listing.md)                                 |                                                                                                                                                                                                                                            |
+| `directory-listing`                                                                      | Activates the directory listing feature.                                                                                                                                                                                                   |
+| [**Basic Authorization**](./features/basic-authentication.md)                            |                                                                                                                                                                                                                                            |
+| `basic-auth`                                                                             | Activates the Basic HTTP Authorization Schema feature.                                                                                                                                                                                     |
+| [**Fallback Page**](./features/error-pages.md#fallback-page-for-use-with-client-routers) |                                                                                                                                                                                                                                            |
+| `fallback-page`                                                                          | Activates the Fallback Page feature.                                                                                                                                                                                                       |
 
 ### Disable all default features
 
@@ -65,7 +65,7 @@ cargo build --release --no-default-features
 
 # or build including all features (example)
 RUSTFLAGS="--cfg tokio_unstable" \
-    cargo build -vv --release --features all 
+    cargo build -vv --release --features all
 ```
 
 ## Cross-compiling
@@ -78,12 +78,12 @@ Let's say, you want to cross-compile SWS from macOS to Linux. Then follow these 
 2. Install the latest [Zig](https://github.com/ziglang/zig) version via `brew install zig`
 3. Install [cargo-zigbuild](https://github.com/rust-cross/cargo-zigbuild) via `cargo install cargo-zigbuild`
 4. Finally, build SWS as follows:
-    ```sh
-    # dynamically-linked binary
-    cargo zigbuild --verbose --release --target=x86_64-unknown-linux-gnu
-    # or statically-linked binary
-    cargo zigbuild --verbose --release --target=x86_64-unknown-linux-musl
-    ```
+   ```sh
+   # dynamically-linked binary
+   cargo zigbuild --verbose --release --target=x86_64-unknown-linux-gnu
+   # or statically-linked binary
+   cargo zigbuild --verbose --release --target=x86_64-unknown-linux-musl
+   ```
 
 Built binaries can be found under the corresponding toolchain directory inside `target/`.
 
@@ -124,7 +124,7 @@ docker run -it --rm \
 
 > [!TIP] Output the docs in a different directory
 >
-> If you want to output the docs in a different directory then append the `--site-dir=/new/dir/path/` argument to the *"squidfunk/mkdocs-material"* `build` command and make sure to provide the new directory path.
+> If you want to output the docs in a different directory then append the `--site-dir=/new/dir/path/` argument to the _"squidfunk/mkdocs-material"_ `build` command and make sure to provide the new directory path.
 
 ### Development server
 

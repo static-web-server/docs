@@ -13,7 +13,7 @@ It means that when a `SIGTERM` [termination signal](https://www.gnu.org/software
 
 Sometimes one wants to control the graceful shutdown process for different reasons. For example during [Kubernetes rollouts](https://github.com/static-web-server/static-web-server/issues/79).
 
-In these situations, SWS allows delaying the graceful shutdown process right after a `SIGTERM` providing a *grace period* in seconds.
+In these situations, SWS allows delaying the graceful shutdown process right after a `SIGTERM` providing a _grace period_ in seconds.
 
 The feature is disabled by default and can be controlled by the numeric `-q, --grace-period` option or its equivalent [SERVER_GRACE_PERIOD](./../configuration/environment-variables.md#server_grace_period) env.
 

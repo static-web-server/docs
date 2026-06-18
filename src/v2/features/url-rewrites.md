@@ -30,7 +30,7 @@ The glob pattern functionality is powered by the [globset](https://docs.rs/globs
 
 > [!TIP] Glob pattern syntax
 >
-> For more details about the Glob pattern syntax check out https://docs.rs/globset/latest/globset/#syntax
+> For more details about the Glob pattern syntax check out the [globset documentation](https://docs.rs/globset/latest/globset/#syntax).
 
 > [!WARNING] Matching of path separator in `*`
 >
@@ -56,9 +56,9 @@ Replacements order start from `0` to `n` and are defined with a dollar sign foll
 
 #### Destination processing
 
-How destination is processed depends on whether the `redirect` key (see below) is present. If it is present, SWS will perform an *external* redirect. It will send a redirect response to the client, and the browser will usually proceed to the destination. In case of a relative URL, it will be another page on the same server. An absolute URL can result in navigation to another server.
+How destination is processed depends on whether the `redirect` key (see below) is present. If it is present, SWS will perform an _external_ redirect. It will send a redirect response to the client, and the browser will usually proceed to the destination. In case of a relative URL, it will be another page on the same server. An absolute URL can result in navigation to another server.
 
-Without a `redirect` key, SWS will perform an *internal* redirect. It will attempt to retrieve the file denoted by the destination and send it to the client. While it is possible to specify an absolute URL here as well, it will always be processed by the same SWS instance. It will result by the request being mapped to a different [virtual host](virtual-hosting.md) however if a matching virtual host is present.
+Without a `redirect` key, SWS will perform an _internal_ redirect. It will attempt to retrieve the file denoted by the destination and send it to the client. While it is possible to specify an absolute URL here as well, it will always be processed by the same SWS instance. It will result by the request being mapped to a different [virtual host](virtual-hosting.md) however if a matching virtual host is present.
 
 #### Different roots within the same virtual host
 

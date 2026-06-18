@@ -23,8 +23,9 @@ All Docker images are [Multi-Arch](https://www.docker.com/blog/how-to-rapidly-bu
 - `linux/s390x` (Debian only)
 
 > [!TIP] `Scratch` and `Alpine` images use statically-linked binaries
->>`Sc
-> `Scratch` and `Alpine` based Docker images use a statically-linked binary that is portable, performant and dependency-free thanks to [musl libc](https://www.musl-libc.org/), keeping containers as lean as possible.
+>
+> > `Sc
+`Scratch`and`Alpine` based Docker images use a statically-linked binary that is portable, performant and dependency-free thanks to [musl libc](https://www.musl-libc.org/), keeping containers as lean as possible.
 
 > [!TIP] `Debian` images use dynamically-linked binaries
 >
@@ -83,7 +84,7 @@ docker run --rm -it -p 8787:80 joseluisq/static-web-server:2-debian -g info
 docker run --rm -it -p 8787:80 ghcr.io/static-web-server/static-web-server:2-debian -g info
 ```
 
-### FIPS-validated TLS
+## FIPS-validated TLS
 
 For deployments that require **FIPS 140-validated cryptography** (US federal, regulated industries), there are a few Docker image variants available with [FIPS-validated TLS](./http2-tls.md#fips-validated-cryptography) via the `http2-fips` feature.
 FIPS images use [`aws-lc-rs`](https://github.com/aws/aws-lc-rs) in FIPS mode instead of `ring` as the TLS crypto provider.
@@ -94,14 +95,14 @@ Platforms supported by FIPS images are `linux/amd64` and `linux/arm64` only.
 >
 > To verify that the image supports FIPS mode, check the output of the following command:
 >
->```sh{3}
+> ```sh{3}
 > docker run --rm ghcr.io/static-web-server/static-web-server:2-fips -V | grep -i "fips"
 > # FIPS Mode:
 > #   Module Version:   AWS-LC-FIPS 3.0.x
 > #   Crypto Provider:  aws-lc-rs (via aws-lc-fips-sys)
->```
+> ```
 
-**Scratch**
+### Scratch {#fips-x86_64}
 
 ```sh
 # Scratch (just the binary)
@@ -110,7 +111,7 @@ docker run --rm -it -p 8787:80 joseluisq/static-web-server:2-fips -g info
 docker run --rm -it -p 8787:80 ghcr.io/static-web-server/static-web-server:2-fips -g info
 ```
 
-**Alpine**
+### Alpine {#fips-alpine}
 
 ```sh
 docker run --rm -it -p 8787:80 joseluisq/static-web-server:2-fips-alpine -g info
@@ -118,7 +119,7 @@ docker run --rm -it -p 8787:80 joseluisq/static-web-server:2-fips-alpine -g info
 docker run --rm -it -p 8787:80 ghcr.io/static-web-server/static-web-server:2-fips-alpine -g info
 ```
 
-**Debian**
+### Debian {#fips-debian}
 
 ```sh
 docker run --rm -it -p 8787:80 joseluisq/static-web-server:2-fips-debian -g info
@@ -173,12 +174,12 @@ FROM ghcr.io/static-web-server/static-web-server:2-debian
 Example using [Docker Compose](https://docs.docker.com/compose/).
 
 ```yaml
-version: "3.3"
+version: '3.3'
 
 services:
   website:
     image: joseluisq/static-web-server:2-alpine
-    container_name: "website"
+    container_name: 'website'
     ports:
       - 80:80
     restart: unless-stopped
@@ -196,27 +197,27 @@ services:
 Example using [Docker Swarm](https://docs.docker.com/engine/swarm/) and [Traefik Proxy](https://traefik.io/traefik/).
 
 1. Create an external `traefik_net` Docker attachable network for Traefik:
-    - `docker network create --driver=overlay --attachable traefik_net`
+   - `docker network create --driver=overlay --attachable traefik_net`
 2. Map a host directory like `/var/www/website` to the service container or create an external `website_data` Docker volume if you prefer:
-    - `docker volume create website_data`
+   - `docker volume create website_data`
 
 ```yaml
-version: "3.3"
+version: '3.3'
 
 services:
   traefik:
-    image: "traefik:v2.11"
+    image: 'traefik:v2.11'
     command:
       #- "--log.level=DEBUG"
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
+      - '--api.insecure=true'
+      - '--providers.docker=true'
+      - '--providers.docker.exposedbydefault=false'
+      - '--entrypoints.web.address=:80'
     ports:
-      - "80:80"
-      - "8080:8080"
+      - '80:80'
+      - '8080:8080'
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'
 
   website:
     image: joseluisq/static-web-server:2
@@ -228,12 +229,12 @@ services:
       # Or use an existing Docker volume
       # - website_data:/public
     labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=traefik_net"
-      - "traefik.http.routers.website.entrypoints=web"
-      - "traefik.http.routers.website.rule=Host(`website.localhost`)"
-      - "traefik.http.routers.website.priority=1"
-      - "traefik.http.services.website.loadbalancer.server.port=80"
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=traefik_net'
+      - 'traefik.http.routers.website.entrypoints=web'
+      - 'traefik.http.routers.website.rule=Host(`website.localhost`)'
+      - 'traefik.http.routers.website.priority=1'
+      - 'traefik.http.services.website.loadbalancer.server.port=80'
     networks:
       - traefik_net
 
@@ -264,7 +265,7 @@ spec:
         - --root=/public
         - --health
       ports:
-      - containerPort: 80
+        - containerPort: 80
       livenessProbe:
         httpGet:
           path: /health

@@ -1,1 +1,4 @@
 *.vue
+src/v2/download-and-install.md
+src/v3/download-install.md
+src/**/*/.tmpl

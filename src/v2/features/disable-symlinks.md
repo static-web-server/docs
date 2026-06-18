@@ -1,6 +1,6 @@
 # Disable Symlinks
 
-**`SWS`** *does not* follow symlinks by default for security reasons.
+**`SWS`** _does not_ follow symlinks by default for security reasons.
 
 As a result, SWS will respond with a `403 Forbidden` status if a symlink is requested as well as it won't be shown in the directory listing if enabled.
 

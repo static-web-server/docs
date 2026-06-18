@@ -26,8 +26,8 @@ spec:
         - --log-level=info
         - --health
       ports:
-      - containerPort: 80
-        name: http
+        - containerPort: 80
+          name: http
       livenessProbe:
         httpGet:
           path: /health

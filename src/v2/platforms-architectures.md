@@ -8,23 +8,23 @@ Currently, only the following platforms/architectures are supported.
 
 ## Linux
 
-### x86
+### x86 {#linux-x86}
 
 - `i686-unknown-linux-gnu`
 - `i686-unknown-linux-musl`
 
-### x86_64
+### x86_64 {#linux-x86_64}
 
 - `x86_64-unknown-linux-gnu`
 - `x86_64-unknown-linux-musl`
 
-### ARM
+### ARM {#linux-arm}
 
 - `arm-unknown-linux-gnueabihf` (armv6)
 - `arm-unknown-linux-musleabihf` (armv6)
 - `armv7-unknown-linux-musleabihf` (armv7)
 
-### ARM64
+### ARM64 {#linux-arm64}
 
 - `aarch64-unknown-linux-musl`
 - `aarch64-unknown-linux-gnu`
@@ -32,21 +32,21 @@ Currently, only the following platforms/architectures are supported.
 
 ## macOS
 
-### x86_64
+### x86_64 {#macos-x86_64}
 
 - `x86_64-apple-darwin`
 
-### ARM64
+### ARM64 {#macos-arm64}
 
 - `aarch64-apple-darwin`
 
 ## Windows
 
-### x86
+### x86 {#windows-x86}
 
 - `i686-pc-windows-msvc`
 
-### x86_64
+### x86_64 {#windows-x86_64}
 
 - `x86_64-pc-windows-msvc`
 - `x86_64-pc-windows-gnu`
@@ -57,23 +57,23 @@ Currently, only the following platforms/architectures are supported.
 
 ## FreeBSD
 
-### x86
+### x86 {#freebsd-x86}
 
 - `i686-unknown-freebsd`
 
-### x86_64
+### x86_64 {#freebsd-x86_64}
 
 - `x86_64-unknown-freebsd`
 
 ## NetBSD
 
-### x86_64
+### x86_64 {#netbsd-x86_64}
 
 - `x86_64-unknown-netbsd`
 
 ## Illumos
 
-### x86_64
+### x86_64 {#illumos-x86_64}
 
 - `x86_64-unknown-illumos`
 

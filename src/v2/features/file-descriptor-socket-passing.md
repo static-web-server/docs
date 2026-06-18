@@ -42,7 +42,7 @@ cp systemd/static-web-server.s* /etc/systemd/system/
 
 # 3. Make sure that the `EnvironmentFile` and `ExecStart` values
 #    of the service match to the corresponding file paths in the `static-web-server.service` file.
-#    TIP: Use absolute paths. 
+#    TIP: Use absolute paths.
 # EnvironmentFile=/etc/default/static-web-server
 # ExecStart=/usr/local/bin/static-web-server --fd 0
 

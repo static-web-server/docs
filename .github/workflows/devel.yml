@@ -1,0 +1,49 @@
+name: devel
+on:
+  push:
+    branches:
+    - master
+    paths:
+      - .github/workflows/devel.yml
+      - .vitepress/**
+      - src/**
+      - README.md
+  pull_request:
+    paths:
+      - .github/workflows/devel.yml
+      - .vitepress/**
+      - src/**
+      - README.md
+
+jobs:
+  docs-check:
+    name: Project docs check
+    runs-on: ubuntu-24.04
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v6
+      with:
+        fetch-depth: 1
+
+    - name: Setup
+      uses: actions/setup-node@v6
+      with:
+        node-version: 26
+        cache: 'yarn'
+
+    # - name: Check spelling
+    #   uses: crate-ci/typos@master
+    #   with:
+    #     config: ./.github/workflows/config/typos.toml
+    #     files: src/.
+
+    - name: Check formatting
+      run: |
+        yarn
+        yarn format:check
+
+    - name: Build docs
+      run: |
+        yarn
+        yarn docs:build
