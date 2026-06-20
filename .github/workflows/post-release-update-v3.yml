@@ -1,0 +1,78 @@
+name: post-release-update-v3
+on:
+  repository_dispatch:
+    types:
+      - event-docs-v3-update
+
+env:
+  SERVER_VERSION_MAJOR: "v3"
+
+jobs:
+  v3-install:
+    runs-on: ubuntu-24.04
+    environment: docs-events
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: master
+
+      - name: Prepare
+        shell: bash
+        run: |
+          release_ref=${{ github.event.client_payload.ref }}
+          release_sha=${{ github.event.client_payload.sha }}
+          server_version=${release_ref#refs/tags/}
+
+          if [[ ! $server_version =~ ^${{ env.SERVER_VERSION_MAJOR }}\..* ]]; then
+            echo "Invalid server_version $server_version"
+            exit 1
+          fi
+
+          pr_branch_name=release-docs-${server_version}-$(date -u '+%d-%m-%Y')
+
+          echo "RELEASE_REF=${release_ref}" >> $GITHUB_ENV
+          echo "RELEASE_SHA=${release_sha}" >> $GITHUB_ENV
+          echo "SERVER_VERSION=${server_version}" >> $GITHUB_ENV
+          echo "PR_BRANCH_NAME=${pr_branch_name}" >> $GITHUB_ENV
+
+          echo "Version is ${server_version}"
+          echo "PR branch is ${pr_branch_name}"
+
+      - name: Post release updates
+        shell: bash
+        env:
+          UPLOAD_CHECKSUM: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          scripts/post_release_updates.sh
+
+      - name: Commit post release updates
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          git add src/${{ env.SERVER_VERSION_MAJOR }}/download-install.md
+          git add src/${{ env.SERVER_VERSION_MAJOR }}/download-install.md.tmpl
+
+          git commit --verbose -m "docs: ${{ env.SERVER_VERSION }} [skip ci]"
+          git checkout -b ${{ env.PR_BRANCH_NAME }}
+          git push --set-upstream origin --verbose ${{ env.PR_BRANCH_NAME }}
+
+      - name: Create pull request for release updates
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create \
+            --title "Post release ${{ env.SERVER_VERSION }} updates" \
+            --body "An automated PR containing documentation updates corresponding to \`${{ env.SERVER_VERSION }}\` release.<br>See https://static-web-server.net/${{ env.SERVER_VERSION_MAJOR }}/download-install/ for more details." \
+            --base "master" \
+            --head "${{ env.PR_BRANCH_NAME }}" \
+            --label "${{ env.SERVER_VERSION_MAJOR }}" \
+            --label "enhancement" \
+            --label "documentation" \
+            --label "automated" \
+            --draft

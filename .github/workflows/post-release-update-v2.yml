@@ -1,8 +1,8 @@
-name: v2-docs-install
+name: post-release-update-v2
 on:
   repository_dispatch:
     types:
-      - event-docs-v2-install
+      - event-docs-v2-update
 
 env:
   SERVER_VERSION_MAJOR: "v2"
@@ -68,7 +68,7 @@ jobs:
         run: |
           gh pr create \
             --title "Post release ${{ env.SERVER_VERSION }} updates" \
-            --body "An automated PR containing documentation and script installer updates corresponding to the current release \`${{ env.SERVER_VERSION }}\`.<br>See https://static-web-server.net/${{ env.SERVER_VERSION_MAJOR }}/download-install/ for more details." \
+            --body "An automated PR containing documentation updates corresponding to \`${{ env.SERVER_VERSION }}\` release.<br>See https://static-web-server.net/${{ env.SERVER_VERSION_MAJOR }}/download-install/ for more details." \
             --base "master" \
             --head "${{ env.PR_BRANCH_NAME }}" \
             --label "${{ env.SERVER_VERSION_MAJOR }}" \
