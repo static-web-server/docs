@@ -4,35 +4,50 @@ on:
     types:
       - event-docs-v2-install
 
+env:
+  SERVER_VERSION_MAJOR: "v2"
+
 jobs:
   v2-install:
     runs-on: ubuntu-24.04
     environment: docs-events
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v6
         with:
-          ref: ${{ github.event.client_payload.ref }}
+          ref: master
 
       - name: Prepare
         shell: bash
         run: |
-          echo ${{ github.event.client_payload.sha }}
+          release_ref=${{ github.event.client_payload.ref }}
+          release_sha=${{ github.event.client_payload.sha }}
+          server_version=${release_ref#refs/tags/}
 
-          # echo "SERVER_VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
-          # echo "version is: ${{ env.SERVER_VERSION }}"
-          # echo "PR_BRANCH_NAME=release-docs-${{ env.SERVER_VERSION }}-$(date -u '+%d-%m-%Y')" >> $GITHUB_ENV
+          if [[ ! $server_version =~ ^${{ env.SERVER_VERSION_MAJOR }}\..* ]]; then
+            echo "Invalid server_version $server_version"
+            exit 1
+          fi
+
+          pr_branch_name=release-docs-${server_version}-$(date -u '+%d-%m-%Y')
+
+          echo "RELEASE_REF=${release_ref}" >> $GITHUB_ENV
+          echo "RELEASE_SHA=${release_sha}" >> $GITHUB_ENV
+          echo "SERVER_VERSION=${server_version}" >> $GITHUB_ENV
+          echo "PR_BRANCH_NAME=${pr_branch_name}" >> $GITHUB_ENV
+
+          echo "Version is ${server_version}"
+          echo "PR branch is ${pr_branch_name}"
 
       - name: Post release updates
-        if: false
         shell: bash
         env:
           UPLOAD_CHECKSUM: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          scripts/ci/post_release_updates.sh
+          scripts/post_release_updates.sh
 
       - name: Commit post release updates
-        if: false
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -40,25 +55,23 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
 
-          git add scripts/installer.sh
-          git add docs/content/download-and-install.md
-          git add docs/content/download-and-install.template.md
+          git add src/${{ env.SERVER_VERSION_MAJOR }}/download-install.md
+          git add src/${{ env.SERVER_VERSION_MAJOR }}/download-install.md.tmpl
 
           git commit --verbose -m "docs: ${{ env.SERVER_VERSION }} [skip ci]"
           git checkout -b ${{ env.PR_BRANCH_NAME }}
           git push --set-upstream origin --verbose ${{ env.PR_BRANCH_NAME }}
 
       - name: Create pull request for release updates
-        if: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh pr create \
             --title "Post release ${{ env.SERVER_VERSION }} updates" \
-            --body "An automated PR containing documentation and script installer updates corresponding to the current release \`${{ env.SERVER_VERSION }}\`.<br>See https://static-web-server.net/download-and-install/ for more details." \
+            --body "An automated PR containing documentation and script installer updates corresponding to the current release \`${{ env.SERVER_VERSION }}\`.<br>See https://static-web-server.net/${{ env.SERVER_VERSION_MAJOR }}/download-install/ for more details." \
             --base "master" \
             --head "${{ env.PR_BRANCH_NAME }}" \
-            --label "${{ env.LABEL_VERSION }}" \
+            --label "${{ env.SERVER_VERSION_MAJOR }}" \
             --label "enhancement" \
             --label "documentation" \
             --label "automated" \
