@@ -20,7 +20,7 @@ export const v2: DefaultTheme.Config = {
         items: [
           { text: 'Overview', link: '/v2/' },
           { text: 'Getting Started', link: '/v2/getting-started' },
-          { text: 'Download & Install', link: '/v2/download-and-install' },
+          { text: 'Download & Install', link: '/v2/download-install' },
         ],
       },
       {

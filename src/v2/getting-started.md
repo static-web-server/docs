@@ -1,6 +1,6 @@
 # Getting Started
 
-[Download and install](./download-and-install.md) the binary for your specific platform and then type
+[Download and install](./download-install.md) the binary for your specific platform and then type
 
 ```sh
 static-web-server --port 8787 --root ./my-public-dir
