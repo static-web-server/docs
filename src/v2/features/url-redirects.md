@@ -8,6 +8,8 @@ outline: deep
 
 URI redirects are particularly useful with pattern matching ([globs](<https://en.wikipedia.org/wiki/Glob_(programming)>)). Use them for example to prevent broken links if you've moved a page or to shorten URLs.
 
+Query strings are handled much like with [Apache's QSA flag](https://httpd.apache.org/docs/2.4/rewrite/flags.html#flag_qsa), which means the query part of the request URI is passed on to the `destination`. If there's a query part in both `destination` and request, the request query is _appended_ to the `destination` query.
+
 ## Structure
 
 The URL redirect rules should be defined mainly as an [Array of Tables](https://toml.io/en/v1.0.0#array-of-tables).
