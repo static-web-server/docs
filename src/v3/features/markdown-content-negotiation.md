@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Markdown Content Negotiation
 
 **`SWS`** provides an optional content negotiation feature that serves markdown files when clients explicitly request them via the `Accept: text/markdown` HTTP header.
@@ -105,10 +109,10 @@ Allow your API clients to request content in markdown format:
 
 ```javascript
 fetch('/documentation', {
-  headers: { 'Accept': 'text/markdown' }
+  headers: { Accept: 'text/markdown' }
 })
-.then(response => response.text())
-.then(markdown => console.log(markdown));
+  .then((response) => response.text())
+  .then((markdown) => console.log(markdown))
 ```
 
 ### Content management

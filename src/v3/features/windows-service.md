@@ -1,8 +1,12 @@
+---
+outline: deep
+---
+
 # Windows Service
 
-**`SWS`** can be also executed in a [Windows Service](<https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2003/cc783643(v=ws.10)>) context. Therefore it also provides a subcommand to *install* SWS as a Windows Service.
+**`SWS`** can be also executed in a [Windows Service](<https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2003/cc783643(v=ws.10)>) context. Therefore it also provides a subcommand to _install_ SWS as a Windows Service.
 
-This feature is disabled by default and can be controlled by the boolean `-s, --windows-service` option or the equivalent [SERVER_WINDOWS_SERVICE](./../configuration/env#server_windows_service) env.
+This feature is disabled by default and can be controlled by the boolean `-s, --windows-service` option or the equivalent [SERVER_WINDOWS_SERVICE](./../configuration/env.md#server_windows_service) env.
 
 ![Static Web Server running as a Windows Service](https://user-images.githubusercontent.com/1700322/169807572-d62a7bab-b596-4597-85f7-31a7c02aeefe.png)
 
@@ -12,12 +16,12 @@ This feature is disabled by default and can be controlled by the boolean `-s, --
 
 - This is an obvious Windows platform-specific feature.
 - The SWS Windows Service option (`windows-service`) doesn't create a Windows Service per se. It just tells SWS to run in a Windows Service context. So it's necessary to [install the SWS Windows Service](#install-the-service) first.
-- Enabling the `windows-service` option via the [configuration file](../configuration/file) is unnecessary if you use the [install subcommand](#install-the-service) to create the service since it already enables it during the service installation.
+- Enabling the `windows-service` option via the [configuration file](../configuration/file.md) is unnecessary if you use the [install subcommand](#install-the-service) to create the service since it already enables it during the service installation.
 - However, you can enable the `windows-service` option for example if you plan to create your own Windows Service and use SWS with it.
 
 ## Service privileges
 
-To either install or uninstall the SWS Windows service requires *administrator* privileges, so make sure to open the terminal application as administrator or give your [Powershell](https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-7.2) session enough privileges otherwise you will get an `"Access is denied"` error.
+To either install or uninstall the SWS Windows service requires _administrator_ privileges, so make sure to open the terminal application as administrator or give your [Powershell](https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-7.2) session enough privileges otherwise you will get an `"Access is denied"` error.
 
 We recommend a Powershell session with administrator privileges.
 
@@ -29,14 +33,14 @@ Follow the steps below to adjust your firewall:
 
 1. Configure an [Inbound Port Rule](https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-firewall/create-an-inbound-port-rule) in your Windows firewall so clients can reach the server's port.
 2. In your SWS config file, use the server IP as a host or a non-routable address like `0.0.0.0` if you prefer.
-3. Create a Windows Service following https://static-web-server.net/features/windows-service/ and start it.
+3. Create a Windows Service following the instructions in the [Windows Service section](./windows-service.md) and start it.
 4. Finally, restart the service to apply the changes.
 
 Note that the steps above are general and you have to adjust your firewall rule(s) according to your needs.
 
 ## Install the service
 
-To install the SWS service use the `install` command along with a [configuration file](../configuration/file) for further SWS options customization.
+To install the SWS service use the `install` command along with a [configuration file](../configuration/file.md) for further SWS options customization.
 
 Make sure to provide a configuration file to run SWS service properly. In particular, configure the server `address`, `port` and `root` directory accordingly.
 If not then the service might not start.

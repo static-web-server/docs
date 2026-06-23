@@ -1,6 +1,6 @@
 # Include Hidden Files
 
-**`SWS`** *does not* serve hidden files (dotfiles) by default for security reasons.
+**`SWS`** _does not_ serve hidden files (dotfiles) by default for security reasons.
 
 As a result, SWS will respond with a `404 Not Found` status for hidden files, and they will not be shown in the directory listing if enabled.
 
@@ -10,7 +10,8 @@ Here is an example of how to enable serving of hidden files if wanted:
 
 ```sh
 static-web-server \
-    -p=8787 -d=./public -g=trace \
+    --port 8787 \
+    --root ./public \
     --directory-listing \
-    --include-hidden=true
+    --include-hidden
 ```

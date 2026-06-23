@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # URL Redirects
 
 **SWS** provides the ability to redirect request URLs with Glob pattern-matching support.
@@ -15,17 +19,17 @@ Each table entry should have the following key/value pairs:
 - `destination`: local file path or a full URL with optional replacements (placeholders).
 - `kind`: optional number containing the HTTP response code (redirection).
 
-!!! info "Note"
-
-    The incoming request(s) will reach the `destination` only if the request(s) URI matches the `source` pattern.
+> [!INFO] Note
+>
+> The incoming request(s) will reach the `destination` only if the request(s) URI matches the `source` pattern.
 
 ### Host
 
 Optional `host` redirect entry to be matched against the incoming host URI. If a `host` redirect setting is specified then SWS will attempt to match the value against the incoming URI host (request), applying the required redirect entry or ignoring it otherwise.
 
-!!! tip "www to non-www redirects"
-
-    The host entry allows for instance to perform www to non-www redirects or vice versa (see example below).
+> [!TIP] www to non-www redirects
+>
+> The host entry allows for instance to perform www to non-www redirects or vice versa (see example below).
 
 ### Source
 
@@ -33,16 +37,16 @@ The source is a [Glob pattern](<https://en.wikipedia.org/wiki/Glob_(programming)
 
 The glob pattern functionality is powered by the [globset](https://docs.rs/globset/latest/globset/) crate which supports Standard Unix-style glob syntax.
 
-!!! tip "Glob pattern syntax"
+> [!TIP] "Glob pattern syntax"
+>
+> For more details about the Glob pattern syntax check out the [globset documentation](https://docs.rs/globset/latest/globset/#syntax).
 
-    For more details about the Glob pattern syntax check out https://docs.rs/globset/latest/globset/#syntax
-
-!!! warning "Matching of path separator in `*`"
-
-    Up to version `2.33.1` the wildcard `*` was matching the path separator.
-    For example, `/{*}/{*}/` matched `/assets/images/logo/`.
-
-    In later versions, the default has changed such that `*` does not match the path separator.
+> [!WARNING] Matching of path separator in `*`
+>
+> Up to version `2.33.1` the wildcard `*` was matching the path separator.
+> For example, `/{*}/{*}/` matched `/assets/images/logo/`.
+>
+> In later versions, the default has changed such that `*` does not match the path separator.
 
 ### Destination
 
@@ -54,10 +58,10 @@ It could look like `/some/directory/file.html`. It is worth noting that the `/` 
 Additionally, a `destination` supports replacements for every Glob pattern group that matches against the `source`.
 The replacement order starts from `0` to `n` and is defined with a dollar sign followed by an index (Glob pattern group occurrence).
 
-!!! tip "Group your Glob patterns"
-
-    When using replacements, also group your Glob pattern by surrounding them with curly braces so every group should map to its corresponding replacement.<br>
-    For example: `source = "**/{*}.{jpg,jpeg,svg}"`
+> [!TIP] Group your Glob patterns
+>
+> When using replacements, also group your Glob pattern by surrounding them with curly braces so every group should map to its corresponding replacement.<br>
+> For example: `source = "**/{*}.{jpg,jpeg,svg}"`
 
 ### Kind
 

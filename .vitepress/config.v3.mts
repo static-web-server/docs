@@ -75,7 +75,7 @@ export const v3: DefaultTheme.Config = {
       },
       { text: 'Platforms & Architectures', link: '/v3/platforms-architectures' },
       { text: 'Migrating from v1 to v3', link: '/v3/migration' },
-      { text: 'Changelog v3 (stable)', link: '/v3/changelog' },
+      { text: 'Changelog v3 (devel)', link: 'https://github.com/static-web-server/static-web-server/blob/master/CHANGELOG.md', target: '_blank', rel: 'noopener noreferrer' },
       { text: 'Semantic Versioning', link: '/v3/semantic-versioning' },
       { text: 'Report Security Issues', link: '/v3/report-security-issues' },
       { text: 'Contributions', link: '/v3/contributions' },

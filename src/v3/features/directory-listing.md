@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Directory Listing
 
 **`SWS`** provides a directory listing feature to display the content of directories.
@@ -7,19 +11,19 @@ This feature is disabled by default and can be controlled by the boolean `-z, --
 ```sh
 static-web-server \
     --port 8787 \
-    --root ./my-public-dir \
-    --directory-listing true
+    --root ./public \
+    --directory-listing
 ```
 
 And here is an example of how the directory listing looks like.
 
-<img title="SWS - Directory Listing" src="https://user-images.githubusercontent.com/1700322/145420578-5a508d2a-773b-4239-acc0-197ea2062ff4.png" width="400">
+<img title="SWS - Directory Listing" src="https://user-images.githubusercontent.com/1700322/145420578-5a508d2a-773b-4239-acc0-197ea2062ff4.png" width="400" alt="Directory listing example" />
 
 ## Relative paths for entries
 
 SWS uses relative paths for the directory listing entries (file or directory) and is used regardless of the [redirect trailing slash](../features/trailing-slash-redirect.md) feature.
 
-However, when the *"redirect trailing slash"* feature is disabled and a directory request URI doesn't contain a trailing slash then the entries will contain the path `parent-dir/entry-name` as the link value. Otherwise, just an `entry-name` link value is used (default behavior).
+However, when the _"redirect trailing slash"_ feature is disabled and a directory request URI doesn't contain a trailing slash then the entries will contain the path `parent-dir/entry-name` as the link value. Otherwise, just an `entry-name` link value is used (default behavior).
 
 Note also that in both cases, SWS will append a trailing slash to the entry if is a directory.
 
@@ -58,18 +62,18 @@ Below are the possible number code values for sorting or ordering which are grou
 
 - `6`: Unordered
 
-!!! tip "Tips"
-
-    - The `--directory-listing-order` option depends on `--directory-listing` to be enabled.
-    - Use the query `?sort=NUMBER` to customize the sorting via the URI. E.g `https://localhost/?sort=5` (sort by size in descending order)
+> [!TIP] Tips
+>
+> - The `--directory-listing-order` option depends on `--directory-listing` to be enabled.
+> - Use the query `?sort=NUMBER` to customize the sorting via the URI. E.g `https://localhost/?sort=5` (sort by size in descending order)
 
 Example:
 
 ```sh
 static-web-server \
     --port 8787 \
-    --root ./my-public-dir \
-    --directory-listing true \
+    --root ./public \
+    --directory-listing \
     # E.g Sorting file/dir names in descending order
     --directory-listing-order 1
 ```
@@ -78,9 +82,9 @@ static-web-server \
 
 **`SWS`** provides support for specifying an output format either HTML (default) or JSON for the directory listing entries via the string `--directory-listing-format` option or the equivalent [SERVER_DIRECTORY_LISTING_FORMAT](./../configuration/env#server_directory_listing_format) env.
 
-!!! tip "Tips"
-
-    - The `--directory-listing-format` option depends on `--directory-listing` to be enabled.
+> [!TIP] Tips
+>
+> - The `--directory-listing-format` option depends on `--directory-listing` to be enabled.
 
 ### HTML format
 
@@ -110,8 +114,9 @@ Here is an example of serving the directory listing in JSON format.
 
 ```sh
 static-web-server \
-    -p=8787 -d=tests/fixtures/public -g=trace \
-    --directory-listing=true \
+    --port 8787 \
+    --root ./public \
+    --directory-listing \
     --directory-listing-format="json"
 ```
 
@@ -134,8 +139,10 @@ curl -iH "content-type: application/json" http://localhost:8787
 
 ```sh
 static-web-server \
-    --directory-listing=true \
-    --directory-listing-download=targz
+    --port 8787 \
+    --root ./public \
+    --directory-listing \
+    --directory-listing-download="targz"
 ```
 
 When **Directory Download** is enabled, append `?download` to a directory URL to download it. A link will also be added to the top part of **HTML** output format.

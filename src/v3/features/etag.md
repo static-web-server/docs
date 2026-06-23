@@ -1,24 +1,25 @@
+---
+outline: deep
+---
+
 # ETag
 
 **`SWS`** provides weak [`ETag`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) support, enabling browsers and CDNs to revalidate cached static assets with a single lightweight round-trip instead of re-downloading unchanged files.
 
-The validator is derived from the file's `mtime` (last modification time, in nanoseconds) and `size` (in bytes) — no file hashing or I/O beyond the `stat()` call. The ETag is always emitted with the weak prefix (`W/`) using the following format:
+The validator is derived from the file's `mtime` (last modification time, in nanoseconds) and `size` (in bytes). No file hashing or I/O beyond the `stat()` call. The ETag is always emitted with the weak prefix (`W/`) using the following format:
 
 ```text
 W/"<mtime_hex>-<len_hex>"
 ```
 
-!!! info "Weak vs strong"
-
-    A weak ETag indicates that two representations are *semantically equivalent* even if byte-for-byte different. This is correct for content negotiation scenarios — for example, a pre-compressed `.br` variant of a file shares the same weak ETag as the original. SWS emits `Vary: Accept-Encoding` so that intermediary caches key variants separately.
+> [!INFO] Weak vs strong
+>
+> A weak ETag indicates that two representations are _semantically equivalent_ even if byte-for-byte different. This is correct for content negotiation scenarios. For example, a pre-compressed `.br` variant of a file shares the same weak ETag as the original. SWS emits `Vary: Accept-Encoding` so that intermediary caches key variants separately.
 
 This feature is enabled by default and can be controlled by the boolean `--etag` option or the equivalent [SERVER_ETAG](../configuration/env#server_etag) env.
 
 ```sh
-static-web-server \
-    --port 8787 \
-    --root ./my-public-dir \
-    --etag true
+static-web-server --port 8787 --root ./public --etag
 ```
 
 ## How it works
@@ -35,7 +36,7 @@ Cache-Control: no-cache
 Accept-Ranges: bytes
 ```
 
-On subsequent requests, the client sends conditional headers that SWS evaluates against the file's current ETag. If the file hasn't changed, SWS responds with `304 Not Modified` — **zero body bytes** are transferred:
+On subsequent requests, the client sends conditional headers that SWS evaluates against the file's current ETag. If the file hasn't changed, SWS responds with `304 Not Modified`. **Zero body bytes** are transferred:
 
 ```http
 GET /index.html HTTP/1.1
@@ -56,29 +57,29 @@ When the file changes (different `mtime` or `size`), the ETag no longer matches 
 
 SWS implements the full [RFC 7232 §6](https://datatracker.ietf.org/doc/html/rfc7232#section-6) precedence rules for evaluating conditional request headers against the resource's ETag and `Last-Modified` validators.
 
-| Client header | Condition | SWS response |
-| -- | -- | -- |
-| *(none)* | First request, no validators held | `200 OK` with `ETag` and `Last-Modified` headers |
-| `If-None-Match: W/"..."` | ETag matches (resource unchanged) | `304 Not Modified` — validators echoed, empty body |
-| `If-None-Match: W/"..."` | ETag differs (resource changed) | `200 OK` with fresh body and new ETag |
-| `If-None-Match: *` | Any representation exists | `304 Not Modified` |
-| `If-None-Match: *, W/"..."` | Wildcard present in list | `304 Not Modified` (wildcard matched first per RFC 7232) |
-| `If-Match: *` | Any representation exists | `200 OK` |
-| `If-Match: W/"..."` | Weak ETag sent | `412 Precondition Failed` — weak validators never satisfy strong comparison (RFC 7232 §3.1) |
-| `If-Match: "..."` | Strong ETag sent by client | SWS matches if the strong ETag equals SWS's weak ETag without the `W/` prefix |
-| `If-Range: W/"..."` | Weak ETag in range request | Falls back to `200 OK` — weak validators cannot strongly match for range (RFC 7233 §3.2); `Range` header is ignored, full file served |
-| `If-Modified-Since` | No `If-None-Match` present | Date-based comparison (fallback when ETag is absent or disabled) |
-| `If-Unmodified-Since` | No `If-Match` present | Date-based comparison (fallback when ETag is absent or disabled) |
+| Client header               | Condition                         | SWS response                                                                                                                          |
+| --------------------------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| _(none)_                    | First request, no validators held | `200 OK` with `ETag` and `Last-Modified` headers                                                                                      |
+| `If-None-Match: W/"..."`    | ETag matches (resource unchanged) | `304 Not Modified` — validators echoed, empty body                                                                                    |
+| `If-None-Match: W/"..."`    | ETag differs (resource changed)   | `200 OK` with fresh body and new ETag                                                                                                 |
+| `If-None-Match: *`          | Any representation exists         | `304 Not Modified`                                                                                                                    |
+| `If-None-Match: *, W/"..."` | Wildcard present in list          | `304 Not Modified` (wildcard matched first per RFC 7232)                                                                              |
+| `If-Match: *`               | Any representation exists         | `200 OK`                                                                                                                              |
+| `If-Match: W/"..."`         | Weak ETag sent                    | `412 Precondition Failed` — weak validators never satisfy strong comparison (RFC 7232 §3.1)                                           |
+| `If-Match: "..."`           | Strong ETag sent by client        | SWS matches if the strong ETag equals SWS's weak ETag without the `W/` prefix                                                         |
+| `If-Range: W/"..."`         | Weak ETag in range request        | Falls back to `200 OK` — weak validators cannot strongly match for range (RFC 7233 §3.2); `Range` header is ignored, full file served |
+| `If-Modified-Since`         | No `If-None-Match` present        | Date-based comparison (fallback when ETag is absent or disabled)                                                                      |
+| `If-Unmodified-Since`       | No `If-Match` present             | Date-based comparison (fallback when ETag is absent or disabled)                                                                      |
 
 ### Precedence order
 
 When multiple conditional headers are present in the same request, SWS evaluates them in the order defined by RFC 7232 §6:
 
-1. **`If-Match`** — if present and fails then it returns `412`. Otherwise, continue.
-2. **`If-Unmodified-Since`** — only evaluated when `If-Match` is absent. If fails then it returns `412`.
-3. **`If-None-Match`** — if present and matches then it returns `304`. Otherwise, continue.
-4. **`If-Modified-Since`** — only evaluated when `If-None-Match` is absent. If matches then it returns `304`.
-5. **`If-Range`** — evaluated last, informs whether to serve a partial `206` or full `200`.
+1. **`If-Match`**: if present and fails then it returns `412`. Otherwise, continue.
+2. **`If-Unmodified-Since`**: only evaluated when `If-Match` is absent. If fails then it returns `412`.
+3. **`If-None-Match`**: if present and matches then it returns `304`. Otherwise, continue.
+4. **`If-Modified-Since`**: only evaluated when `If-None-Match` is absent. If matches then it returns `304`.
+5. **`If-Range`**: evaluated last, informs whether to serve a partial `206` or full `200`.
 
 ## ETag with `--cache-control-headers`
 
@@ -114,10 +115,7 @@ When the [In-Memory Cache](memory-cache.md) is enabled, the ETag `HeaderValue` i
 To omit the `ETag` header from all responses:
 
 ```sh
-static-web-server \
-    --port 8787 \
-    --root ./my-public-dir \
-    --etag false
+static-web-server --port=8787 --root=./public --etag=false
 ```
 
 When disabled, SWS falls back to date-based validation via `Last-Modified`, `If-Modified-Since`, and `If-Unmodified-Since`.

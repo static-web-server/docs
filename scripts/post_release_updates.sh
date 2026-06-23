@@ -96,12 +96,6 @@ sed -i$sed_bk -e "s/{{RELEASE_VERSION_NUM}}/$server_version_num/g" $page_downloa
 rm -rf docs/content/*.bk
 echo "Download and install page generated!"
 
-# TODO:
-# # Update current installer script version
-# sed -i$sed_bk -e "s/SWS_INSTALL_VERSION\:\-\".*\"/SWS_INSTALL_VERSION\:\-\"$server_version_num\"/g" $cwd/scripts/installer.sh
-# rm -rf scripts/*.bk
-# echo "Installer script's version was updated to $server_version_num!"
-
 echo
 
 echo "All changes after release were done successfully!"

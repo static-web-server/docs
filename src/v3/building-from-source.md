@@ -16,43 +16,43 @@ cargo build --release
 
 Finally, the release binary should be available at `target/release/static-web-server` or under your toolchain directory chosen.
 
-!!! info "Don't use the project's `Makefile`"
-
-    Please don't use the project's `Makefile` since it's only intended for development and some on-demand tasks.
+> [!INFO] Don't use the project's `Makefile`
+>
+> Please don't use the project's `Makefile` since it's only intended for development and some on-demand tasks.
 
 ## Cargo features
 
 When building from the source, all features are enabled by default.
 However, you can disable just the ones you don't need from the lists below.
 
-| Feature | Description |
-| -- | -- |
-| **Default** |  |
-| `default` | Activates the default features by omission. |
-| `all` | Activates all available features including the `experimental` feature. This is the default feature used when building SWS binaries. |
-| [**HTTP2/TLS**](./features/http2) |  |
-| `tls` | Activates the TLS feature. Requires exactly one of `tls-ring` or `tls-fips` to select a TLS crypto provider. |
-| `tls-ring` | Activates the TLS feature with [`ring`](https://github.com/briansmith/ring) as the TLS crypto provider. Included by default. |
-| `tls-fips` | Activates the TLS feature with [`aws-lc-rs`](https://github.com/aws/aws-lc-rs) in FIPS mode as the TLS crypto provider. Requires `cmake`, `go`, and `libclang` at build time. Supported only on linux x86_64/aarch64 (gnu and musl). |
-| `http2` | Activates the HTTP/2 protocol support. Requires TLS to be enabled. |
-| [**Compression**](./features/compression) |  |
-| `compression` | Activates auto-compression with all supported algorithms. |
-| `compression-brotli` | Activates auto-compression with only the `brotli` algorithm. |
-| `compression-deflate` | Activates auto-compression with only the `deflate` algorithm. |
-| `compression-gzip` | Activates auto-compression with only the `gzip` algorithm. |
-| `compression-zstd` | Activates auto-compression with only the `zstd` algorithm. |
-| [**Directory Listing**](./features/directory-listing) |  |
-| `directory-listing` | Activates the directory listing feature. |
-| [**Basic Authorization**](./features/basic-authentication) |  |
-| `basic-auth` | Activates the Basic HTTP Authorization Schema feature. |
-| [**Fallback Page**](./features/error-pages#fallback-page-for-use-with-client-routers) |  |
-| `fallback-page` | Activates the Fallback Page feature. |
-| [**Metrics**](./features/metrics) |  |
-| `metrics` | Activates the Prometheus metrics endpoint (`/metrics`). Enabled by default but requires the `--metrics` flag at runtime. |
-| [**In-Memory Cache**](./features/memory-cache) |  |
-| `mem-cache` | Activates the in-memory file cache with LFU admission and LRU eviction. Enabled by default. Configured via `[advanced.memory-cache]` in the TOML file. |
-| **Experimental** |  |
-| `experimental` | Activates all SWS experimental features (Tokio runtime metrics). Requires `RUSTFLAGS="--cfg tokio_unstable"`. |
+| Feature                                                                               | Description                                                                                                                                                                                                                          |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Default**                                                                           |                                                                                                                                                                                                                                      |
+| `default`                                                                             | Activates the default features by omission.                                                                                                                                                                                          |
+| `all`                                                                                 | Activates all available features including the `experimental` feature. This is the default feature used when building SWS binaries.                                                                                                  |
+| [**HTTP2/TLS**](./features/http2)                                                     |                                                                                                                                                                                                                                      |
+| `tls`                                                                                 | Activates the TLS feature. Requires exactly one of `tls-ring` or `tls-fips` to select a TLS crypto provider.                                                                                                                         |
+| `tls-ring`                                                                            | Activates the TLS feature with [`ring`](https://github.com/briansmith/ring) as the TLS crypto provider. Included by default.                                                                                                         |
+| `tls-fips`                                                                            | Activates the TLS feature with [`aws-lc-rs`](https://github.com/aws/aws-lc-rs) in FIPS mode as the TLS crypto provider. Requires `cmake`, `go`, and `libclang` at build time. Supported only on linux x86_64/aarch64 (gnu and musl). |
+| `http2`                                                                               | Activates the HTTP/2 protocol support. Requires TLS to be enabled.                                                                                                                                                                   |
+| [**Compression**](./features/compression)                                             |                                                                                                                                                                                                                                      |
+| `compression`                                                                         | Activates auto-compression with all supported algorithms.                                                                                                                                                                            |
+| `compression-brotli`                                                                  | Activates auto-compression with only the `brotli` algorithm.                                                                                                                                                                         |
+| `compression-deflate`                                                                 | Activates auto-compression with only the `deflate` algorithm.                                                                                                                                                                        |
+| `compression-gzip`                                                                    | Activates auto-compression with only the `gzip` algorithm.                                                                                                                                                                           |
+| `compression-zstd`                                                                    | Activates auto-compression with only the `zstd` algorithm.                                                                                                                                                                           |
+| [**Directory Listing**](./features/directory-listing)                                 |                                                                                                                                                                                                                                      |
+| `directory-listing`                                                                   | Activates the directory listing feature.                                                                                                                                                                                             |
+| [**Basic Authorization**](./features/basic-authentication)                            |                                                                                                                                                                                                                                      |
+| `basic-auth`                                                                          | Activates the Basic HTTP Authorization Schema feature.                                                                                                                                                                               |
+| [**Fallback Page**](./features/error-pages#fallback-page-for-use-with-client-routers) |                                                                                                                                                                                                                                      |
+| `fallback-page`                                                                       | Activates the Fallback Page feature.                                                                                                                                                                                                 |
+| [**Metrics**](./features/metrics)                                                     |                                                                                                                                                                                                                                      |
+| `metrics`                                                                             | Activates the Prometheus metrics endpoint (`/metrics`). Enabled by default but requires the `--metrics` flag at runtime.                                                                                                             |
+| [**In-Memory Cache**](./features/memory-cache)                                        |                                                                                                                                                                                                                                      |
+| `mem-cache`                                                                           | Activates the in-memory file cache with LFU admission and LRU eviction. Enabled by default. Configured via `[advanced.memory-cache]` in the TOML file.                                                                               |
+| **Experimental**                                                                      |                                                                                                                                                                                                                                      |
+| `experimental`                                                                        | Activates all SWS experimental features (Tokio runtime metrics). Requires `RUSTFLAGS="--cfg tokio_unstable"`.                                                                                                                        |
 
 ### Disable all default features
 
@@ -67,7 +67,7 @@ cargo build --release --no-default-features
 
 # or build including all features (example)
 RUSTFLAGS="--cfg tokio_unstable" \
-    cargo build -vv --release --features all 
+    cargo build -vv --release --features all
 ```
 
 ## Cross-compiling
@@ -80,12 +80,12 @@ Let's say, you want to cross-compile SWS from macOS to Linux. Then follow these 
 2. Install the latest [Zig](https://github.com/ziglang/zig) version via `brew install zig`
 3. Install [cargo-zigbuild](https://github.com/rust-cross/cargo-zigbuild) via `cargo install cargo-zigbuild`
 4. Finally, build SWS as follows:
-    ```sh
-    # dynamically-linked binary
-    cargo zigbuild --verbose --release --target=x86_64-unknown-linux-gnu
-    # or statically-linked binary
-    cargo zigbuild --verbose --release --target=x86_64-unknown-linux-musl
-    ```
+   ```sh
+   # dynamically-linked binary
+   cargo zigbuild --verbose --release --target=x86_64-unknown-linux-gnu
+   # or statically-linked binary
+   cargo zigbuild --verbose --release --target=x86_64-unknown-linux-musl
+   ```
 
 Built binaries can be found under the corresponding toolchain directory inside `target/`.
 
@@ -124,9 +124,9 @@ docker run -it --rm \
     -v /tmp/docs:/tmp/docs squidfunk/mkdocs-material build
 ```
 
-!!! tip "Output the docs in a different directory"
-
-    If you want to output the docs in a different directory then append the `--site-dir=/new/dir/path/` argument to the *"squidfunk/mkdocs-material"* `build` command and make sure to provide the new directory path.
+> [!TIP] Output the docs in a different directory
+>
+> If you want to output the docs in a different directory then append the `--site-dir=/new/dir/path/` argument to the _"squidfunk/mkdocs-material"_ `build` command and make sure to provide the new directory path.
 
 ### Development server
 

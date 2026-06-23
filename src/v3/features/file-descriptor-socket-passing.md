@@ -1,12 +1,16 @@
+---
+outline: deep
+---
+
 # File Descriptor Socket Passing
 
 **SWS** provides the ability to accept a socket listener as a file descriptor for use in sandboxing and on-demand applications via `systemd` (Linux), `launchd` (Macos) or similar.
 
-!!! tip "Tip"
+> [!TIP] Tip
+>
+> The [Socket Activation](http://0pointer.de/blog/projects/socket-activation.html) model is an alternative to TCP port binding.
 
-    The [Socket Activation](http://0pointer.de/blog/projects/socket-activation.html) model is an alternative to TCP port binding.
-
-Socket activation is supported by the `-f, --fd` option or the equivalent [SERVER_LISTEN_FD](./../configuration/env#server_listen_fd) env.
+Socket activation is supported by the `-f, --fd` option or the equivalent [SERVER_LISTEN_FD](./../configuration/env.md#server_listen_fd) env.
 
 If you are using `inetd`, its "`wait`" option should be used in conjunction with static-web-server's `--fd 0`
 option.
@@ -38,7 +42,7 @@ cp systemd/static-web-server.s* /etc/systemd/system/
 
 # 3. Make sure that the `EnvironmentFile` and `ExecStart` values
 #    of the service match to the corresponding file paths in the `static-web-server.service` file.
-#    TIP: Use absolute paths. 
+#    TIP: Use absolute paths.
 # EnvironmentFile=/etc/default/static-web-server
 # ExecStart=/usr/local/bin/static-web-server --fd 0
 

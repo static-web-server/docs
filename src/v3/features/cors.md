@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # CORS
 
 **`SWS`** provides optional [Cross-Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) support.
@@ -25,17 +29,17 @@ The server also supports a list of [CORS allowed headers](https://developer.mozi
 
 This feature depends on `--cors-allow-origins` to be used along with this feature. It can be controlled by the string `-j, --cors-allow-headers` option or the equivalent [SERVER_CORS_ALLOW_HEADERS](../configuration/env#server_cors_allow_headers) env.
 
-!!! info "Tips"
-
-    - The default allowed headers value is `origin, content-type, authorization`.
-    - The server also supports [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) via the `OPTIONS` method. See [Preflighted requests in CORS](./http-methods.md#preflight-requests-in-cors).
+> [!INFO] Tips
+>
+> - The default allowed headers value is `origin, content-type, authorization`.
+> - The server also supports [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) via the `OPTIONS` method. See [Preflighted requests in CORS](./http-methods.md#preflight-requests-in-cors).
 
 Below is an example of how to CORS.
 
 ```sh
 static-web-server \
     --port 8787 \
-    --root ./my-public-dir \
+    --root ./public \
     --cors-allow-origins "https://domain.com" \
     --cors-allow-headers "origin, content-type, x-requested-with"
 ```
@@ -46,17 +50,17 @@ The server also supports a list of [CORS-exposed headers to scripts](https://dev
 
 This feature depends on `--cors-allow-origins` to be used along with this feature. It can be controlled by the string `--cors-expose-headers` option or the equivalent [SERVER_CORS_EXPOSE_HEADERS](../configuration/env#server_cors_expose_headers) env.
 
-!!! info "Tips"
-
-    - The default exposed header's is `origin, content-type`.
-    - The server also supports [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) via the `OPTIONS` method. See [Preflighted requests in CORS](./http-methods.md#preflight-requests-in-cors).
+> [!INFO] Tips
+>
+> - The default exposed header's is `origin, content-type`.
+> - The server also supports [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) via the `OPTIONS` method. See [Preflighted requests in CORS](./http-methods.md#preflight-requests-in-cors).
 
 Below is an example of how to CORS.
 
 ```sh
 static-web-server \
     --port 8787 \
-    --root ./my-public-dir \
+    --root ./public \
     --cors-allow-origins "https://domain.com" \
     --cors-expose-headers "origin, content-type, x-requested-with"
 ```

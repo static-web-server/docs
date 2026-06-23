@@ -4,31 +4,31 @@
 
 This is useful to allow the server to be taken offline without disrupting the service.
 
-The feature is disabled by default and can be controlled by the boolean `--maintenance-mode` option or the equivalent [SERVER_MAINTENANCE_MODE](./../configuration/env#server_maintenance_mode) env.
+The feature is disabled by default and can be controlled by the boolean `--maintenance-mode` option or the equivalent [SERVER_MAINTENANCE_MODE](./../configuration/env.md#server_maintenance_mode) env.
 
 ## How it works
 
-When the feature is enabled, SWS will respond *always* with the specified (or default) status code and HTML content to every request ignoring all SWS features. Except the [Health check](./health-endpoint.md), [CORS](./cors.md) and [Basic Authentication](./basic-authentication.md) features.
+When the feature is enabled, SWS will respond _always_ with the specified (or default) status code and HTML content to every request ignoring all SWS features. Except the [Health check](./health-endpoint.md), [CORS](./cors.md) and [Basic Authentication](./basic-authentication.md) features.
 
 ## HTTP Status Code
 
-The `--maintenance-mode-status` or the equivalent [SERVER_MAINTENANCE_MODE_STATUS](./../configuration/env#server_maintenance_mode_status) env variable can be used to tell SWS to reply with a specific status code.
+The `--maintenance-mode-status` or the equivalent [SERVER_MAINTENANCE_MODE_STATUS](./../configuration/env.md#server_maintenance_mode_status) env variable can be used to tell SWS to reply with a specific status code.
 
 When not specified, the server will reply with the `503 Service Unavailable` status.
 
 ## HTML Page
 
-The `--maintenance-mode-file` or the equivalent [SERVER_MAINTENANCE_MODE_FILE](./../configuration/env#server_maintenance_mode_file) env variable can be also used to customize the response content.
+The `--maintenance-mode-file` or the equivalent [SERVER_MAINTENANCE_MODE_FILE](./../configuration/env.md#server_maintenance_mode_file) env variable can be also used to customize the response content.
 
 The value should be an existing local HTML file path. When not provided a generic message will be displayed.
 
-!!! tip "Optional"
+> [!TIP] Optional
+>
+> Remember that either `--maintenance-mode-status` and `--maintenance-mode-file` are optional and can be omitted as needed.
 
-    Remember that either `--maintenance-mode-status` and `--maintenance-mode-file` are optional and can be omitted as needed.
-
-!!! info "Independent path"
-
-    The `--maintenance-mode-file` is an independent file path and not relative to the root.
+> [!INFO] Independent path
+>
+> The `--maintenance-mode-file` is an independent file path and not relative to the root.
 
 ## Example
 

@@ -6,13 +6,13 @@ This feature is disabled by default and can be controlled by the boolean `--metr
 
 ## Exposed metrics
 
-| Metric | Type | Labels | Description |
-| -- | -- | -- | -- |
-| `sws_http_requests_total` | Counter | method, status, host | Total requests by method, status class (2xx, 4xx, etc.), and Host header |
-| `sws_http_request_duration_seconds` | Histogram | method, status, host | Request latency with buckets from 50µs to 10s |
-| `sws_http_response_bytes_total` | Counter | method, status, host | Total response bytes (from Content-Length) |
-| `sws_http_requests_inflight` | Gauge | — | Requests currently being processed |
-| `sws_http_connections_active` | Gauge | — | Active HTTP connections |
+| Metric                              | Type      | Labels               | Description                                                              |
+| ----------------------------------- | --------- | -------------------- | ------------------------------------------------------------------------ |
+| `sws_http_requests_total`           | Counter   | method, status, host | Total requests by method, status class (2xx, 4xx, etc.), and Host header |
+| `sws_http_request_duration_seconds` | Histogram | method, status, host | Request latency with buckets from 50µs to 10s                            |
+| `sws_http_response_bytes_total`     | Counter   | method, status, host | Total response bytes (from Content-Length)                               |
+| `sws_http_requests_inflight`        | Gauge     | —                    | Requests currently being processed                                       |
+| `sws_http_connections_active`       | Gauge     | —                    | Active HTTP connections                                                  |
 
 When built with the `experimental` feature and `RUSTFLAGS="--cfg tokio_unstable"`, Tokio runtime metrics (worker threads, task scheduling, etc.) are also included in the output.
 

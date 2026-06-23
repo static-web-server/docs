@@ -4,22 +4,22 @@
 
 It means that when a `SIGTERM` [termination signal](https://www.gnu.org/software/libc/manual/html_node/Termination-Signals.html) is caught the server will stop receiving more requests immediately but in turn, it will continue processing all existing requests until they are completed (or closed).
 
-!!! tip "Tips"
-
-    - In **BSD/Unix-like** systems, SWS will start the graceful shutdown process when a `SIGTERM`, `SIGINT` or `SIGQUIT` [termination signal](https://www.gnu.org/software/libc/manual/html_node/Termination-Signals.html) is caught.
-    - In **Windows** systems otherwise, SWS will start the graceful shutdown process right after a <kbd>CTRL + C</kbd>. This is used to abort the current task.
+> [!TIP] Tips
+>
+> - In **BSD/Unix-like** systems, SWS will start the graceful shutdown process when a `SIGTERM`, `SIGINT` or `SIGQUIT` [termination signal](https://www.gnu.org/software/libc/manual/html_node/Termination-Signals.html) is caught.
+> - In **Windows** systems otherwise, SWS will start the graceful shutdown process right after a <kbd>CTRL + C</kbd>. This is used to abort the current task.
 
 ## Grace Period
 
 Sometimes one wants to control the graceful shutdown process for different reasons. For example during [Kubernetes rollouts](https://github.com/static-web-server/static-web-server/issues/79).
 
-In these situations, SWS allows delaying the graceful shutdown process right after a `SIGTERM` providing a *grace period* in seconds.
+In these situations, SWS allows delaying the graceful shutdown process right after a `SIGTERM` providing a _grace period_ in seconds.
 
-The feature is disabled by default and can be controlled by the numeric `-q, --grace-period` option or its equivalent [SERVER_GRACE_PERIOD](./../configuration/env#server_grace_period) env.
+The feature is disabled by default and can be controlled by the numeric `-q, --grace-period` option or its equivalent [SERVER_GRACE_PERIOD](./../configuration/env.md#server_grace_period) env.
 
-!!! tip "Tip"
-
-    The maximum grace period value is `255` seconds (4.25 min). The default value is `0` (no delay).
+> [!TIP] Tip
+>
+> The maximum grace period value is `255` seconds (4.25 min). The default value is `0` (no delay).
 
 Here is an example of delaying the graceful shutdown process by `10` seconds after a `SIGTERM`.
 

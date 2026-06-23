@@ -22,11 +22,11 @@ For example, a `robots.txt` file will be served with the header: `Content-Type: 
 Without this default behavior, files like `robots.txt`, `llms.txt`, plain READMEs and other text-based resources are served without an explicit character encoding. When the charset is missing, browsers and HTTP clients fall back to outdated, locale-specific guesses (such as Windows-1252 or US-ASCII). This default guessing often results in mojibake—corrupting international symbols, accents, and non-ASCII characters.
 Forcing UTF-8 ensures reliable, cross-platform text rendering.
 
-The option is enabled by default and can be controlled by boolean `--text-charset` option or the equivalent [SERVER_TEXT_CHARSET](./../configuration/env#server_text_charset) env.
+The option is enabled by default and can be controlled by boolean `--text-charset` option or the equivalent [SERVER_TEXT_CHARSET](./../configuration/env.md#server_text_charset) env.
 
-!!! info "Custom HTTP Headers Take Precedence"
-
-    Users can turn off the default UTF-8 charset if wanted or use [Custom HTTP Headers](./custom-http-headers.md) with glob patterns to selectively apply charset to specific files.
+> [!INFO] Custom HTTP Headers Take Precedence
+>
+> Users can turn off the default UTF-8 charset if wanted or use [Custom HTTP Headers](./custom-http-headers.md) with glob patterns to selectively apply charset to specific files.
 
 ## Usage examples
 

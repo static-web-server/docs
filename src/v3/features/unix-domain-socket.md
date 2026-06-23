@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Unix Domain Socket
 
 **SWS** can bind to a [Unix Domain Socket](https://en.wikipedia.org/wiki/Unix_domain_socket) (UDS) instead of a TCP host and port. UDS is ideal for **reverse-proxy** setups where SWS and the front-end proxy (e.g. nginx, Caddy, HAProxy) run on the same host: connections bypass the TCP/IP stack entirely (no port allocation, no checksums, no Nagle), and access can be restricted via filesystem permissions.
@@ -6,15 +10,15 @@ This feature is **Unix-only** (Linux, macOS, FreeBSD, etc.) and is mutually excl
 
 ## Options
 
-| CLI option | Environment variable | Description |
-| -- | -- | -- |
-| `--unix-socket <PATH>` | [`SERVER_UNIX_SOCKET`](../configuration/env#server_unix_socket) | Filesystem path to bind the socket (e.g. `/run/sws.sock`). |
-| `--unix-socket-mode <OCTAL>` | [`SERVER_UNIX_SOCKET_MODE`](../configuration/env#server_unix_socket_mode) | Permission bits in octal (`660`, `0660`, `0o660`). Default: process umask. |
-| `--unix-socket-force` | [`SERVER_UNIX_SOCKET_FORCE`](../configuration/env#server_unix_socket_force) | Remove a stale socket file before binding (socket-type files only; refuses to clobber regular files or directories). |
+| CLI option                   | Environment variable                                                        | Description                                                                                                          |
+| ---------------------------- | --------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `--unix-socket <PATH>`       | [`SERVER_UNIX_SOCKET`](../configuration/env#server_unix_socket)             | Filesystem path to bind the socket (e.g. `/run/sws.sock`).                                                           |
+| `--unix-socket-mode <OCTAL>` | [`SERVER_UNIX_SOCKET_MODE`](../configuration/env#server_unix_socket_mode)   | Permission bits in octal (`660`, `0660`, `0o660`). Default: process umask.                                           |
+| `--unix-socket-force`        | [`SERVER_UNIX_SOCKET_FORCE`](../configuration/env#server_unix_socket_force) | Remove a stale socket file before binding (socket-type files only; refuses to clobber regular files or directories). |
 
-!!! info "Socket cleanup"
-
-    The socket file is automatically removed on graceful shutdown. If the server is killed abruptly (`SIGKILL`), use `--unix-socket-force` on restart to clean up the stale socket.
+> [!INFO] Socket cleanup
+>
+> The socket file is automatically removed on graceful shutdown. If the server is killed abruptly (`SIGKILL`), use `--unix-socket-force` on restart to clean up the stale socket.
 
 ## Example
 
@@ -46,9 +50,9 @@ server {
 }
 ```
 
-!!! note
-
-    Because UDS peers lack an IP address, SWS reports no remote address for connections arriving over the socket. Use the proxy's `X-Real-IP` or `X-Forwarded-For` headers to preserve the original client address.
+> [!NOTE]
+>
+> Because UDS peers lack an IP address, SWS reports no remote address for connections arriving over the socket. Use the proxy's `X-Real-IP` or `X-Forwarded-For` headers to preserve the original client address.
 
 ## TOML configuration
 

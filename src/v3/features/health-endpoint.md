@@ -5,7 +5,7 @@ When the `/health` is requested, SWS will generate a log only at the `debug` lev
 
 The HTTP methods supported are `GET` and `HEAD`.
 
-This feature is disabled by default and can be controlled by the boolean `--health` option or the equivalent [SERVER_HEALTH](../configuration/env#server_health) env.
+This feature is disabled by default and can be controlled by the boolean `--health` option or the equivalent [SERVER_HEALTH](../configuration/env.md#server_health) env.
 
 ## Usage with Kubernetes liveness probe
 
@@ -26,8 +26,8 @@ spec:
         - --log-level=info
         - --health
       ports:
-      - containerPort: 80
-        name: http
+        - containerPort: 80
+          name: http
       livenessProbe:
         httpGet:
           path: /health

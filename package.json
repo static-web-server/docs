@@ -12,8 +12,8 @@
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview",
     "type": "vue-tsc --noEmit",
-    "format:check": "markdownlint-cli2 \"src/v2/**/*.md\" README.md && yarn prettier --check \"src/v2/**/*.md\" README.md",
-    "format:fix": "yarn prettier --write \"src/v2/**/*.md\" README.md"
+    "format:check": "markdownlint-cli2 \"src/**/*.md\" README.md && yarn prettier --check \"src/**/*.md\" README.md",
+    "format:fix": "yarn prettier --write \"src/**/*.md\" README.md"
   },
   "devDependencies": {
     "@types/markdown-it": "^14.1.2",
