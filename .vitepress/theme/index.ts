@@ -4,6 +4,7 @@ import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import Home from './components/Home.vue'
 import HomeNavItems from './components/HomeNavItems.vue'
+import SearchVersionFilter from './components/SearchVersionFilter.vue'
 import './styles/index.css'
 
 export default {
@@ -12,6 +13,7 @@ export default {
     return h(DefaultTheme.Layout, null, {
       'nav-bar-content-before': () => h(HomeNavItems),
       'page-top': () => h(Home),
+      'layout-top': () => h(SearchVersionFilter),
     })
   },
   enhanceApp({ app, router, siteData }) {
