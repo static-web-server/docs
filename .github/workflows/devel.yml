@@ -16,7 +16,7 @@ on:
       - README.md
 
 jobs:
-  docs-check:
+  docs:
     name: Project docs check
     runs-on: ubuntu-24.04
 
@@ -32,6 +32,10 @@ jobs:
         node-version: 26
         cache: 'yarn'
 
+    - name: Install dependencies
+      run: |
+        yarn
+
     # - name: Check spelling
     #   uses: crate-ci/typos@master
     #   with:
@@ -40,10 +44,12 @@ jobs:
 
     - name: Check formatting
       run: |
-        yarn
         yarn format:check
 
     - name: Build docs
       run: |
-        yarn
-        yarn docs:build
+        yarn typecheck
+
+    - name: Build docs
+      run: |
+        yarn build

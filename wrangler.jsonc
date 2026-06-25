@@ -1,11 +1,11 @@
 {
     "$schema": "./node_modules/wrangler/config-schema.json",
     "name": "static-web-server-docs",
-    "compatibility_date": "2026-06-18",
+    "compatibility_date": "2026-06-26",
     "assets": {
         "directory": ".vitepress/dist"
     },
     "build": {
-        "command": "yarn docs:build"
+        "command": "yarn build"
     }
 }
