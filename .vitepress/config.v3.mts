@@ -27,6 +27,7 @@ export const v3: DefaultTheme.Config = {
           { text: 'Config File (TOML)', link: '/v3/configuration/file' },
         ],
       },
+      { text: 'Server defaults', link: '/v3/defaults' },
       {
         text: 'Building from Source', link: '/v3/building-from-source'
       },
