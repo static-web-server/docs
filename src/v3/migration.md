@@ -1,3 +1,0 @@
-# Migrating from v2 to v3
-
-TODO

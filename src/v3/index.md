@@ -16,6 +16,10 @@
 
 SWS is designed to be **simple by default, powerful when needed**. You can point it at a folder and go with zero configuration, or tune every aspect through CLI flags, environment variables, or a TOML config file.
 
+> [!INFO] Major v3 upgrade
+>
+> If you use SWS v2 and want to upgrade, check out [the v3 migration guide](./migration-guide.md).
+
 ## Features
 
 | Feature                                                                         | Description                                                                                          |
