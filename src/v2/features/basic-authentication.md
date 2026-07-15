@@ -14,6 +14,14 @@ Both are separated by a `:` (punctuation mark) character.
 >
 > Only the password must be encoded using the [`BCrypt`](https://en.wikipedia.org/wiki/Bcrypt) password-hashing function.
 
+> [!WARNING] Bcrypt Password Length Limit
+>
+> SWS verifies bcrypt hashes using non-truncating verification. The `bcrypt` algorithm only considers the first **72 bytes** of a password.
+>
+> If you generated a bcrypt hash with a tool that truncates passwords (for example, the [Apache `htpasswd`](https://httpd.apache.org/docs/2.4/programs/htpasswd.html) tool or standard `bcrypt` utilities) for a password longer than 72 bytes, the same hash will **not** match in SWS.
+>
+> Make sure your password is **at most 72 bytes** long. We recommend using **ASCII-only passwords of 72 characters or fewer** to avoid encoding issues.
+
 As an example, we will use the [Apache `htpasswd`](https://httpd.apache.org/docs/2.4/programs/htpasswd.html) tool to generate the `username:encrypted_password` pair.
 
 ```sh
