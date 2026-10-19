@@ -116,6 +116,12 @@ The v2 supports running SWS as a WASM/WASI binary (via Wasmer). However, v3 stil
 
 **Action:** For now, if you run SWS on WASM/WASI, stay on v2 or migrate to a native binary (Linux, macOS, Windows).
 
+### 10. Idle connections are now closed
+
+v2 kept idle connections open until the client closed them. v3 closes connections with no reads or writes for `30` seconds. See [Idle Connection Timeout](./features/idle-timeout.md).
+
+**Action:** Usually none. Use `--idle-timeout` to change the timeout, or `0` to disable it.
+
 ## Quick migration checklist
 
 1. **Port:** Add `--port 80` if you were relying on the default.
@@ -127,3 +133,4 @@ The v2 supports running SWS as a WASM/WASI binary (via Wasmer). However, v3 stil
 7. **Logging:** Add `--log-format pretty` if you prefer old-style human-readable logs.
 8. **TOML `text-charset`:** Change `"utf-8"` string to `true` boolean.
 9. **WebAssembly:** Migrate to a native binary — Wasm is no longer supported.
+10. **Idle timeout:** No action needed (now on by default, `30` seconds). Add `--idle-timeout 0` to turn off.
