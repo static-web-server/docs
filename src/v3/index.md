@@ -51,6 +51,7 @@ SWS is designed to be **simple by default, powerful when needed**. You can point
 | [**Include Hidden Files**](./features/include-hidden)                           | Control whether dotfiles like `.htaccess` or `.env` are accessible.                                  |
 | [**Maintenance Mode**](./features/maintenance-mode)                             | Display a custom maintenance page while you deploy updates.                                          |
 | [**Graceful Shutdown**](./features/graceful-shutdown)                           | Drain in-flight connections before stopping, zero dropped requests.                                  |
+| [**Idle Connection Timeout**](./features/idle-timeout)                          | Close idle or stalled connections after a configurable timeout.                                      |
 | [**Windows Service**](./features/windows-service)                               | Install SWS as a native Windows Service with `sc` or the installer.                                  |
 | [**Docker**](./features/docker)                                                 | Official images on `scratch`, `Alpine`, and `Debian` for several architectures.                      |
 | [**Unix Domain Socket**](./features/unix-domain-socket)                         | Listen on a UDS path for secure, low-latency local proxying.                                         |

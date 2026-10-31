@@ -130,6 +130,12 @@ v3 no longer serves `/health`. With `--health` enabled, requests to `/health` go
 
 See the [Health endpoint](./features/health-endpoint.md) page for more details.
 
+### 11. Idle connections are now closed
+
+v2 kept idle connections open until the client closed them. v3 closes connections with no reads or writes for `30` seconds. See [Idle Connection Timeout](./features/idle-timeout.md).
+
+**Action:** Usually none. Use `--idle-timeout` to change the timeout, or `0` to disable it.
+
 ## Quick migration checklist
 
 1. **Port:** Add `--port 80` if you were relying on the default.
@@ -142,3 +148,4 @@ See the [Health endpoint](./features/health-endpoint.md) page for more details.
 8. **TOML `text-charset`:** Change `"utf-8"` string to `true` boolean.
 9. **WebAssembly:** Migrate to a native binary — Wasm is no longer supported.
 10. **Health endpoint:** Replace `/health` with `/livez` (liveness) and `/readyz` (readiness) in probes and checks.
+11. **Idle timeout:** No action needed (now on by default, `30` seconds). Add `--idle-timeout 0` to turn off.

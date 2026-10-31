@@ -98,6 +98,8 @@ Options:
           It provides The "Basic" HTTP Authentication scheme using credentials as "user-id:password" pairs. Password must be encoded using the "BCrypt" password-hashing function [env: SERVER_BASIC_AUTH=] [default: ""]
   -q, --grace-period <GRACE_PERIOD>
           Defines a grace period in seconds after a `SIGTERM` signal is caught which will delay the server before to shut it down gracefully. The maximum value is 255 seconds [env: SERVER_GRACE_PERIOD=] [default: 0]
+      --idle-timeout <IDLE_TIMEOUT>
+          Defines the time in seconds after which a connection without any reads or writes is closed. An HTTP/1 request header must also arrive within this time. Use `0` to disable it. The maximum value is 65535 seconds [env: SERVER_IDLE_TIMEOUT=] [default: 30]
   -w, --config-file <CONFIG_FILE>
           Server TOML configuration file path [env: SERVER_CONFIG_FILE=] [default: ./sws.toml]
       --log-remote-address [<LOG_REMOTE_ADDRESS>]
