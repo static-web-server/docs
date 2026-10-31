@@ -1,15 +1,61 @@
 # Health endpoint
 
-SWS provides an optional `/health` endpoint that can be used to check if it is running properly.
-When the `/health` is requested, SWS will generate a log only at the `debug` level instead of the usual `info` level for a regular file.
+SWS provides optional health endpoints for the Kubernetes-style [liveness and readiness probes](https://kubernetes.io/docs/reference/using-api/health-checks/):
 
-The HTTP methods supported are `GET` and `HEAD`.
+| Path      | Probe     |
+| --------- | --------- |
+| `/livez`  | Liveness  |
+| `/readyz` | Readiness |
 
-This feature is disabled by default and can be controlled by the boolean `--health` option or the equivalent [SERVER_HEALTH](../configuration/env.md#server_health) env.
+This feature is disabled by default and can be controlled by the boolean `--health` option, the equivalent [SERVER_HEALTH](../configuration/env.md#server_health) env, or the `health` key in the [config file](../configuration/file.md).
 
-## Usage with Kubernetes liveness probe
+```sh
+static-web-server --root ./public --health
+SERVER_HEALTH=true static-web-server --root ./public
+```
 
-The health endpoint is well suited for the Kubernetes liveness probe:
+```toml
+[general]
+health = true
+```
+
+> [!WARNING] `/health` was removed in v3
+> SWS v2 served a single `/health` endpoint. SWS v3 serves `/livez` and `/readyz` instead, and requests to `/health` go to the static file handler like any other path. See the [migration guide](../migration-guide.md#_10-health-endpoint-replaced-by-livez-and-readyz).
+
+## Behavior
+
+When the feature is enabled, SWS answers `GET` and `HEAD` requests to `/livez` and `/readyz` with `200 OK`:
+
+- `GET` returns the body `OK` with `Content-Type: text/plain; charset=utf-8`.
+- `HEAD` returns the same headers with an empty body.
+- The query string is ignored, so `/livez?verbose` and `/readyz?verbose` also return `200 OK`.
+- Only the exact paths match: `/livez/`, `/readyz/` or `/LIVEZ` go to the static file handler.
+- Other methods are not handled by the health endpoints: `OPTIONS` goes on to the rest of the request pipeline (e.g. [CORS](./cors.md)), and methods SWS does not support, such as `POST`, return `405 Method Not Allowed`.
+- Requests are logged at `debug` level instead of the usual `info` level, to avoid noise from frequent probes. See [Logging](./logging.md#per-request-logging).
+
+SWS keeps no state that could make it alive but not ready, so both endpoints return the same response.
+
+```sh
+curl -i http://localhost:8787/livez
+```
+
+```text
+HTTP/1.1 200 OK
+content-type: text/plain; charset=utf-8
+content-length: 2
+
+OK
+```
+
+When the feature is disabled, `/livez` and `/readyz` are regular paths served from the root directory.
+
+## Interaction with other features
+
+The health endpoints run before [CORS](./cors.md), [Basic Authentication](./basic-authentication.md), [maintenance mode](./maintenance-mode.md), [URL redirects](./url-redirects.md) and [URL rewrites](./url-rewrites.md), so probes succeed without credentials and while maintenance mode is on.
+
+[Custom HTTP headers](./custom-http-headers.md) apply to the health endpoints only with `scope = "all"`.
+
+## Usage with Kubernetes probes
 
 ```yaml
 apiVersion: v1
@@ -26,10 +72,14 @@ spec:
         - --log-level=info
         - --health
       ports:
-        - containerPort: 80
+        - containerPort: 8787
           name: http
       livenessProbe:
         httpGet:
-          path: /health
+          path: /livez
+          port: http
+      readinessProbe:
+        httpGet:
+          path: /readyz
           port: http
 ```

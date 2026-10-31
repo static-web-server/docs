@@ -52,7 +52,7 @@ SWS validates the codes at startup and fails to start on an empty array or a cod
 An optional string that selects which responses the entry applies to:
 
 - `files` (default): responses of the static file handler only, including error responses such as `404 Not Found` and plain [URL rewrites](url-rewrites.md), which are served as files.
-- `all`: also the responses SWS returns before serving a file: [URL redirects](url-redirects.md), [URL rewrites](url-rewrites.md) with `redirect`, the [health endpoint](health-endpoint.md), the [metrics endpoint](metrics.md), CORS requests rejected with `403 Forbidden`, [Basic Authentication](basic-authentication.md) challenges, [maintenance mode](maintenance-mode.md) and `405 Method Not Allowed`.
+- `all`: also the responses SWS returns before serving a file: [URL redirects](url-redirects.md), [URL rewrites](url-rewrites.md) with `redirect`, the [health endpoints](health-endpoint.md), the [metrics endpoint](metrics.md), CORS requests rejected with `403 Forbidden`, [Basic Authentication](basic-authentication.md) challenges, [maintenance mode](maintenance-mode.md) and `405 Method Not Allowed`.
 
 These early responses serve no file, so `source` is matched against the request path as is. `scope` can be combined with `status`.
 

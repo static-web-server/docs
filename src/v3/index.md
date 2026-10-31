@@ -43,7 +43,7 @@ SWS is designed to be **simple by default, powerful when needed**. You can point
 | [**Trailing Slash Redirect**](./features/trailing-slash-redirect)               | Enforce or remove trailing slashes on directory URLs.                                                |
 | [**Error Pages**](./features/error-pages)                                       | Replace the default 404/5xx pages with your own HTML files.                                          |
 | [**Logging**](./features/logging)                                               | Structured JSON or human-readable text combined logs to stdout or a file.                            |
-| [**Health Endpoint**](./features/health-endpoint)                               | A dedicated `/health` route for load balancer and orchestrator checks.                               |
+| [**Health Endpoint**](./features/health-endpoint)                               | The `/livez` and `/readyz` routes for load balancer and orchestrator checks.                               |
 | [**Metrics**](./features/metrics)                                               | Prometheus-compatible metrics endpoint for monitoring and alerting.                                  |
 | [**Virtual Hosting**](./features/virtual-hosting)                               | Serve multiple domains from a single SWS instance by host header routing.                            |
 | [**Multiple Index Files**](./features/multiple-index-files)                     | Fallback chain of index documents (`index.html`, `index.htm`, etc.).                                 |
