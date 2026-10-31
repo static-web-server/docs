@@ -217,7 +217,7 @@ Set a default `charset=utf-8` parameter on limited set of `text` responses that 
 
 ## SERVER_HEALTH
 
-Add a `/health` endpoint that doesn't generate any log entry and returns a `200` status code. This is especially useful with Kubernetes liveness and readiness probes. Default `false` (disabled).
+Add the `/livez` (liveness) and `/readyz` (readiness) endpoints for Kubernetes-style probes. They answer `GET` and `HEAD` with `200 OK` and log requests at `debug` level only. See [Health endpoint](../features/health-endpoint.md) for details. Default `false` (disabled).
 
 ## SERVER_METRICS
 

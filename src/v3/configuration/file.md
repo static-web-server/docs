@@ -101,7 +101,7 @@ use-relative-root = false
 #### Check for existing pre-compressed files
 compression-static = true
 
-#### Health-check endpoint (GET or HEAD `/health`)
+#### Health-check endpoints (GET or HEAD `/livez` and `/readyz`)
 health = false
 
 #### Markdown content negotiation

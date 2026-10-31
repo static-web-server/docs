@@ -123,7 +123,7 @@ Options:
       --text-charset [<TEXT_CHARSET>]
           Set a default `charset=utf-8` parameter on limited set of `text` responses that don't already have one [env: SERVER_TEXT_CHARSET=] [default: true] [possible values: true, false]
       --health [<HEALTH>]
-          Add a /health endpoint that doesn't generate any log entry and returns a 200 status code. This is especially useful with Kubernetes liveness and readiness probes [env: SERVER_HEALTH=] [default: false] [possible values: true, false]
+          Add the `/livez` (liveness) and `/readyz` (readiness) endpoints for Kubernetes-style probes. They answer `GET` and `HEAD` with `200 OK` and log requests at `debug` level only [env: SERVER_HEALTH=] [default: false] [possible values: true, false]
       --metrics [<METRICS>]
           Enable the /metrics endpoint that exposes Prometheus metrics for HTTP requests, connections, and latency [env: SERVER_METRICS=] [default: false] [possible values: true, false]
       --maintenance-mode [<MAINTENANCE_MODE>]
