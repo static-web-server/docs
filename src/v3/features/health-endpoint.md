@@ -85,3 +85,17 @@ spec:
 ```
 
 Add `--grace-period` (e.g. `--grace-period=10`) so `/readyz` fails while SWS still serves in-flight and new requests during a rollout. Keep it below the pod's `terminationGracePeriodSeconds` (default `30`).
+
+### With TLS
+
+With [`--tls`](./tls.md), point the probes at the TLS port and set `scheme: HTTPS`. The kubelet skips certificate verification for HTTPS probes.
+
+```yaml
+readinessProbe:
+  httpGet:
+    path: /readyz
+    port: https
+    scheme: HTTPS
+```
+
+Do not probe the [`--https-redirect`](./http-https-redirect.md) port: it accepts only `Host` values listed in `--https-redirect-from-hosts` (default `localhost`), and the kubelet sends the pod IP, so probes get `400 Bad Request`.
