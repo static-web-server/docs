@@ -33,7 +33,7 @@ When the feature is enabled, SWS answers `GET` and `HEAD` requests to `/livez` a
 - Other methods are not handled by the health endpoints: `OPTIONS` goes on to the rest of the request pipeline (e.g. [CORS](./cors.md)), and methods SWS does not support, such as `POST`, return `405 Method Not Allowed`.
 - Requests are logged at `debug` level instead of the usual `info` level, to avoid noise from frequent probes. See [Logging](./logging.md#per-request-logging).
 
-SWS keeps no state that could make it alive but not ready, so both endpoints return the same response.
+Once shutdown starts (`SIGTERM`, `SIGINT`, `SIGQUIT` or <kbd>CTRL + C</kbd> on Windows), `/readyz` returns `503 Service Unavailable` with the body `shutting down`, while `/livez` keeps returning `200 OK`. With a [grace period](./graceful-shutdown.md), SWS keeps serving requests during that time, so load balancers stop routing new traffic before connections close.
 
 ```sh
 curl -i http://localhost:8787/livez
@@ -83,3 +83,5 @@ spec:
           path: /readyz
           port: http
 ```
+
+Add `--grace-period` (e.g. `--grace-period=10`) so `/readyz` fails while SWS still serves in-flight and new requests during a rollout. Keep it below the pod's `terminationGracePeriodSeconds` (default `30`).
