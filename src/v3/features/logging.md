@@ -90,7 +90,7 @@ static-web-server -p 8788 -d ./public/ -g trace --log-format pretty --log-with-a
 
 ## Per-request logging
 
-When the level is `info` or lower, SWS logs each request with the `incoming request` message. Requests to the health endpoint are logged at `debug` level instead, to avoid noise from frequent probes.
+When the level is `info` or lower, SWS logs each request with the `incoming request` message. Requests to the [health endpoints](./health-endpoint.md) (`/livez` and `/readyz`) are logged at `debug` level instead, to avoid noise from frequent probes.
 
 ```json
 {
