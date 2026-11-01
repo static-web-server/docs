@@ -232,7 +232,7 @@ curl "http://[::1]:8080" --header "X-Forwarded-For: <iframe src=//malware.attack
 
 ## Access Log Format
 
-**`SWS`** can write one access log line per request in a format you define, for example the nginx or NCSA combined format. The line is written after the response, so it carries the status code, the response size and the duration.
+**`SWS`** can write one access log line per request in a format you define, for example the nginx or NCSA combined format. The line is written once the response body is sent, so it carries the status code, the bytes sent and the duration.
 
 This feature is disabled by default. Set a format with the `--access-log-format` option, the equivalent [SERVER_ACCESS_LOG_FORMAT](./../configuration/env#server_access_log_format) env or the `access-log-format` key under `[general]` in the [TOML file](./../configuration/file). When a format is set, it replaces the `incoming request` line described in [Per-request logging](#per-request-logging).
 
@@ -256,8 +256,8 @@ A token is written as `%{name}`. `%%` writes a literal `%`. Any other text is co
 | `%{uri}`           | Request URI as sent by the client, before [URL Rewrites](./url-rewrites)                            |
 | `%{version}`       | HTTP version, e.g. `HTTP/1.1`                                                                       |
 | `%{status}`        | Response status code                                                                                |
-| `%{bytes}`         | Response `Content-Length`, or `-` when the response has none (e.g. compressed on the fly)           |
-| `%{duration}`      | Time to build the response in seconds, with microsecond precision                                   |
+| `%{bytes}`         | Response body bytes sent, after compression, or `-` when no body is sent (e.g. `HEAD`, `304`)      |
+| `%{duration}`      | Time until the response body is sent in seconds, with microsecond precision                         |
 | `%{remote_addr}`   | Client IP address                                                                                   |
 | `%{x_real_ip}`     | `X-Real-IP` address, see [Logging Client IP from X-Real-IP header](#logging-client-ip-from-x-real-ip-header) |
 | `%{forwarded_for}` | First `X-Forwarded-For` address, see [Logging Client IP from X-Forwarded-For header](#logging-client-ip-from-x-forwarded-for-header) |
@@ -270,7 +270,7 @@ A token without a value is written as `-`. `%{x_real_ip}` and `%{forwarded_for}`
 
 ### Output
 
-The rendered line is the `message` of a log entry with the `static_web_server::access_logs` target, at the `info` level, so it needs `--log-level info` or lower. Requests to the [health endpoints](./health-endpoint) (`/livez` and `/readyz`) are logged at the `debug` level. A request that fails before SWS builds a response is not logged. With the `json` format:
+The rendered line is the `message` of a log entry with the `static_web_server::access_logs` target, at the `info` level, so it needs `--log-level info` or lower. Requests to the [health endpoints](./health-endpoint) (`/livez` and `/readyz`) are logged at the `debug` level. A request that fails before SWS builds a response is not logged. An aborted download is logged with the bytes sent so far. With the `json` format:
 
 ```json
 {"timestamp":"2026-05-29T23:43:47.151533+02:00","level":"INFO","message":"192.168.1.126 - [29/May/2026:23:43:47 +0200] \"GET / HTTP/1.1\" 200 1250 \"-\" \"curl/8.7.1\"","target":"static_web_server::access_logs"}
