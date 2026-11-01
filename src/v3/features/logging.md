@@ -261,7 +261,7 @@ A token is written as `%{name}`. `%%` writes a literal `%`. Any other text is co
 | `%{remote_addr}`   | Client IP address                                                                                   |
 | `%{x_real_ip}`     | `X-Real-IP` address, see [Logging Client IP from X-Real-IP header](#logging-client-ip-from-x-real-ip-header) |
 | `%{forwarded_for}` | First `X-Forwarded-For` address, see [Logging Client IP from X-Forwarded-For header](#logging-client-ip-from-x-forwarded-for-header) |
-| `%{host}`          | `Host` header                                                                                       |
+| `%{host}`          | Host as sent by the client, before [URL Rewrites](./url-rewrites): the request URI authority (HTTP/2 `:authority` or an absolute-form request target) without user info, else the `Host` header |
 | `%{user_agent}`    | `User-Agent` header                                                                                 |
 | `%{referer}`       | `Referer` header                                                                                    |
 | `%{timestamp}`     | Local time in the `%d/%b/%Y:%H:%M:%S %z` format, e.g. `29/May/2026:23:43:47 +0200`, honoring `TZ`  |
@@ -270,7 +270,7 @@ A token without a value is written as `-`. `%{x_real_ip}` and `%{forwarded_for}`
 
 ### Output
 
-The rendered line is the `message` of a log entry with the `static_web_server::access_logs` target, at the `info` level, so it needs `--log-level info` or lower. Requests to the health endpoint are logged at the `debug` level. A request that fails before SWS builds a response is not logged. With the `json` format:
+The rendered line is the `message` of a log entry with the `static_web_server::access_logs` target, at the `info` level, so it needs `--log-level info` or lower. Requests to the [health endpoints](./health-endpoint) (`/livez` and `/readyz`) are logged at the `debug` level. A request that fails before SWS builds a response is not logged. With the `json` format:
 
 ```json
 {"timestamp":"2026-05-29T23:43:47.151533+02:00","level":"INFO","message":"192.168.1.126 - [29/May/2026:23:43:47 +0200] \"GET / HTTP/1.1\" 200 1250 \"-\" \"curl/8.7.1\"","target":"static_web_server::access_logs"}
@@ -279,6 +279,8 @@ The rendered line is the `message` of a log entry with the `static_web_server::a
 ### Escaping
 
 The URI and the `Host`, `User-Agent` and `Referer` headers come from the client. SWS writes bytes outside printable ASCII, `"` and `\` in them as `\xHH`, so a client cannot close a quoted field or inject a fake log line. For example, the `User-Agent` value `x" 200 "forged` is logged as `x\x22 200 \x22forged`.
+
+An escaped value longer than 4 KiB is cut and ends with `...`, so a large header cannot produce a large log line.
 
 ## File Logging
 
