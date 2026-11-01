@@ -77,6 +77,9 @@ threads-multiplier = 1
 #### Grace period after a graceful shutdown
 grace-period = 0
 
+#### Connection idle timeout
+idle-timeout = 30
+
 #### Page fallback for 404s
 # page-fallback = ""
 
@@ -101,7 +104,7 @@ use-relative-root = false
 #### Check for existing pre-compressed files
 compression-static = true
 
-#### Health-check endpoint (GET or HEAD `/health`)
+#### Health-check endpoints (GET or HEAD `/livez` and `/readyz`)
 health = false
 
 #### Markdown content negotiation
