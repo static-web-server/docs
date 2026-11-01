@@ -250,27 +250,27 @@ access-log-format = '%{remote_addr} - [%{timestamp}] "%{method} %{uri} %{version
 
 A token is written as `%{name}`. `%%` writes a literal `%`. Any other text is copied as is. SWS validates the format at startup and refuses to start on an unknown token, an unclosed `%{` or a `%` followed by another character.
 
-| Token              | Value                                                                                                                                                                                            |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `%{method}`        | Request method, e.g. `GET`                                                                                                                                                                       |
-| `%{uri}`           | Path and query of the request URI as sent by the client, before [URL Rewrites](./url-rewrites), without scheme or authority                                                                      |
-| `%{version}`       | HTTP version, e.g. `HTTP/1.1`                                                                                                                                                                    |
-| `%{status}`        | Response status code                                                                                                                                                                             |
-| `%{bytes}`         | Number of response body bytes sent, after on-the-fly compression, without the headers. `-` when no body bytes were sent, always for `HEAD`, `204` and `304` (like `%b` in the Common Log Format) |
-| `%{duration}`      | Time from the start of request handling until the response body is finished, in seconds with microsecond precision                                                                               |
-| `%{remote_addr}`   | Client IP address                                                                                                                                                                                |
-| `%{x_real_ip}`     | `X-Real-IP` address, see [Logging Client IP from X-Real-IP header](#logging-client-ip-from-x-real-ip-header)                                                                                     |
-| `%{forwarded_for}` | First `X-Forwarded-For` address, see [Logging Client IP from X-Forwarded-For header](#logging-client-ip-from-x-forwarded-for-header)                                                             |
-| `%{host}`          | Host as sent by the client, before [URL Rewrites](./url-rewrites): the request URI authority (HTTP/2 `:authority` or an absolute-form request target) without user info, else the `Host` header  |
-| `%{user_agent}`    | `User-Agent` header                                                                                                                                                                              |
-| `%{referer}`       | `Referer` header                                                                                                                                                                                 |
-| `%{timestamp}`     | Local time when the line is written, in the Common Log Format, e.g. `29/May/2026:23:43:47 +0200`, honoring `TZ`                                                                                  |
+| Token              | Value                                                                                                                                                                                                   |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `%{method}`        | Request method, e.g. `GET`                                                                                                                                                                              |
+| `%{uri}`           | Path and query of the request URI as sent by the client, before [URL Rewrites](./url-rewrites), without scheme or authority. For a `CONNECT` request, the authority-form target, e.g. `example.com:443` |
+| `%{version}`       | HTTP version, e.g. `HTTP/1.1`                                                                                                                                                                           |
+| `%{status}`        | Response status code                                                                                                                                                                                    |
+| `%{bytes}`         | Number of response body bytes sent, after on-the-fly compression, without the headers. `-` when no body bytes were sent, always for `HEAD`, `204` and `304` (like `%b` in the Common Log Format)        |
+| `%{duration}`      | Time from the start of request handling until the response body is finished, in seconds with microsecond precision                                                                                      |
+| `%{remote_addr}`   | Client IP address                                                                                                                                                                                       |
+| `%{x_real_ip}`     | `X-Real-IP` address, see [Logging Client IP from X-Real-IP header](#logging-client-ip-from-x-real-ip-header)                                                                                            |
+| `%{forwarded_for}` | First `X-Forwarded-For` address, see [Logging Client IP from X-Forwarded-For header](#logging-client-ip-from-x-forwarded-for-header)                                                                    |
+| `%{host}`          | Host as sent by the client, before [URL Rewrites](./url-rewrites): the request URI authority (HTTP/2 `:authority` or an absolute-form request target) without user info, else the `Host` header         |
+| `%{user_agent}`    | `User-Agent` header                                                                                                                                                                                     |
+| `%{referer}`       | `Referer` header                                                                                                                                                                                        |
+| `%{timestamp}`     | Local time when the line is written, in the Common Log Format, e.g. `29/May/2026:23:43:47 +0200`, honoring `TZ`                                                                                         |
 
 A token without a value, or with an empty one, is written as `-`. `%{x_real_ip}` and `%{forwarded_for}` need no `--log-x-real-ip` or `--log-forwarded-for`: those options only change the default request line. When `--trusted-proxies` is set, the two tokens are logged only for requests from those IPs and are `-` otherwise.
 
 ### Output
 
-The rendered line is the `message` of a log entry with the `static_web_server::access_logs` target, at the `info` level, so it needs `--log-level info` or lower. Requests to the [health endpoints](./health-endpoint) (`/livez` and `/readyz`) are logged at the `debug` level. A request that fails before SWS builds a response is not logged. If the client closes the connection before the body is fully sent, the line is still written, with the bytes sent so far and the time until the transfer ended. With the `json` format:
+The rendered line is the `message` of a log entry with the `static_web_server::access_logs` target, at the `info` level. The default log level is `error`, so pass `--log-level info` (or `debug`, `trace`) to see it. Requests to the [health endpoints](./health-endpoint) (`/livez` and `/readyz`) are logged at the `debug` level. A request that fails before SWS builds a response is not logged. If the client closes the connection before the body is fully sent, the line is still written, with the bytes sent so far and the time until the transfer ended. With the `json` format:
 
 ```json
 {
