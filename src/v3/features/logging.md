@@ -58,7 +58,7 @@ static-web-server -p 8787 -d ./public/ -g info --log-format pretty
 ```log
 2026-05-29T23:44:04.703047+02:00  INFO static_web_server::server: starting Static Web Server name="static-web-server" version="2.42.0"
 2026-05-29T23:44:04.704137+02:00  INFO static_web_server::compression: auto compression enabled=true formats=deflate,gzip,brotli,zstd compression_level=Default
-2026-05-29T23:44:05.724579+02:00  INFO static_web_server::log_addr: incoming request method=GET uri=/
+2026-05-29T23:44:05.724579+02:00  INFO static_web_server::log_addr: response method=GET uri=/ status=200
 ```
 
 ## Log Date-Timestamp
@@ -90,20 +90,21 @@ static-web-server -p 8788 -d ./public/ -g trace --log-format pretty --log-with-a
 
 ## Per-request logging
 
-When the level is `info` or lower, SWS logs each request with the `incoming request` message. Requests to the [health endpoints](./health-endpoint.md) (`/livez` and `/readyz`) are logged at `debug` level instead, to avoid noise from frequent probes.
+When the level is `info` or lower, SWS logs one line per request with the `response` message, once the response body is sent or aborted. The line carries the request method, the URI as sent by the client (before [URL Rewrites](./url-rewrites)) and the response `status`, including for responses that end the request early, such as redirects or `405 Method Not Allowed`. Requests to the [health endpoints](./health-endpoint.md) (`/livez` and `/readyz`) are logged at `debug` level instead, to avoid noise from frequent probes.
 
 ```json
 {
   "timestamp": "2026-05-29T23:43:47.151533+02:00",
   "level": "INFO",
-  "message": "incoming request",
+  "message": "response",
   "method": "GET",
   "uri": "/",
+  "status": 200,
   "target": "static_web_server::log_addr"
 }
 ```
 
-The `remote_addr`, `x_real_ip` and `real_remote_ip` fields are added when the corresponding logging options are enabled and a value is available. Fields without a value are omitted.
+No line is logged when SWS fails to build a response. The `remote_addr`, `x_real_ip` and `real_remote_ip` fields are added when the corresponding logging options are enabled and a value is available. Fields without a value are omitted.
 
 ## Log Remote Addresses
 
@@ -117,7 +118,7 @@ static-web-server -a "0.0.0.0" -p 8080 -d docker/public/ -g info --log-remote-ad
 
 ```json
 {"timestamp":"2026-05-29T23:43:47.071681+02:00","level":"INFO","message":"log requests with remote IP addresses","enabled":true,"target":"static_web_server::log_addr"}
-{"timestamp":"2026-05-29T23:43:47.151533+02:00","level":"INFO","message":"incoming request","method":"GET","uri":"/","remote_addr":"192.168.1.126","target":"static_web_server::log_addr"}
+{"timestamp":"2026-05-29T23:43:47.151533+02:00","level":"INFO","message":"response","method":"GET","uri":"/","status":200,"remote_addr":"192.168.1.126","target":"static_web_server::log_addr"}
 ```
 
 ## Logging Client IP from X-Real-IP header
@@ -130,9 +131,10 @@ Enable logging of the `X-Real-IP` header with the `--log-x-real-ip` option or th
 {
   "timestamp": "2026-05-29T23:43:47.151533+02:00",
   "level": "INFO",
-  "message": "incoming request",
+  "message": "response",
   "method": "GET",
   "uri": "/",
+  "status": 200,
   "x_real_ip": "203.0.113.195",
   "target": "static_web_server::log_addr"
 }
@@ -178,9 +180,10 @@ The request log includes the `real_remote_ip` field:
 {
   "timestamp": "2026-05-29T23:43:47.151533+02:00",
   "level": "INFO",
-  "message": "incoming request",
+  "message": "response",
   "method": "GET",
   "uri": "/",
+  "status": 200,
   "real_remote_ip": "203.0.113.195",
   "target": "static_web_server::log_addr"
 }
@@ -200,9 +203,10 @@ the log omits `real_remote_ip`:
 {
   "timestamp": "2026-05-29T23:43:47.151533+02:00",
   "level": "INFO",
-  "message": "incoming request",
+  "message": "response",
   "method": "GET",
   "uri": "/",
+  "status": 200,
   "target": "static_web_server::log_addr"
 }
 ```
@@ -223,9 +227,10 @@ curl "http://[::1]:8080" --header "X-Forwarded-For: <iframe src=//malware.attack
 {
   "timestamp": "2026-05-29T23:43:47.151533+02:00",
   "level": "INFO",
-  "message": "incoming request",
+  "message": "response",
   "method": "GET",
   "uri": "/",
+  "status": 200,
   "target": "static_web_server::log_addr"
 }
 ```
@@ -234,7 +239,7 @@ curl "http://[::1]:8080" --header "X-Forwarded-For: <iframe src=//malware.attack
 
 **`SWS`** can write one access log line per request in a format you define, for example the nginx or NCSA combined format. The line is written when the response body is finished, so it carries the status code, the number of body bytes sent and the duration of the whole transfer.
 
-This feature is disabled by default. Set a format with the `--access-log-format` option, the equivalent [SERVER_ACCESS_LOG_FORMAT](./../configuration/env#server_access_log_format) env or the `access-log-format` key under `[general]` in the [TOML file](./../configuration/file). When a format is set, it replaces the `incoming request` line described in [Per-request logging](#per-request-logging).
+This feature is disabled by default. Set a format with the `--access-log-format` option, the equivalent [SERVER_ACCESS_LOG_FORMAT](./../configuration/env#server_access_log_format) env or the `access-log-format` key under `[general]` in the [TOML file](./../configuration/file). When a format is set, it replaces the `response` line described in [Per-request logging](#per-request-logging).
 
 ```sh
 static-web-server -p 8787 -d ./public/ -g info \
