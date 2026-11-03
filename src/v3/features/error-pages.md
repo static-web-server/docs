@@ -44,3 +44,12 @@ static-web-server \
     --root ./public \
     --page-fallback ./public/index.html
 ```
+
+### Missing assets keep their 404
+
+The fallback page replaces a `404` only for page navigations, so missing assets like `/favicon.ico` or `/assets/app.js` still respond `404`. A request counts as an asset when:
+
+- its `Sec-Fetch-Dest` header is present and is not `document`, `iframe` or `frame`, or
+- without that header, its path has a known non-HTML file extension and its `Accept` header does not list `text/html` or `application/xhtml+xml` (a `*/*` wildcard does not count).
+
+Browsers are unaffected, since navigations send `Sec-Fetch-Dest: document` or `Accept: text/html`. Other clients requesting a client route with a dotted last segment, like `/search/example.com` with `Accept: */*`, get a `404`.
