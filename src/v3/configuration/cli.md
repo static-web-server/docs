@@ -41,7 +41,7 @@ Options:
       --page404 <PAGE404>
           HTML file path for 404 errors. If the path is not specified or simply doesn't exist then the server will use a generic HTML error message. If a relative path is used then it will be resolved under the root directory [env: SERVER_ERROR_PAGE_404=] [default: ./404.html]
       --page-fallback <PAGE_FALLBACK>
-          A HTML file path (not relative to the root) used for GET requests when the requested path doesn't exist. The fallback page is served with a 200 status code, useful when using client routers. If the path doesn't exist then the feature is not activated [env: SERVER_FALLBACK_PAGE=] [default: ""]
+          A HTML file path (not relative to the root) used for GET requests when the requested path doesn't exist. The fallback page is served with a 200 status code, useful when using client routers. Requests for missing assets keep their 404: those whose `Sec-Fetch-Dest` is not a document or frame or, without that header, a non-HTML extension (like `/favicon.ico`) not asking for `text/html`. If the path doesn't exist then the feature is not activated [env: SERVER_FALLBACK_PAGE=] [default: ""]
   -g, --log-level <LOG_LEVEL>
           Specify a logging level in lower case. Values: error, warn, info, debug or trace [env: SERVER_LOG_LEVEL=] [default: error]
       --log-format <LOG_FORMAT>
