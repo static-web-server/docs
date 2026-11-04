@@ -171,6 +171,10 @@ Defines a grace period in seconds after a `SIGTERM` signal is caught which will 
 
 Defines the time in seconds after which a connection without any reads or writes is closed. An HTTP/1 request header must also arrive within this time. Use `0` to disable it. The maximum value is `65535` seconds. See [Idle Connection Timeout](../features/idle-timeout.md). Default `30`.
 
+## SERVER_MAX_CONNECTIONS
+
+Defines the maximum number of connections served at the same time, across all listeners. Once reached, new connections wait until another one closes. Use `0` for no limit. See [Maximum Connections](../features/max-connections.md). Default `0`.
+
 ## SERVER_CONFIG_FILE
 
 Server TOML configuration file path. See [The TOML Configuration File](../configuration/file). Default `./sws.toml`.

@@ -32,6 +32,7 @@ static-web-server -d ./public/ --idle-timeout 60
 - A download stays open for as long as data keeps moving, however long it takes. If the client reads nothing, or reads so slowly that nothing can be sent for the whole timeout, the connection is closed.
 - If SWS can't start or continue a response within the timeout (for example, on very slow storage), the connection is closed too.
 - Over TLS, only decrypted bytes count, so the TLS handshake must also finish within the timeout.
+- With `--log-level debug`, SWS logs each connection it closes this way, with the client address.
 
 > [!TIP] Reverse proxies
 >
@@ -39,4 +40,4 @@ static-web-server -d ./public/ --idle-timeout 60
 
 > [!WARNING] Limitations
 >
-> A client can still keep a connection open indefinitely by making some progress within every timeout period, for example by sending a new request or reading part of a response. SWS doesn't limit the number of connections, so use a firewall or a reverse proxy if you need to limit connections per client.
+> A client can still keep a connection open indefinitely by making some progress within every timeout period, for example by sending a new request or reading part of a response. Use [`--max-connections`](./max-connections.md) to cap the number of open connections, and a firewall or a reverse proxy if you need to limit connections per client.
