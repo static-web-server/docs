@@ -110,4 +110,5 @@ The types considered compressible include all `text/*` MIME types, plus `applica
 | Maintenance mode             | disabled        | Opt-in for planned downtime. Returns `503` with a custom page.                                                     |
 | Grace period                 | `0s` (no delay) | SIGTERM triggers an immediate graceful shutdown. Set a delay (max 255s) if your load balancer needs time to drain. |
 | Idle timeout                 | `30s`           | Connections with no traffic are closed, so abandoned ones don't pile up and use up file descriptors.               |
+| Max connections              | `0` (no limit)  | Opt-in. The right value depends on the file descriptor limit and the expected traffic.                             |
 | Config file                  | `./sws.toml`    | Auto-loaded if present. TOML format for settings that need more structure than CLI flags.                          |

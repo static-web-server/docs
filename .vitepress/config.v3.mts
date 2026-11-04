@@ -51,6 +51,7 @@ export const v3: DefaultTheme.Config = {
           { text: 'Docker', link: '/v3/features/docker' },
           { text: 'Graceful Shutdown', link: '/v3/features/graceful-shutdown' },
           { text: 'Idle Connection Timeout', link: '/v3/features/idle-timeout' },
+          { text: 'Maximum Connections', link: '/v3/features/max-connections' },
           { text: 'File Descriptor Socket Passing', link: '/v3/features/file-descriptor-socket-passing' },
           { text: 'Unix Domain Socket', link: '/v3/features/unix-domain-socket' },
           { text: 'Worker Threads Customization', link: '/v3/features/worker-threads' },

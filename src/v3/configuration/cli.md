@@ -100,6 +100,8 @@ Options:
           Defines a grace period in seconds after a `SIGTERM` signal is caught which will delay the server before to shut it down gracefully. The maximum value is 255 seconds [env: SERVER_GRACE_PERIOD=] [default: 0]
       --idle-timeout <IDLE_TIMEOUT>
           Defines the time in seconds after which a connection without any reads or writes is closed. An HTTP/1 request header must also arrive within this time. Use `0` to disable it. The maximum value is 65535 seconds [env: SERVER_IDLE_TIMEOUT=] [default: 30]
+      --max-connections <MAX_CONNECTIONS>
+          Defines the maximum number of connections served at the same time, across all listeners. Once reached, new connections wait until another one closes. Use `0` for no limit [env: SERVER_MAX_CONNECTIONS=] [default: 0]
   -w, --config-file <CONFIG_FILE>
           Server TOML configuration file path [env: SERVER_CONFIG_FILE=] [default: ./sws.toml]
       --access-log-format <ACCESS_LOG_FORMAT>
