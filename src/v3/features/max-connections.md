@@ -38,4 +38,6 @@ max-connections = 1000
 
 > [!TIP] Choosing a value
 >
+> When SWS is exposed directly to clients, `1024` is a good starting point. Behind a reverse proxy, the proxy opens far fewer connections and its own limits usually apply first.
+>
 > Keep the limit below the process file descriptor limit (`ulimit -n`), which also has to cover open files being served. Since a limit is reached by any client that holds connections open, it protects the server's resources but not the availability of the site: use a firewall or a reverse proxy if you need to limit connections per client.
