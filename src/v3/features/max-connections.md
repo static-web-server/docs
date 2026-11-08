@@ -31,6 +31,8 @@ max-connections = 1000
 - Each listener accepts one connection beyond the limit and holds it until a slot frees up. With the HTTPS redirect server on, SWS can have up to two connections more than the limit open.
 - Idle keep-alive connections keep their slot until the client closes them or the [idle timeout](./idle-timeout.md) does. Over HTTP/1, browsers open up to 6 connections per site, so a low limit can make other clients wait for up to the idle timeout.
 - When the limit is reached, SWS logs a warning, at most once a minute.
+- On shutdown, connections still waiting for a slot are closed without a response. Connections being served are drained as described in [Graceful Shutdown](./graceful-shutdown.md).
+- Requests to the [health endpoints](./health-endpoint.md) (`/livez`, `/readyz`) also wait for a slot, so a liveness probe can time out while the limit is reached.
 
 > [!WARNING] Idle timeout
 >
