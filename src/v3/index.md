@@ -53,6 +53,7 @@ SWS is designed to be **simple by default, powerful when needed**. You can point
 | [**Graceful Shutdown**](./features/graceful-shutdown)                           | Drain in-flight connections before stopping, zero dropped requests.                                  |
 | [**Idle Connection Timeout**](./features/idle-timeout)                          | Close idle or stalled connections after a configurable timeout.                                      |
 | [**Maximum Connections**](./features/max-connections)                           | Limit the number of connections served at the same time.                                             |
+| [**Maximum Request Header Size**](./features/max-header-size)                   | Reject requests whose headers are larger than a configurable limit.                                  |
 | [**Windows Service**](./features/windows-service)                               | Install SWS as a native Windows Service with `sc` or the installer.                                  |
 | [**Docker**](./features/docker)                                                 | Official images on `scratch`, `Alpine`, and `Debian` for several architectures.                      |
 | [**Unix Domain Socket**](./features/unix-domain-socket)                         | Listen on a UDS path for secure, low-latency local proxying.                                         |
