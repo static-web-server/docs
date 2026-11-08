@@ -149,7 +149,7 @@ Specify list of enabled format(s) for directory download. Format supported: `tar
 
 ## SERVER_SECURITY_HEADERS
 
-Enable security headers by default when TLS feature is activated. Headers included: `Strict-Transport-Security: max-age=63072000; includeSubDomains; preload` (2 years max-age), `X-Frame-Options: DENY` and `Content-Security-Policy: frame-ancestors 'self'`. Default `true` (enabled).
+Enable security headers. Headers included: `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Content-Security-Policy: frame-ancestors 'self'` and `Referrer-Policy: strict-origin-when-cross-origin`. With `SERVER_TLS`, also `Strict-Transport-Security: max-age=63072000; includeSubDomains` (2 years max-age). See [Security Headers](../features/security-headers.md). Default `true` (enabled) when the TLS feature is activated.
 
 ## SERVER_CACHE_CONTROL_HEADERS
 
@@ -170,6 +170,14 @@ Defines a grace period in seconds after a `SIGTERM` signal is caught which will 
 ## SERVER_IDLE_TIMEOUT
 
 Defines the time in seconds after which a connection without any reads or writes is closed. An HTTP/1 request header must also arrive within this time. Use `0` to disable it. The maximum value is `65535` seconds. See [Idle Connection Timeout](../features/idle-timeout.md). Default `30`.
+
+## SERVER_MAX_HEADER_SIZE
+
+Defines the maximum size in bytes of the request headers. For HTTP/1 it includes the request line, for HTTP/2 it applies to the header list. Larger requests get `431 Request Header Fields Too Large`. The value must be greater than `0`. See [Maximum Request Header Size](../features/max-header-size.md). Default `16384`.
+
+## SERVER_MAX_CONNECTIONS
+
+Defines the maximum number of connections served at the same time, across all listeners. Once reached, new connections wait until another one closes. Use `0` for no limit. See [Maximum Connections](../features/max-connections.md). Default `0`.
 
 ## SERVER_CONFIG_FILE
 

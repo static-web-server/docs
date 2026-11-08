@@ -89,7 +89,7 @@ Options:
       --directory-listing-download=<DIRECTORY_LISTING_DOWNLOAD>
           Specify list of enabled format(s) for directory download. Format supported: `targz`. Default to empty list (disabled) [env: SERVER_DIRECTORY_LISTING_DOWNLOAD=] [possible values: targz]
       --security-headers [<SECURITY_HEADERS>]
-          Enable security headers by default when TLS feature is activated. Headers included: "Strict-Transport-Security: max-age=63072000; includeSubDomains; preload" (2 years max-age), "X-Frame-Options: DENY" and "Content-Security-Policy: frame-ancestors 'self'" [env: SERVER_SECURITY_HEADERS=] [default: true] [possible values: true, false]
+          Enable security headers. Enabled by default when the TLS feature is activated. Headers included: "X-Frame-Options: DENY", "X-Content-Type-Options: nosniff", "Content-Security-Policy: frame-ancestors 'self'" and "Referrer-Policy: strict-origin-when-cross-origin". With `--tls`, also "Strict-Transport-Security: max-age=63072000; includeSubDomains" (2 years max-age). Behind a TLS-terminating proxy, add `Strict-Transport-Security` at the proxy or with an `[[advanced.headers]]` rule [env: SERVER_SECURITY_HEADERS=] [default: true] [possible values: true, false]
   -e, --cache-control-headers [<CACHE_CONTROL_HEADERS>]
           Enable cache control headers for incoming requests based on a set of file types. The file type list can be found on `src/control_headers.rs` file [env: SERVER_CACHE_CONTROL_HEADERS=] [default: true] [possible values: true, false]
       --etag [<ETAG>]
@@ -100,6 +100,10 @@ Options:
           Defines a grace period in seconds after a `SIGTERM` signal is caught which will delay the server before to shut it down gracefully. The maximum value is 255 seconds [env: SERVER_GRACE_PERIOD=] [default: 0]
       --idle-timeout <IDLE_TIMEOUT>
           Defines the time in seconds after which a connection without any reads or writes is closed. An HTTP/1 request header must also arrive within this time. Use `0` to disable it. The maximum value is 65535 seconds [env: SERVER_IDLE_TIMEOUT=] [default: 30]
+      --max-header-size <MAX_HEADER_SIZE>
+          Defines the maximum size in bytes of the request headers. For HTTP/1 it includes the request line, for HTTP/2 it applies to the header list. Larger requests get `431 Request Header Fields Too Large`. The value must be greater than `0` [env: SERVER_MAX_HEADER_SIZE=] [default: 16384]
+      --max-connections <MAX_CONNECTIONS>
+          Defines the maximum number of connections served at the same time, across all listeners. Once reached, new connections wait until another one closes. Use `0` for no limit [env: SERVER_MAX_CONNECTIONS=] [default: 0]
   -w, --config-file <CONFIG_FILE>
           Server TOML configuration file path [env: SERVER_CONFIG_FILE=] [default: ./sws.toml]
       --access-log-format <ACCESS_LOG_FORMAT>
