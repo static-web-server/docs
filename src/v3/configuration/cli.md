@@ -19,9 +19,13 @@ Commands:
 
 Options:
   -a, --host <HOST>
-          Host address (E.g 127.0.0.1 or ::1) [env: SERVER_HOST=] [default: ::]
+          Host address (E.g 127.0.0.1 or ::1). The default `::` accepts both IPv6 and IPv4 connections where the OS supports dual-stack sockets [env: SERVER_HOST=] [default: ::]
   -p, --port <PORT>
-          Host port [env: SERVER_PORT=] [default: 8787]
+          Host port [env: SERVER_PORT=] [default: 8080]
+      --open [<OPEN>]
+          Open the server URL in the system default web browser after startup [env: SERVER_OPEN=] [default: false] [possible values: true, false]
+      --open-path <OPEN_PATH>
+          URL path opened in the browser. Requires the open option [env: SERVER_OPEN_PATH=]
   -f, --fd <FD>
           Instead of binding to a TCP port, accept incoming connections to an already-bound TCP socket listener on the specified file descriptor number (usually zero). Requires that the parent process (e.g. inetd, launchd, or systemd) binds an address and port on behalf of static-web-server, before arranging for the resulting file descriptor to be inherited by static-web-server. Cannot be used in conjunction with the port and host arguments. The included systemd unit file utilises this feature to increase security by allowing the static-web-server to be sandboxed more completely [env: SERVER_LISTEN_FD=]
       --unix-socket <UNIX_SOCKET>
@@ -35,7 +39,7 @@ Options:
   -b, --max-blocking-threads <MAX_BLOCKING_THREADS>
           Maximum number of blocking threads [env: SERVER_MAX_BLOCKING_THREADS=] [default: 512]
   -d, --root <ROOT>
-          Root directory path of static files [env: SERVER_ROOT=] [default: ./public]
+          Root directory path of static files [env: SERVER_ROOT=] [default: .]
       --page50x <PAGE50X>
           HTML file path for 50x errors. If the path is not specified or simply doesn't exist then the server will use a generic HTML error message. If a relative path is used then it will be resolved under the root directory [env: SERVER_ERROR_PAGE_50X=] [default: ./50x.html]
       --page404 <PAGE404>
@@ -69,7 +73,7 @@ Options:
       --https-redirect-host <HTTPS_REDIRECT_HOST>
           Canonical host name or IP of the HTTPS server. It depends on "https_redirect" to be enabled [env: SERVER_HTTPS_REDIRECT_HOST=] [default: localhost]
       --https-redirect-from-port <HTTPS_REDIRECT_FROM_PORT>
-          HTTP host port where the redirect server will listen for requests to redirect them to HTTPS. It depends on "https_redirect" to be enabled [env: SERVER_HTTPS_REDIRECT_FROM_PORT=] [default: 80]
+          HTTP host port where the redirect server will listen for requests to redirect them to HTTPS. It depends on "https_redirect" to be enabled [env: SERVER_HTTPS_REDIRECT_FROM_PORT=] [default: 8080]
       --https-redirect-from-hosts <HTTPS_REDIRECT_FROM_HOSTS>
           List of host names or IPs allowed to redirect from. HTTP requests must contain the HTTP 'Host' header and match against this list. It depends on "https_redirect" to be enabled [env: SERVER_HTTPS_REDIRECT_FROM_HOSTS=] [default: localhost]
       --index-files <INDEX_FILES>
@@ -85,7 +89,7 @@ Options:
       --directory-listing-order <DIRECTORY_LISTING_ORDER>
           Specify a default code number to order directory listing entries per `Name`, `Last modified` or `Size` attributes (columns). Code numbers supported: 0 (Name asc), 1 (Name desc), 2 (Last modified asc), 3 (Last modified desc), 4 (Size asc), 5 (Size desc). Default 6 (unordered) [env: SERVER_DIRECTORY_LISTING_ORDER=] [default: 6]
       --directory-listing-format <DIRECTORY_LISTING_FORMAT>
-          Specify a content format for directory listing entries. Formats supported: "html" or "json". Default "html" [env: SERVER_DIRECTORY_LISTING_FORMAT=] [default: html] [possible values: html, json]
+          Specify a content format for directory listing entries. Formats supported: "html", "json" or "auto". Default "html" [env: SERVER_DIRECTORY_LISTING_FORMAT=] [default: html] [possible values: html, json, auto]
       --directory-listing-download=<DIRECTORY_LISTING_DOWNLOAD>
           Specify list of enabled format(s) for directory download. Format supported: `targz`. Default to empty list (disabled) [env: SERVER_DIRECTORY_LISTING_DOWNLOAD=] [possible values: targz]
       --security-headers [<SECURITY_HEADERS>]
@@ -107,15 +111,15 @@ Options:
   -w, --config-file <CONFIG_FILE>
           Server TOML configuration file path [env: SERVER_CONFIG_FILE=] [default: ./sws.toml]
       --access-log-format <ACCESS_LOG_FORMAT>
-          Custom access log format string using %{token} syntax. When set, replaces the default request logging with a configurable format that includes response data. Tokens: method, uri, status, bytes, duration, remote_addr, x_real_ip, forwarded_for, host, user_agent, referer, timestamp, version. x_real_ip and forwarded_for are logged only for requests from --trusted-proxies, if set. Example: '%{remote_addr} "%{method} %{uri}" %{status} %{bytes}' [env: SERVER_ACCESS_LOG_FORMAT=] [default: ""]
+          Custom access log format string using %{token} syntax. When set, replaces the default request logging with a configurable format that includes response data. Tokens: method, uri, status, bytes, duration, remote_addr, x_real_ip, forwarded_for, host, user_agent, referer, timestamp, version. x_real_ip and forwarded_for are logged only for requests from --trusted-proxies. Example: '%{remote_addr} "%{method} %{uri}" %{status} %{bytes}' [env: SERVER_ACCESS_LOG_FORMAT=] [default: ""]
       --log-remote-address [<LOG_REMOTE_ADDRESS>]
           Log the remote address of each request, if available [env: SERVER_LOG_REMOTE_ADDRESS=] [default: false] [possible values: true, false]
       --log-x-real-ip [<LOG_X_REAL_IP>]
-          Log the X-Real-IP header for remote IP information [env: SERVER_LOG_X_REAL_IP=] [default: false] [possible values: true, false]
+          Log the X-Real-IP header of requests from --trusted-proxies [env: SERVER_LOG_X_REAL_IP=] [default: false] [possible values: true, false]
       --log-forwarded-for [<LOG_FORWARDED_FOR>]
-          Log the X-Forwarded-For header for remote IP information [env: SERVER_LOG_FORWARDED_FOR=] [default: false] [possible values: true, false]
+          Log the first X-Forwarded-For address of requests from --trusted-proxies [env: SERVER_LOG_FORWARDED_FOR=] [default: false] [possible values: true, false]
       --trusted-proxies <TRUSTED_PROXIES>
-          List of IPs to use X-Forwarded-For from. The default is to trust all [env: SERVER_TRUSTED_PROXIES=]
+          List of proxy IPs to use the X-Real-IP and X-Forwarded-For headers from. The default trusts no one, so the headers are not logged unless set. IPv4 entries also match their IPv4-mapped IPv6 form (`::ffff:a.b.c.d`) [env: SERVER_TRUSTED_PROXIES=]
       --redirect-trailing-slash [<REDIRECT_TRAILING_SLASH>]
           Check for a trailing slash in the requested directory URI and redirect permanently (308) to the same path with a trailing slash suffix if it is missing [env: SERVER_REDIRECT_TRAILING_SLASH=] [default: true] [possible values: true, false]
       --include-hidden [<INCLUDE_HIDDEN>]
@@ -129,7 +133,7 @@ Options:
       --text-charset [<TEXT_CHARSET>]
           Set a default `charset=utf-8` parameter on limited set of `text` responses that don't already have one [env: SERVER_TEXT_CHARSET=] [default: true] [possible values: true, false]
       --health [<HEALTH>]
-          Add the `/livez` (liveness) and `/readyz` (readiness) endpoints for Kubernetes-style probes. They answer `GET` and `HEAD` with `200 OK` and log requests at `debug` level only [env: SERVER_HEALTH=] [default: false] [possible values: true, false]
+          Add the `/livez` (liveness) and `/readyz` (readiness) endpoints for Kubernetes-style probes. They answer `GET` and `HEAD` with `200 OK` (`/readyz` returns `503` once shutdown starts or while the root directory is missing) and log requests at `debug` level only [env: SERVER_HEALTH=] [default: false] [possible values: true, false]
       --metrics [<METRICS>]
           Enable the /metrics endpoint that exposes Prometheus metrics for HTTP requests, connections, and latency [env: SERVER_METRICS=] [default: false] [possible values: true, false]
       --maintenance-mode [<MAINTENANCE_MODE>]

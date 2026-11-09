@@ -3,13 +3,14 @@
 [Download and install](./download-install) the binary for your specific platform and then type
 
 ```sh
-static-web-server --port 8787 --root ./my-public-dir
+static-web-server --root ./my-public-dir
+# Serving on http://localhost:8080
 ```
 
 Or if you use [Docker](https://www.docker.com/) just try
 
 ```sh
-docker run --rm -it -p 8787:8787 joseluisq/static-web-server:3.0.0-beta.1 -g info
+docker run --rm -it -p 8080:8080 joseluisq/static-web-server:3.0.0-beta.2 -g info
 ```
 
 > [!INFO] Docker Tip

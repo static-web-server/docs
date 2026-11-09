@@ -6,7 +6,7 @@ outline: deep
 
 **`SWS`** provides custom HTML error pages for the HTTP `404` and `50x` status errors.
 
-This feature is enabled by default and can be controlled either by the string `--page404` ([SERVER_ERROR_PAGE_404](./../configuration/env.md#server_error_page_404)) or the `--page50x` ([SERVER_ERROR_PAGE_50X](./../configuration/env.md#server_error_page_50x)) arguments.
+This feature is enabled by default and can be controlled either by the string `--page404` ([SERVER_ERROR_PAGE_404](./../configuration/env.md#server-error-page-404)) or the `--page50x` ([SERVER_ERROR_PAGE_50X](./../configuration/env.md#server-error-page-50x)) arguments.
 
 > [!INFO] Tip
 >
@@ -16,7 +16,7 @@ Below is an example of how to customize those HTML pages.
 
 ```sh
 static-web-server \
-    --port 8787 \
+    --port 8080 \
     --root ./public \
     --page404 ./my-page-404.html \
     --page50x ./my-page-50x.html
@@ -40,7 +40,7 @@ It can be set with the `SERVER_FALLBACK_PAGE` environment variable or with the C
 
 ```sh
 static-web-server \
-    --port 8787 \
+    --port 8080 \
     --root ./public \
     --page-fallback ./public/index.html
 ```

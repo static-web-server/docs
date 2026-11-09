@@ -15,7 +15,7 @@ The HTTP [OPTIONS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/OPT
 Example using an HTTP client.
 
 ```sh
-curl -I -X OPTIONS http://localhost:8787/assets/main.js
+curl -I -X OPTIONS http://localhost:8080/assets/main.js
 # HTTP/1.1 204 No Content
 # allow: OPTIONS, HEAD, GET
 # accept-ranges: bytes
@@ -34,13 +34,13 @@ The HTTP [OPTIONS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/OPT
 Example using an HTTP client.
 
 ```sh
-curl http://localhost:8787/assets/main.js \
+curl http://localhost:8080/assets/main.js \
     -I -X OPTIONS \
     -H "Access-Control-Request-Method: HEAD" \
     -H "Access-Control-Request-Headers: content-type" \
-    -H "Origin: http://localhost:8787"
+    -H "Origin: http://localhost:8080"
 # HTTP/1.1 204 No Content
-# access-control-allow-origin: http://localhost:8787
+# access-control-allow-origin: http://localhost:8080
 # accept-ranges: bytes
 # access-control-allow-headers: content-type, origin
 # access-control-allow-methods: GET, OPTIONS, HEAD

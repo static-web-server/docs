@@ -6,7 +6,7 @@ outline: deep
 
 **`SWS`** provides support for _arbitrary_ [`Cache-Control`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control) HTTP header specifying `public` and `max-age` response directives.
 
-This feature is enabled by default and can be controlled by the boolean `-e, --cache-control-headers` option or the equivalent [SERVER_CACHE_CONTROL_HEADERS](./../configuration/env#server_cache_control_headers) env.
+This feature is enabled by default and can be controlled by the boolean `-e, --cache-control-headers` option or the equivalent [SERVER_CACHE_CONTROL_HEADERS](./../configuration/env#server-cache-control-headers) env.
 
 > [!TIP] Customize HTTP headers
 >
@@ -49,5 +49,5 @@ avif, bmp, bz2, css, doc, gif, gz, htc, ico, jpeg, jpg, js, jxl, map, mjs, mp3, 
 Below is an example of how to enable the feature.
 
 ```sh
-static-web-server --port 8787 --root ./public --cache-control-headers
+static-web-server --port 8080 --root ./public --cache-control-headers
 ```

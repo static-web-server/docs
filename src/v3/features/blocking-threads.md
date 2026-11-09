@@ -2,7 +2,7 @@
 
 **SWS** allows limiting the number of blocking threads powered by the [Tokio](https://tokio.rs/) runtime.
 
-This feature can be controlled by the numeric `-b, --max-blocking-threads` option or the equivalent [SERVER_MAX_BLOCKING_THREADS](./../configuration/env.md#server_max_blocking_threads) env.
+This feature can be controlled by the numeric `-b, --max-blocking-threads` option or the equivalent [SERVER_MAX_BLOCKING_THREADS](./../configuration/env.md#server-max-blocking-threads) env.
 
 > [!INFO] WebAssembly
 >
@@ -12,7 +12,7 @@ Below is an example.
 
 ```sh
 static-web-server \
-    --port 8787 \
+    --port 8080 \
     --root ./my-public-dir \
     --max-blocking-threads 20
 ```

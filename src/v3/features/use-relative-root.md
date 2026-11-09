@@ -6,7 +6,7 @@ outline: deep
 
 **`SWS`** resolves and canonicalizes the web root directory to its absolute real path at startup by default and following any intermediate symlinks, so that every subsequent request is validated against a precomputed canonical base without additional filesystem overhead.
 
-The `--use-relative-root` option (or the equivalent [SERVER_USE_RELATIVE_ROOT](./../configuration/env#server_use_relative_root) environment variable) changes this behavior. When enabled, **root directory canonicalization is skipped** at startup. Instead, the root is resolved at request time relative to the server's current working directory.
+The `--use-relative-root` option (or the equivalent [SERVER_USE_RELATIVE_ROOT](./../configuration/env#server-use-relative-root) environment variable) changes this behavior. When enabled, **root directory canonicalization is skipped** at startup. Instead, the root is resolved at request time relative to the server's current working directory.
 
 This unlocks scenarios where the root directory is behind a symlink that you intend to _swap_ at runtime. For example, pointing it to a different directory without restarting the server.
 
@@ -56,7 +56,7 @@ Even with `--use-relative-root` enabled, **SWS will never follow a symlink that 
 
 ```sh
 static-web-server \
-    --port 8787 \
+    --port 8080 \
     --root ./public \
     --log-level info \
     --use-relative-root

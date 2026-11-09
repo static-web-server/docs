@@ -6,7 +6,7 @@ outline: deep
 
 **`SWS`** can be also executed in a [Windows Service](<https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2003/cc783643(v=ws.10)>) context. Therefore it also provides a subcommand to _install_ SWS as a Windows Service.
 
-This feature is disabled by default and can be controlled by the boolean `-s, --windows-service` option or the equivalent [SERVER_WINDOWS_SERVICE](./../configuration/env.md#server_windows_service) env.
+This feature is disabled by default and can be controlled by the boolean `-s, --windows-service` option or the equivalent [SERVER_WINDOWS_SERVICE](./../configuration/env.md#server-windows-service) env.
 
 ![Static Web Server running as a Windows Service](https://user-images.githubusercontent.com/1700322/169807572-d62a7bab-b596-4597-85f7-31a7c02aeefe.png)
 

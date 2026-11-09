@@ -6,7 +6,7 @@ outline: deep
 
 **`SWS`** provides several [security headers](https://web.dev/security-headers/) support.
 
-The feature is enabled by default when SWS is built with the [TLS](../features/tls.md) feature, as all release binaries are, and can be controlled by the boolean `--security-headers` option or the equivalent [SERVER_SECURITY_HEADERS](./../configuration/env#server_security_headers) env.
+The feature is enabled by default when SWS is built with the [TLS](../features/tls.md) feature, as all release binaries are, and can be controlled by the boolean `--security-headers` option or the equivalent [SERVER_SECURITY_HEADERS](./../configuration/env#server-security-headers) env.
 
 > [!TIP] Customize HTTP headers
 >

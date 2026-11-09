@@ -60,7 +60,9 @@ max-file-size = 8192
 
 > [!TIP] Pair with static compression
 >
-> The in-memory cache stores **uncompressed** file data. It is safe to combine with [on-the-fly compression](compression.md) and [pre-compressed file serving](compression-static.md) — the cache lookup happens before compression in the request pipeline.
+> The in-memory cache stores file data as it is on disk. It is safe to combine with [on-the-fly compression](compression.md) (applied after the cache lookup) and [pre-compressed file serving](compression-static.md): each pre-compressed variant is cached separately with its content coding, so every client gets the one matching its `Accept-Encoding`.
+
+Only `GET` and `HEAD` requests are served from the cache.
 
 > [!NOTE] Partial content (range requests)
 >
@@ -77,11 +79,11 @@ You can use this header to verify cache behaviour, e.g., with `curl`:
 
 ```sh
 # First request (miss - no X-Cache header):
-curl -sI http://localhost:8787/index.html | grep -i x-cache
+curl -sI http://localhost:8080/index.html | grep -i x-cache
 # (no output)
 
 # Second request (hit - X-Cache: HIT):
-curl -sI http://localhost:8787/index.html | grep -i x-cache
+curl -sI http://localhost:8080/index.html | grep -i x-cache
 # x-cache: HIT
 ```
 

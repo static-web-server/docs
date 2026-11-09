@@ -4,7 +4,7 @@
 
 See [Tokio ` worker_threads` API](https://docs.rs/tokio/latest/tokio/runtime/struct.Builder.html#method.worker_threads).
 
-This feature can be controlled by the numeric `-n, --threads-multiplier` option or the equivalent [SERVER_THREADS_MULTIPLIER](./../configuration/env.md#server_threads_multiplier) env.
+This feature can be controlled by the numeric `-n, --threads-multiplier` option or the equivalent [SERVER_THREADS_MULTIPLIER](./../configuration/env.md#server-threads-multiplier) env.
 
 ## Worker threads multiplier
 
@@ -36,7 +36,7 @@ Below is an example of how to adjust the number of worker threads.
 
 ```sh
 static-web-server \
-    --port 8787 \
+    --port 8080 \
     --root ./my-public-dir \
     # NOTE: "8" gets multiplied by the number of the available cores.
     --threads-multiplier 8

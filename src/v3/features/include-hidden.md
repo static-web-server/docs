@@ -8,7 +8,7 @@ outline: deep
 
 As a result, SWS will respond with a `404 Not Found` status for hidden files, and they will not appear in the [directory listing](./directory-listing.md) if enabled.
 
-This behaviour is controlled by the boolean `--include-hidden` option (disabled by default) or the equivalent [SERVER_INCLUDE_HIDDEN](./../configuration/env#server_include_hidden) env.
+This behaviour is controlled by the boolean `--include-hidden` option (disabled by default) or the equivalent [SERVER_INCLUDE_HIDDEN](./../configuration/env#server-include-hidden) env.
 
 ## Security considerations
 
@@ -42,7 +42,7 @@ Enable serving of hidden files:
 
 ```sh
 static-web-server \
-    --port 8787 \
+    --port 8080 \
     --root ./public \
     --directory-listing \
     --include-hidden

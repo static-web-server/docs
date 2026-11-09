@@ -9,11 +9,19 @@ The server can be configured via the following environment variables.
 
 ## SERVER_HOST
 
-Host address (e.g. `127.0.0.1` or `::1`). Default `[::]`.
+Host address (e.g. `127.0.0.1` or `::1`). The default `::` accepts both IPv6 and IPv4 connections where the OS supports dual-stack sockets. Default `::`.
 
 ## SERVER_PORT
 
-Host port. Default `8787`.
+Host port. Default `8080`.
+
+## SERVER_OPEN
+
+Open the server URL in the system default web browser after startup. See [Open in Browser](../features/open-browser.md). Default `false` (disabled).
+
+## SERVER_OPEN_PATH
+
+URL path opened in the browser. Requires `SERVER_OPEN`. Default empty (`/`).
 
 ## SERVER_LISTEN_FD
 
@@ -41,7 +49,7 @@ Maximum number of blocking threads. Default `512`.
 
 ## SERVER_ROOT
 
-Root directory path of static files. Default `./public`.
+Root directory path of static files. Default `.` (current directory).
 
 ## SERVER_ERROR_PAGE_50X
 
@@ -53,7 +61,7 @@ HTML file path for 404 errors. If the path is not specified or simply doesn't ex
 
 ## SERVER_FALLBACK_PAGE
 
-A HTML file path (not relative to the root) used for `GET` requests when the requested path doesn't exist. The fallback page is served with a `200` status code, useful when using client routers. If the path doesn't exist then the feature is not activated.
+A HTML file path (not relative to the root) used for `GET` requests when the requested path doesn't exist. The fallback page is served with a `200` status code, useful when using client routers. Requests for missing assets keep their `404`, see [Fallback Page](../features/error-pages.md#fallback-page-for-use-with-client-routers). If the path doesn't exist then the feature is not activated.
 
 ## SERVER_LOG_LEVEL
 
@@ -109,7 +117,7 @@ Canonical host name or IP of the HTTPS server. It depends on `SERVER_HTTPS_REDIR
 
 ## SERVER_HTTPS_REDIRECT_FROM_PORT
 
-HTTP host port where the redirect server will listen for requests to redirect them to HTTPS. It depends on `SERVER_HTTPS_REDIRECT` to be enabled. Default `80`.
+HTTP host port where the redirect server will listen for requests to redirect them to HTTPS. It depends on `SERVER_HTTPS_REDIRECT` to be enabled. Default `8080`.
 
 ## SERVER_HTTPS_REDIRECT_FROM_HOSTS
 
@@ -141,7 +149,7 @@ Specify a default code number to order directory listing entries per `Name`, `La
 
 ## SERVER_DIRECTORY_LISTING_FORMAT
 
-Specify a content format for directory listing entries. Formats supported: `html` or `json`. Default `html`.
+Specify a content format for directory listing entries. Formats supported: `html`, `json` or `auto` (chosen per request from the `Accept` header). See [Output format](../features/directory-listing.md#output-format). Default `html`.
 
 ## SERVER_DIRECTORY_LISTING_DOWNLOAD
 
@@ -193,15 +201,15 @@ Log the remote address of each request, if available. Default `false`.
 
 ## SERVER_LOG_X_REAL_IP
 
-Log the `X-Real-IP` header for remote IP information. Default `false`.
+Log the `X-Real-IP` header of requests from `SERVER_TRUSTED_PROXIES`. Default `false`.
 
 ## SERVER_LOG_FORWARDED_FOR
 
-Log the `X-Forwarded-For` header for remote IP information. Default `false`.
+Log the first `X-Forwarded-For` address of requests from `SERVER_TRUSTED_PROXIES`. Default `false`.
 
 ## SERVER_TRUSTED_PROXIES
 
-List of IPs to use `X-Forwarded-For` from. The default is to trust all. Default `""`.
+List of proxy IPs to use the `X-Real-IP` and `X-Forwarded-For` headers from. IPv4 entries also match their IPv4-mapped IPv6 form (`::ffff:a.b.c.d`). See [Trusted proxies](../features/logging.md#trusted-proxies). Default empty (trusts no one, so the headers are not logged).
 
 ## SERVER_REDIRECT_TRAILING_SLASH
 
@@ -229,7 +237,7 @@ Set a default `charset=utf-8` parameter on limited set of `text` responses that 
 
 ## SERVER_HEALTH
 
-Add the `/livez` (liveness) and `/readyz` (readiness) endpoints for Kubernetes-style probes. They answer `GET` and `HEAD` with `200 OK` and log requests at `debug` level only. See [Health endpoint](../features/health-endpoint.md) for details. Default `false` (disabled).
+Add the `/livez` (liveness) and `/readyz` (readiness) endpoints for Kubernetes-style probes. They answer `GET` and `HEAD` with `200 OK` (`/readyz` returns `503` once shutdown starts or while the root directory is missing) and log requests at `debug` level only. See [Health endpoint](../features/health-endpoint.md) for details. Default `false` (disabled).
 
 ## SERVER_METRICS
 

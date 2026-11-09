@@ -6,11 +6,11 @@ outline: deep
 
 **`SWS`** provides a directory listing feature to display the content of directories.
 
-This feature is disabled by default and can be controlled by the boolean `-z, --directory-listing` option or the equivalent [SERVER_DIRECTORY_LISTING](./../configuration/env#server_directory_listing) env.
+This feature is disabled by default and can be controlled by the boolean `-z, --directory-listing` option or the equivalent [SERVER_DIRECTORY_LISTING](./../configuration/env#server-directory-listing) env.
 
 ```sh
 static-web-server \
-    --port 8787 \
+    --port 8080 \
     --root ./public \
     --directory-listing
 ```
@@ -35,7 +35,7 @@ You can also use the `sort` query parameter to sort manually by certain attribut
 
 ### Sorting by default
 
-Sometimes one wants to sort by a certain attribute but by **default**. In that case, the default ascending or descending ordering of files/dirs by their attributes is provided by the numeric `--directory-listing-order` option or the equivalent [SERVER_DIRECTORY_LISTING_ORDER](./../configuration/env#server_directory_listing_order) env.
+Sometimes one wants to sort by a certain attribute but by **default**. In that case, the default ascending or descending ordering of files/dirs by their attributes is provided by the numeric `--directory-listing-order` option or the equivalent [SERVER_DIRECTORY_LISTING_ORDER](./../configuration/env#server-directory-listing-order) env.
 
 To do so you have to pass a [code sorting number](#code-numbers-for-sorting). E.g `--directory-listing-order=2`.
 
@@ -71,7 +71,7 @@ Example:
 
 ```sh
 static-web-server \
-    --port 8787 \
+    --port 8080 \
     --root ./public \
     --directory-listing \
     # E.g Sorting file/dir names in descending order
@@ -80,7 +80,11 @@ static-web-server \
 
 ## Output format
 
-**`SWS`** provides support for specifying an output format either HTML (default) or JSON for the directory listing entries via the string `--directory-listing-format` option or the equivalent [SERVER_DIRECTORY_LISTING_FORMAT](./../configuration/env#server_directory_listing_format) env.
+**`SWS`** provides support for specifying an output format for the directory listing entries via the string `--directory-listing-format` option or the equivalent [SERVER_DIRECTORY_LISTING_FORMAT](./../configuration/env#server-directory-listing-format) env:
+
+- `html` (default): an HTML page.
+- `json`: a JSON array, see [JSON format](#json-format).
+- `auto`: chosen per request from the `Accept` header, see [Automatic format](#automatic-format).
 
 > [!TIP] Tips
 >
@@ -114,7 +118,7 @@ Here is an example of serving the directory listing in JSON format.
 
 ```sh
 static-web-server \
-    --port 8787 \
+    --port 8080 \
     --root ./public \
     --directory-listing \
     --directory-listing-format="json"
@@ -123,26 +127,39 @@ static-web-server \
 And below is a client request example to illustrate how the feature works.
 
 ```sh
-curl -iH "content-type: application/json" http://localhost:8787
+curl -i http://localhost:8080
 # HTTP/1.1 200 OK
 # content-type: application/json
 # content-length: 163
-# cache-control: max-age=86400
+# cache-control: no-cache
 # date: Tue, 11 Oct 2022 23:24:55 GMT
 
 # [{"name":"spécial directöry","type":"directory","mtime":"2022-10-07T00:53:50Z"},{"name":"index.html.gz","type":"file","mtime":"2022-09-27T22:44:34Z","size":332}]⏎
 ```
 
+### Automatic format
+
+With `--directory-listing-format=auto`, SWS picks the format from the request's `Accept` header, following its quality values: `application/json` gets JSON, and `text/html` gets HTML. HTML is also used when the header is missing or lists neither type. The response includes `Vary: Accept` so caches store each format separately.
+
+```sh
+static-web-server --root ./public --directory-listing --directory-listing-format=auto
+
+curl -H "Accept: application/json" http://localhost:8080/  # JSON
+curl http://localhost:8080/                                 # HTML
+```
+
 ## Directory Download
 
-**`SWS`** supports downloading the content of a directory as a single file when **Directory Listing** feature is enabled. To activate, specify the list of download format to enable using the `--directory-listing-download` flag or the equivalent [SERVER_DIRECTORY_LISTING_DOWNLOAD](./../configuration/env#server_directory_listing_download) env. Currently, `targz` format is supported.
+**`SWS`** supports downloading the content of a directory as a single file when **Directory Listing** feature is enabled. To activate, specify the list of download format to enable using the `--directory-listing-download` flag or the equivalent [SERVER_DIRECTORY_LISTING_DOWNLOAD](./../configuration/env#server-directory-listing-download) env. Currently, `targz` format is supported.
 
 ```sh
 static-web-server \
-    --port 8787 \
+    --port 8080 \
     --root ./public \
     --directory-listing \
     --directory-listing-download="targz"
 ```
 
 When **Directory Download** is enabled, append `?download` to a directory URL to download it. A link will also be added to the top part of **HTML** output format.
+
+When [symlinks are followed](./follow-symlinks.md), the archive skips entries whose target resolves outside the root directory.

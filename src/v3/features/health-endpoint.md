@@ -7,7 +7,7 @@ SWS provides optional health endpoints for the Kubernetes-style [liveness and re
 | `/livez`  | Liveness  |
 | `/readyz` | Readiness |
 
-This feature is disabled by default and can be controlled by the boolean `--health` option, the equivalent [SERVER_HEALTH](../configuration/env.md#server_health) env, or the `health` key in the [config file](../configuration/file.md).
+This feature is disabled by default and can be controlled by the boolean `--health` option, the equivalent [SERVER_HEALTH](../configuration/env.md#server-health) env, or the `health` key in the [config file](../configuration/file.md).
 
 ```sh
 static-web-server --root ./public --health
@@ -33,10 +33,15 @@ When the feature is enabled, SWS answers `GET` and `HEAD` requests to `/livez` a
 - Other methods are not handled by the health endpoints: `OPTIONS` goes on to the rest of the request pipeline (e.g. [CORS](./cors.md)), and methods SWS does not support, such as `POST`, return `405 Method Not Allowed`.
 - Requests are logged at `debug` level instead of the usual `info` level, to avoid noise from frequent probes. See [Logging](./logging.md#per-request-logging).
 
-Once shutdown starts (`SIGTERM`, `SIGINT`, `SIGQUIT` or <kbd>CTRL + C</kbd> on Windows), `/readyz` returns `503 Service Unavailable` with the body `shutting down`, while `/livez` keeps returning `200 OK`. With a [grace period](./graceful-shutdown.md), SWS keeps serving requests during that time, so load balancers stop routing new traffic before connections close.
+`/readyz` returns `503 Service Unavailable` instead, while `/livez` keeps returning `200 OK`:
+
+- Once shutdown starts (`SIGTERM`, `SIGINT`, `SIGQUIT` or <kbd>CTRL + C</kbd> on Windows), with the body `shutting down`. With a [grace period](./graceful-shutdown.md), SWS keeps serving requests during that time, so load balancers stop routing new traffic before connections close.
+- While the root directory is missing or not a directory, with the body `root directory unavailable`, e.g. before a mounted volume is ready. It recovers on its own once the directory is back.
+
+[Metrics](./metrics.md) don't count requests to the health endpoints.
 
 ```sh
-curl -i http://localhost:8787/livez
+curl -i http://localhost:8080/livez
 ```
 
 ```text
@@ -72,7 +77,7 @@ spec:
         - --log-level=info
         - --health
       ports:
-        - containerPort: 8787
+        - containerPort: 8080
           name: http
       livenessProbe:
         httpGet:

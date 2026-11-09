@@ -12,9 +12,9 @@ This feature is **Unix-only** (Linux, macOS, FreeBSD, etc.) and is mutually excl
 
 | CLI option                   | Environment variable                                                        | Description                                                                                                          |
 | ---------------------------- | --------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `--unix-socket <PATH>`       | [`SERVER_UNIX_SOCKET`](../configuration/env#server_unix_socket)             | Filesystem path to bind the socket (e.g. `/run/sws.sock`).                                                           |
-| `--unix-socket-mode <OCTAL>` | [`SERVER_UNIX_SOCKET_MODE`](../configuration/env#server_unix_socket_mode)   | Permission bits in octal (`660`, `0660`, `0o660`). Default: process umask.                                           |
-| `--unix-socket-force`        | [`SERVER_UNIX_SOCKET_FORCE`](../configuration/env#server_unix_socket_force) | Remove a stale socket file before binding (socket-type files only; refuses to clobber regular files or directories). |
+| `--unix-socket <PATH>`       | [`SERVER_UNIX_SOCKET`](../configuration/env#server-unix-socket)             | Filesystem path to bind the socket (e.g. `/run/sws.sock`).                                                           |
+| `--unix-socket-mode <OCTAL>` | [`SERVER_UNIX_SOCKET_MODE`](../configuration/env#server-unix-socket-mode)   | Permission bits in octal (`660`, `0660`, `0o660`). Default: process umask.                                           |
+| `--unix-socket-force`        | [`SERVER_UNIX_SOCKET_FORCE`](../configuration/env#server-unix-socket-force) | Remove a stale socket file before binding (socket-type files only; refuses to clobber regular files or directories). |
 
 > [!INFO] Socket cleanup
 >
@@ -52,13 +52,13 @@ server {
 
 > [!NOTE]
 >
-> Because UDS peers lack an IP address, SWS reports no remote address for connections arriving over the socket. Use the proxy's `X-Real-IP` or `X-Forwarded-For` headers to preserve the original client address.
+> Because UDS peers lack an IP address, SWS reports no remote address for connections arriving over the socket. For the same reason, the `X-Real-IP` and `X-Forwarded-For` headers are not logged, since they can only be trusted from [known proxy IPs](./logging.md#trusted-proxies). Log the client address at the proxy instead.
 
 ## TOML configuration
 
 ```toml
 [general]
 unix-socket = "/run/sws.sock"
-unix-socket-mode = 660
+unix-socket-mode = 0o660 # TOML octal integer
 unix-socket-force = true
 ```

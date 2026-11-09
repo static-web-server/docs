@@ -2,17 +2,25 @@
 
 SWS provides an optional `/metrics` endpoint that exposes Prometheus-compatible metrics about HTTP traffic. Useful for monitoring request rates, latency, error rates, and connection counts.
 
-This feature is disabled by default and can be controlled by the boolean `--metrics` option or the equivalent [SERVER_METRICS](../configuration/env#server_metrics) env.
+This feature is disabled by default and can be controlled by the boolean `--metrics` option or the equivalent [SERVER_METRICS](../configuration/env#server-metrics) env.
 
 ## Exposed metrics
 
-| Metric                              | Type      | Labels               | Description                                                              |
-| ----------------------------------- | --------- | -------------------- | ------------------------------------------------------------------------ |
-| `sws_http_requests_total`           | Counter   | method, status, host | Total requests by method, status class (2xx, 4xx, etc.), and Host header |
-| `sws_http_request_duration_seconds` | Histogram | method, status, host | Request latency with buckets from 50µs to 10s                            |
-| `sws_http_response_bytes_total`     | Counter   | method, status, host | Total response bytes (from Content-Length)                               |
-| `sws_http_requests_inflight`        | Gauge     | —                    | Requests currently being processed                                       |
-| `sws_http_connections_active`       | Gauge     | —                    | Active HTTP connections                                                  |
+| Metric                              | Type      | Labels               | Description                                                       |
+| ----------------------------------- | --------- | -------------------- | ----------------------------------------------------------------- |
+| `sws_http_requests_total`           | Counter   | method, status, host | Total requests by method, status class (2xx, 4xx, etc.), and host |
+| `sws_http_request_duration_seconds` | Histogram | method, status, host | Request latency with buckets from 50µs to 10s                     |
+| `sws_http_response_bytes_total`     | Counter   | method, status, host | Total response bytes (from Content-Length)                        |
+| `sws_http_requests_inflight`        | Gauge     | —                    | Requests currently being processed                                |
+| `sws_http_connections_active`       | Gauge     | —                    | Active HTTP connections                                           |
+
+Label values come from a fixed set, so clients can't create new series with arbitrary methods or `Host` headers:
+
+- `method`: `GET`, `HEAD`, `OPTIONS` or `other`.
+- `status`: the status class, from `1xx` to `5xx`.
+- `host`: the matching [virtual host](./virtual-hosting.md) name (the port is ignored), or `other`. Without virtual hosts, it is always `other`.
+
+Requests to `/metrics` and, when enabled, to the [health endpoints](./health-endpoint.md) are not counted.
 
 When built with the `experimental` feature and `RUSTFLAGS="--cfg tokio_unstable"`, Tokio runtime metrics (worker threads, task scheduling, etc.) are also included in the output.
 
@@ -23,16 +31,16 @@ static-web-server --root /var/www --metrics
 ```
 
 ```sh
-curl http://localhost/metrics
+curl http://localhost:8080/metrics
 ```
 
 ```text
 # HELP sws_http_requests_total Total HTTP requests by method, status class, and host.
 # TYPE sws_http_requests_total counter
-sws_http_requests_total{host="localhost",method="GET",status="2xx"} 42
+sws_http_requests_total{host="other",method="GET",status="2xx"} 42
 # HELP sws_http_request_duration_seconds HTTP request duration in seconds by method, status class, and host.
 # TYPE sws_http_request_duration_seconds histogram
-sws_http_request_duration_seconds_bucket{host="localhost",method="GET",status="2xx",le="0.001"} 38
+sws_http_request_duration_seconds_bucket{host="other",method="GET",status="2xx",le="0.001"} 38
 ...
 # HELP sws_http_connections_active Number of currently active HTTP connections.
 # TYPE sws_http_connections_active gauge

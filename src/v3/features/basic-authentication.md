@@ -2,7 +2,7 @@
 
 **`SWS`** provides ['Basic' HTTP Authentication Scheme](https://datatracker.ietf.org/doc/html/rfc7617) using an `user:password` pair.
 
-This feature is disabled by default and can be controlled by the string `--basic-auth` option or the equivalent [SERVER_BASIC_AUTH](./../configuration/env#server_basic_auth) env.
+This feature is disabled by default and can be controlled by the string `--basic-auth` option or the equivalent [SERVER_BASIC_AUTH](./../configuration/env#server-basic-auth) env.
 
 The format to use is the following:
 
@@ -38,7 +38,9 @@ Finally, assign the credentials and run the server.
 
 ```sh
 static-web-server \
-    --port 8787 \
+    --port 8080 \
     --root ./public \
     --basic-auth 'username:$2y$...'
 ```
+
+Every request needs valid credentials, including `OPTIONS` requests. The only exception is a [CORS](./cors.md) preflight request (`OPTIONS` with the `Origin` and `Access-Control-Request-Method` headers, while CORS is enabled), since browsers send it without credentials.
