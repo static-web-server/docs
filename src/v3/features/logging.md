@@ -8,13 +8,13 @@ outline: deep
 
 ## Log Level
 
-Set the level with the `-g, --log-level` option or the equivalent [SERVER_LOG_LEVEL](./../configuration/env#server_log_level) env.
+Set the level with the `-g, --log-level` option or the equivalent [SERVER_LOG_LEVEL](./../configuration/env#server-log-level) env.
 
 Values are `error`, `warn`, `info`, `debug` and `trace`. The default is `error`, which is suited for production.
 
 ```sh
 static-web-server \
-    --port 8787 \
+    --port 8080 \
     --root ./my-public-dir \
     --log-level "info"
 ```
@@ -23,20 +23,20 @@ The default `error` level keeps production output limited to failures. Use `info
 
 ## Log Format
 
-SWS writes logs as single-line JSON by default. Set the format with the `--log-format` option or the equivalent [SERVER_LOG_FORMAT](./../configuration/env#server_log_format) env.
+SWS writes logs as single-line JSON by default. Set the format with the `--log-format` option or the equivalent [SERVER_LOG_FORMAT](./../configuration/env#server-log-format) env.
 
 ### JSON format
 
 The `json` format writes one JSON object per line to standard error. Every entry contains `timestamp`, `level`, `message` and `target`. Additional fields depend on the event.
 
 ```sh
-static-web-server -p 8787 -d ./public/ -g info --log-format json
+static-web-server -p 8080 -d ./public/ -g info --log-format json
 ```
 
 ```json
 {"timestamp":"2026-05-29T23:42:41.505241+02:00","level":"INFO","message":"starting Static Web Server","name":"static-web-server","version":"2.42.0","target":"static_web_server::server"}
 {"timestamp":"2026-05-29T23:42:41.506488+02:00","level":"INFO","message":"log level","log_level":"info","target":"static_web_server::server"}
-{"timestamp":"2026-05-29T23:42:41.506629+02:00","level":"INFO","message":"server bound to tcp socket","addr":"[::]:8787","target":"static_web_server::server"}
+{"timestamp":"2026-05-29T23:42:41.506629+02:00","level":"INFO","message":"server bound to tcp socket","addr":"[::]:8080","target":"static_web_server::server"}
 {"timestamp":"2026-05-29T23:42:41.506659+02:00","level":"INFO","message":"runtime worker threads","worker_threads":4,"target":"static_web_server::server"}
 ```
 
@@ -52,7 +52,7 @@ Feature configuration logs share a common `enabled` boolean field:
 The `pretty` format writes human-readable text, suited for local development. Fields appear after the message as `key=value` pairs.
 
 ```sh
-static-web-server -p 8787 -d ./public/ -g info --log-format pretty
+static-web-server -p 8080 -d ./public/ -g info --log-format pretty
 ```
 
 ```log
@@ -82,7 +82,7 @@ $ TZ="America/Lima" \
 
 ## Log output with ANSI
 
-The `pretty` format does not output ANSI escape codes by default. Enable colors and other text formatting with the boolean `--log-with-ansi` option or the equivalent [SERVER_LOG_WITH_ANSI](./../configuration/env#server_log_with_ansi) env. This option has no effect on the `json` format.
+The `pretty` format does not output ANSI escape codes by default. Enable colors and other text formatting with the boolean `--log-with-ansi` option or the equivalent [SERVER_LOG_WITH_ANSI](./../configuration/env#server-log-with-ansi) env. This option has no effect on the `json` format.
 
 ```sh
 static-web-server -p 8788 -d ./public/ -g trace --log-format pretty --log-with-ansi
@@ -110,7 +110,7 @@ No line is logged when SWS fails to build a response. The `remote_addr`, `x_real
 
 SWS adds the client's _Remote Address (IP)_ to each request log.
 
-This feature is disabled by default. Enable it with the boolean `--log-remote-address` option or the equivalent [SERVER_LOG_REMOTE_ADDRESS](./../configuration/env#server_log_remote_address) env. When enabled, request logs include a `remote_addr` field.
+This feature is disabled by default. Enable it with the boolean `--log-remote-address` option or the equivalent [SERVER_LOG_REMOTE_ADDRESS](./../configuration/env#server-log-remote-address) env. When enabled, request logs include a `remote_addr` field.
 
 ```sh
 static-web-server -a "0.0.0.0" -p 8080 -d docker/public/ -g info --log-remote-address=true
@@ -125,7 +125,7 @@ static-web-server -a "0.0.0.0" -p 8080 -d docker/public/ -g info --log-remote-ad
 
 Some upstream proxies report the client's real IP address in the `X-Real-IP` header.
 
-Enable logging of the `X-Real-IP` header with the `--log-x-real-ip` option or the equivalent [SERVER_LOG_X_REAL_IP](../configuration/env#server_log_x_real_ip) env. When enabled, request logs include an `x_real_ip` field.
+Enable logging of the `X-Real-IP` header with the `--log-x-real-ip` option or the equivalent [SERVER_LOG_X_REAL_IP](../configuration/env#server-log-x-real-ip) env. When enabled, request logs include an `x_real_ip` field.
 
 ```json
 {
@@ -142,17 +142,19 @@ Enable logging of the `X-Real-IP` header with the `--log-x-real-ip` option or th
 
 If the value of the `X-Real-IP` header does not parse as an IP address, the `x_real_ip` field is omitted.
 
-To restrict logging to requests that originate from trusted proxy IPs, use the `--trusted-proxies` option or the equivalent [SERVER_TRUSTED_PROXIES](../configuration/env#server_trusted_proxies) env. This is a comma-separated list of IPs. An empty list (the default) trusts all IPs.
+The header is logged only for requests from a [trusted proxy](#trusted-proxies).
+
+## Trusted proxies
+
+Any client can send `X-Real-IP` or `X-Forwarded-For`, so SWS logs these headers only for requests coming from the proxy IPs listed in the `--trusted-proxies` option or the equivalent [SERVER_TRUSTED_PROXIES](../configuration/env#server-trusted-proxies) env, a comma-separated list of IPs.
+
+The list is empty by default, which trusts no one: the headers are never logged until it is set, and SWS logs a warning at startup when they are set to be logged without trusted proxies. IPv4 entries also match their IPv4-mapped IPv6 form (`::ffff:a.b.c.d`), as seen on the default dual-stack `::` listener. Over a [Unix domain socket](./unix-domain-socket.md) peers have no IP address, so the headers are never logged.
 
 ## Logging Client IP from X-Forwarded-For header
 
-> Note: Trust this header only when the upstream handles `X-Forwarded-For` securely and the `--trusted-proxies` option is set.
-
 When SWS runs behind a reverse proxy, the `remote_addr` field reports the proxy's IP address, not the client's. The proxy can be configured to send the [X-Forwarded-For header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For), a comma-separated list of IP addresses that starts with the _real remote client IP_ followed by intermediate proxies.
 
-Enable logging of the real remote IP with the `--log-forwarded-for` option or the equivalent [SERVER_LOG_FORWARDED_FOR](../configuration/env#server_log_forwarded_for) env. By default this logs every request with a correctly formatted `X-Forwarded-For` header, adding a `real_remote_ip` field.
-
-Because any proxy in the chain can change the `X-Forwarded-For` header, the reported IP may not be trustworthy. Restrict logging to trusted proxy IPs with the `--trusted-proxies` option or the equivalent [SERVER_TRUSTED_PROXIES](../configuration/env#server_trusted_proxies) env. This is a comma-separated list of IPs. An empty list (the default) trusts all IPs.
+Enable logging of the real remote IP with the `--log-forwarded-for` option or the equivalent [SERVER_LOG_FORWARDED_FOR](../configuration/env#server-log-forwarded-for) env. Requests from a [trusted proxy](#trusted-proxies) with a correctly formatted `X-Forwarded-For` header then get a `real_remote_ip` field with its first address.
 
 Command used for the following examples:
 
@@ -165,7 +167,7 @@ Look for these lines in the log output:
 ```json
 {"timestamp":"2026-05-29T23:43:47.071681+02:00","level":"INFO","message":"log level","log_level":"info","target":"static_web_server::server"}
 {"timestamp":"2026-05-29T23:43:47.071700+02:00","level":"INFO","message":"log X-Forwarded-For header","enabled":true,"target":"static_web_server::log_addr"}
-{"timestamp":"2026-05-29T23:43:47.071710+02:00","level":"INFO","message":"trusted IPs for X-Forwarded-For","trusted_proxies":"[::1]","target":"static_web_server::log_addr"}
+{"timestamp":"2026-05-29T23:43:47.071710+02:00","level":"INFO","message":"trusted IPs for X-Real-IP and X-Forwarded-For","trusted_proxies":"[::1]","target":"static_web_server::log_addr"}
 ```
 
 Simulate a request from behind a reverse proxy with an additional intermediate proxy:
@@ -239,10 +241,10 @@ curl "http://[::1]:8080" --header "X-Forwarded-For: <iframe src=//malware.attack
 
 **`SWS`** can write one access log line per request in a format you define, for example the nginx or NCSA combined format. The line is written when the response body is finished, so it carries the status code, the number of body bytes sent and the duration of the whole transfer.
 
-This feature is disabled by default. Set a format with the `--access-log-format` option, the equivalent [SERVER_ACCESS_LOG_FORMAT](./../configuration/env#server_access_log_format) env or the `access-log-format` key under `[general]` in the [TOML file](./../configuration/file). When a format is set, it replaces the `response` line described in [Per-request logging](#per-request-logging).
+This feature is disabled by default. Set a format with the `--access-log-format` option, the equivalent [SERVER_ACCESS_LOG_FORMAT](./../configuration/env#server-access-log-format) env or the `access-log-format` key under `[general]` in the [TOML file](./../configuration/file). When a format is set, it replaces the `response` line described in [Per-request logging](#per-request-logging).
 
 ```sh
-static-web-server -p 8787 -d ./public/ -g info \
+static-web-server -p 8080 -d ./public/ -g info \
     --access-log-format '%{remote_addr} - [%{timestamp}] "%{method} %{uri} %{version}" %{status} %{bytes} "%{referer}" "%{user_agent}"'
 ```
 
@@ -271,7 +273,7 @@ A token is written as `%{name}`. `%%` writes a literal `%`. Any other text is co
 | `%{referer}`       | `Referer` header                                                                                                                                                                                        |
 | `%{timestamp}`     | Local time when the line is written, in the Common Log Format, e.g. `29/May/2026:23:43:47 +0200`, honoring `TZ`                                                                                         |
 
-A token without a value, or with an empty one, is written as `-`. `%{x_real_ip}` and `%{forwarded_for}` need no `--log-x-real-ip` or `--log-forwarded-for`: those options only change the default request line. When `--trusted-proxies` is set, the two tokens are logged only for requests from those IPs and are `-` otherwise.
+A token without a value, or with an empty one, is written as `-`. `%{x_real_ip}` and `%{forwarded_for}` need no `--log-x-real-ip` or `--log-forwarded-for`: those options only change the default request line. Like them, the two tokens are logged only for requests from a [trusted proxy](#trusted-proxies) and are `-` otherwise.
 
 ### Output
 
@@ -300,7 +302,7 @@ By default **SWS** writes log records to standard error. The `--log-file` option
 
 | CLI option          | Environment variable                                      | TOML key   | Description                                                                                                                                             |
 | ------------------- | --------------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--log-file <PATH>` | [`SERVER_LOG_FILE`](../configuration/env#server_log_file) | `log-file` | Filesystem path to stream log records to in addition to `stderr`. Missing parent directories are created on startup. The file is opened in append mode. |
+| `--log-file <PATH>` | [`SERVER_LOG_FILE`](../configuration/env#server-log-file) | `log-file` | Filesystem path to stream log records to in addition to `stderr`. Missing parent directories are created on startup. The file is opened in append mode. |
 
 The file uses the format selected by [`--log-format`](./logging.md#log-format) (`json` by default) and the level selected by [`--log-level`](./logging.md#log-level). ANSI escape codes are **always disabled** for file output regardless of `--log-with-ansi`, so the file stays parsable.
 
@@ -308,7 +310,7 @@ The file uses the format selected by [`--log-format`](./logging.md#log-format) (
 
 ```sh
 static-web-server \
-    --port 8787 \
+    --port 8080 \
     --root ./my-public-dir \
     --log-level info \
     --log-format json \

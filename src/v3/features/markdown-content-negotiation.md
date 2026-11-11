@@ -10,7 +10,7 @@ This feature enables serving the raw markdown source of your documentation or co
 
 The HTTP methods supported are `GET` and `HEAD`.
 
-This feature is disabled by default and can be controlled by the boolean `--accept-markdown` option or the equivalent [SERVER_ACCEPT_MARKDOWN](../configuration/env#server_accept_markdown) env.
+This feature is disabled by default and can be controlled by the boolean `--accept-markdown` option or the equivalent [SERVER_ACCEPT_MARKDOWN](../configuration/env#server-accept-markdown) env.
 
 ## How it works
 
@@ -23,6 +23,10 @@ When a client sends a request with the `Accept: text/markdown` header, SWS will 
 If a markdown variant is found, it will be served with the `Content-Type: text/markdown; charset=utf-8` header. If no markdown variant exists, the request falls back to normal static file handling.
 
 **Important**: The feature only activates for the explicit `Accept: text/markdown` header. Wildcard headers like `Accept: text/*` or `Accept: */*` will not trigger markdown content negotiation.
+
+### Caching
+
+Since the same URL can return HTML or markdown, SWS adds `Vary: Accept` to HTML and markdown responses (including directory listings) while the feature is enabled, so shared caches store each variant separately. Other assets such as CSS, JS or images don't get it.
 
 ## Usage examples
 

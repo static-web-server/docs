@@ -6,7 +6,7 @@ outline: deep
 
 **`SWS`** provides support for redirecting HTTP requests to HTTPS via a [301 Moved Permanently](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/301) redirect status response code.
 
-This feature is disabled by default and can be controlled by the boolean `--https-redirect` option or the equivalent [SERVER_HTTPS_REDIRECT](./../configuration/env#server_https_redirect) env.
+This feature is disabled by default and can be controlled by the boolean `--https-redirect` option or the equivalent [SERVER_HTTPS_REDIRECT](./../configuration/env#server-https-redirect) env.
 
 > [!INFO] TLS required
 >
@@ -24,7 +24,7 @@ It depends on "https-redirect" option to be enabled. The default is `localhost`.
 
 ## HTTPS redirect from port
 
-The string `--https-redirect-from-port` option represents the HTTP host port where the redirect server will listen for requests (source) to redirect them to HTTPS. It depends on "https-redirect" option to be enabled. The default is `80`.
+The string `--https-redirect-from-port` option represents the HTTP host port where the redirect server will listen for requests (source) to redirect them to HTTPS. It depends on "https-redirect" option to be enabled. The default is `8080`, the same as the default `--port`, so set a different port for one of them (e.g. `--port 8443`).
 
 ## HTTPS redirect from hosts
 
@@ -49,7 +49,7 @@ static-web-server -p 4433 -d public/ -g trace \
     # HTTPS redirect options
     --https-redirect=true \
     --https-redirect-host="localhost" \
-    --https-redirect-from-port=8787 \
+    --https-redirect-from-port=8080 \
     --https-redirect-from-hosts="localhost"
     # or using multiple hostnames/IPs:
     # --https-redirect-from-hosts = "localhost,127.0.0.1"
@@ -61,11 +61,11 @@ After running the server, the logs should look as follows.
 .......
 2023-06-01T22:30:17.555338Z  INFO static_web_server::server: http to https redirect: enabled=true
 2023-06-01T22:30:17.555349Z  INFO static_web_server::server: http to https redirect host: localhost
-2023-06-01T22:30:17.555359Z  INFO static_web_server::server: http to https redirect from port: 8787
+2023-06-01T22:30:17.555359Z  INFO static_web_server::server: http to https redirect from port: 8080
 2023-06-01T22:30:17.555368Z  INFO static_web_server::server: http to https redirect from hosts: localhost
 2023-06-01T22:30:17.557507Z  INFO Server::start_server{addr_str="[::]:4433" threads=8}: static_web_server::server: close time.busy=0.00ns time.idle=3.00µs
 2023-06-01T22:30:17.557547Z  INFO static_web_server::server: http2 server is listening on https://[::]:4433
-2023-06-01T22:30:17.557583Z  INFO Server::start_server{addr=[::]:8787 threads=8}: static_web_server::server: close time.busy=0.00ns time.idle=1.92µs
-2023-06-01T22:30:17.557596Z  INFO static_web_server::server: http1 redirect server is listening on http://[::]:8787
+2023-06-01T22:30:17.557583Z  INFO Server::start_server{addr=[::]:8080 threads=8}: static_web_server::server: close time.busy=0.00ns time.idle=1.92µs
+2023-06-01T22:30:17.557596Z  INFO static_web_server::server: http1 redirect server is listening on http://[::]:8080
 2023-06-01T22:30:17.557768Z  INFO static_web_server::server: press ctrl+c to shut down the servers
 ```

@@ -1,6 +1,6 @@
 # HTTP/1
 
-The HTTP/1.1 is the protocol by default and can be used by specifying a host address via the `-a, --host` ([SERVER_HOST](./../configuration/env#server_host)) argument, the port of the host via `-p, --port` ([SERVER_PORT](./../configuration/env#server_port)) and the directory of the static files using the `-d, --root` ([SERVER_ROOT](./../configuration/env#server_root)) argument.
+The HTTP/1.1 is the protocol by default and can be used by specifying a host address via the `-a, --host` ([SERVER_HOST](./../configuration/env#server-host)) argument, the port of the host via `-p, --port` ([SERVER_PORT](./../configuration/env#server-port)) and the directory of the static files using the `-d, --root` ([SERVER_ROOT](./../configuration/env#server-root)) argument.
 
 > [!INFO] Tips
 >
@@ -13,6 +13,6 @@ Below is an example of how to run the server using HTTP/1.
 ```sh
 static-web-server \
     --host 127.0.0.1 \
-    --port 8787 \
+    --port 8080 \
     --root ./my-public-dir
 ```

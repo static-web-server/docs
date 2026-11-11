@@ -9,13 +9,13 @@ outline: deep
 A list of allowed origin hosts (URLs) should be specified and separated by commas.
 Or an asterisk (\*) can be used to allow any host.
 
-This feature is disabled by default and can be controlled by the string `-c, --cors-allow-origins` option or the equivalent [SERVER_CORS_ALLOW_ORIGINS](../configuration/env#server_cors_allow_origins) env.
+This feature is disabled by default and can be controlled by the string `-c, --cors-allow-origins` option or the equivalent [SERVER_CORS_ALLOW_ORIGINS](../configuration/env#server-cors-allow-origins) env.
 
 Below is an example of how to enable CORS.
 
 ```sh
 static-web-server \
-    --port 8787 \
+    --port 8080 \
     --root ./my-public-dir \
     --cors-allow-origins "https://domain.com"
 
@@ -27,7 +27,7 @@ static-web-server \
 
 The server also supports a list of [CORS allowed headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Headers) separated by commas.
 
-This feature depends on `--cors-allow-origins` to be used along with this feature. It can be controlled by the string `-j, --cors-allow-headers` option or the equivalent [SERVER_CORS_ALLOW_HEADERS](../configuration/env#server_cors_allow_headers) env.
+This feature depends on `--cors-allow-origins` to be used along with this feature. It can be controlled by the string `-j, --cors-allow-headers` option or the equivalent [SERVER_CORS_ALLOW_HEADERS](../configuration/env#server-cors-allow-headers) env.
 
 > [!INFO] Tips
 >
@@ -38,7 +38,7 @@ Below is an example of how to CORS.
 
 ```sh
 static-web-server \
-    --port 8787 \
+    --port 8080 \
     --root ./public \
     --cors-allow-origins "https://domain.com" \
     --cors-allow-headers "origin, content-type, x-requested-with"
@@ -48,7 +48,7 @@ static-web-server \
 
 The server also supports a list of [CORS-exposed headers to scripts](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers) separated by commas.
 
-This feature depends on `--cors-allow-origins` to be used along with this feature. It can be controlled by the string `--cors-expose-headers` option or the equivalent [SERVER_CORS_EXPOSE_HEADERS](../configuration/env#server_cors_expose_headers) env.
+This feature depends on `--cors-allow-origins` to be used along with this feature. It can be controlled by the string `--cors-expose-headers` option or the equivalent [SERVER_CORS_EXPOSE_HEADERS](../configuration/env#server-cors-expose-headers) env.
 
 > [!INFO] Tips
 >
@@ -59,7 +59,7 @@ Below is an example of how to CORS.
 
 ```sh
 static-web-server \
-    --port 8787 \
+    --port 8080 \
     --root ./public \
     --cors-allow-origins "https://domain.com" \
     --cors-expose-headers "origin, content-type, x-requested-with"

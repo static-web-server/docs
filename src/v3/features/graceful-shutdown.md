@@ -15,7 +15,7 @@ Sometimes one wants to control the graceful shutdown process for different reaso
 
 In these situations, SWS allows delaying the graceful shutdown process right after a `SIGTERM` providing a _grace period_ in seconds.
 
-The feature is disabled by default and can be controlled by the numeric `-q, --grace-period` option or its equivalent [SERVER_GRACE_PERIOD](./../configuration/env.md#server_grace_period) env.
+The feature is disabled by default and can be controlled by the numeric `-q, --grace-period` option or its equivalent [SERVER_GRACE_PERIOD](./../configuration/env.md#server-grace-period) env.
 
 > [!TIP] Tip
 >
@@ -24,7 +24,7 @@ The feature is disabled by default and can be controlled by the numeric `-q, --g
 Here is an example of delaying the graceful shutdown process by `10` seconds after a `SIGTERM`.
 
 ```sh
-static-web-server -p 8787 -d ./public/ -g trace --grace-period 10
+static-web-server -p 8080 -d ./public/ -g trace --grace-period 10
 ```
 
 With the [health endpoints](./health-endpoint.md) enabled, `/readyz` returns `503 Service Unavailable` during the grace period.

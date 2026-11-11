@@ -73,6 +73,7 @@ export const v3: DefaultTheme.Config = {
           { text: 'Maintenance Mode', link: '/v3/features/maintenance-mode' },
           { text: 'In-Memory Cache', link: '/v3/features/memory-cache' },
           { text: 'WebAssembly', link: '/v3/features/webassembly' },
+          { text: 'Open in Browser', link: '/v3/features/open-browser' },
           { text: 'Man Pages and Shell Completions', link: '/v3/features/man-pages-completions' },
           { text: 'Markdown Content Negotiation', link: '/v3/features/markdown-content-negotiation' },
           { text: 'Default Charset for Text Responses', link: '/v3/features/text-charset' },

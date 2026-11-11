@@ -16,10 +16,10 @@ W/"<mtime_hex>-<len_hex>"
 >
 > A weak ETag indicates that two representations are _semantically equivalent_ even if byte-for-byte different. This is correct for content negotiation scenarios. For example, a pre-compressed `.br` variant of a file shares the same weak ETag as the original. SWS emits `Vary: Accept-Encoding` so that intermediary caches key variants separately.
 
-This feature is enabled by default and can be controlled by the boolean `--etag` option or the equivalent [SERVER_ETAG](../configuration/env#server_etag) env.
+This feature is enabled by default and can be controlled by the boolean `--etag` option or the equivalent [SERVER_ETAG](../configuration/env#server-etag) env.
 
 ```sh
-static-web-server --port 8787 --root ./public --etag
+static-web-server --port 8080 --root ./public --etag
 ```
 
 ## How it works
@@ -115,7 +115,7 @@ When the [In-Memory Cache](memory-cache.md) is enabled, the ETag `HeaderValue` i
 To omit the `ETag` header from all responses:
 
 ```sh
-static-web-server --port=8787 --root=./public --etag=false
+static-web-server --port=8080 --root=./public --etag=false
 ```
 
 When disabled, SWS falls back to date-based validation via `Last-Modified`, `If-Modified-Since`, and `If-Unmodified-Since`.

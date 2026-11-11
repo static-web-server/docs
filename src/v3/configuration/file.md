@@ -6,7 +6,7 @@ outline: deep
 
 **`SWS`** can be configured using a [TOML](https://toml.io/en/) file to adjust the general server features as well as other advanced ones.
 
-It's disabled by default and can be enabled by passing a _string file path_ via the `-w, --config-file` option or its equivalent [SERVER_CONFIG_FILE](./../configuration/env#server_config_file) env.
+It's disabled by default and can be enabled by passing a _string file path_ via the `-w, --config-file` option or its equivalent [SERVER_CONFIG_FILE](./../configuration/env#server-config-file) env.
 
 > [!TIP] The default config file path is checked at startup time
 > If using the default config file path (`./sws.toml`), SWS will attempt to load it at startup time.
@@ -21,58 +21,81 @@ Below is just an example showing all features with their default values.
 
 #### Address & Root dir
 host = "::"
-port = 80
-root = "./public"
+port = 8080
+root = "."
+
+#### Open the server URL in the browser on startup
+open = false
+# open-path = "/"
+
+#### Unix domain socket (Unix only)
+# unix-socket = "/run/sws.sock"
+# unix-socket-mode = 0o660 # octal
+unix-socket-force = false
+
+#### File descriptor binding
+# fd = 0
 
 #### Logging
 log-level = "error"
 log-format = "json"
+log-with-ansi = false
+# log-file = "/var/log/sws.log"
 
 #### Cache Control headers
 cache-control-headers = true
 
+#### ETag validators
+etag = true
+
 #### Auto Compression
 compression = true
 compression-level = "default"
+
+#### Check for existing pre-compressed files
+compression-static = true
 
 #### Error pages
 # Note: If a relative path is used then it will be resolved under the root directory.
 page404 = "./404.html"
 page50x = "./50x.html"
 
-#### HTTP/2 + TLS
+#### Page fallback for 404s
+# page-fallback = ""
+
+#### TLS, HTTP/2 & HTTPS redirect
+tls = false
+tls-cert = ""
+tls-key = ""
 http2 = false
-http2-tls-cert = ""
-http2-tls-key = ""
 https-redirect = false
 https-redirect-host = "localhost"
-https-redirect-from-port = 80
+https-redirect-from-port = 8080
 https-redirect-from-hosts = "localhost"
 
-#### CORS & Security headers
-# security-headers = true
-# cors-allow-origins = ""
+#### Security headers
+security-headers = true
+
+#### CORS
+cors-allow-origins = ""
+cors-allow-headers = "origin, content-type, authorization"
+cors-expose-headers = "origin, content-type"
+
+#### List of index files
+index-files = "index.html"
 
 #### Directory listing
 directory-listing = false
-
-#### Directory listing sorting code
-directory-listing-order = 1
-
-#### Directory listing content format
+directory-listing-order = 6
 directory-listing-format = "html"
-
-#### Directory listing download format
 directory-listing-download = []
 
 #### Basic Authentication
 # basic-auth = ""
 
-#### File descriptor binding
-# fd = ""
-
-#### Worker threads
+#### Worker and blocking threads
 threads-multiplier = 1
+max-blocking-threads = 512
 
 #### Grace period after a graceful shutdown
 grace-period = 0
@@ -86,45 +109,44 @@ max-header-size = 16384
 #### Maximum connections served at the same time (0 means no limit)
 max-connections = 0
 
-#### Page fallback for 404s
-# page-fallback = ""
-
 #### Custom access log format (replaces the default request line when set)
 # access-log-format = '%{remote_addr} - [%{timestamp}] "%{method} %{uri} %{version}" %{status} %{bytes} "%{referer}" "%{user_agent}"'
 
 #### Log request Remote Address if available
 log-remote-address = false
 
-#### Log real IP from X-Forwarded-For header if available
+#### Log real IPs from the X-Real-IP and X-Forwarded-For headers of trusted proxies
+log-x-real-ip = false
 log-forwarded-for = false
 
-#### IPs to accept the X-Forwarded-For header from. Empty means all
+#### Proxy IPs to accept the X-Real-IP and X-Forwarded-For headers from. Empty means none
 trusted-proxies = []
 
 #### Redirect to trailing slash in the requested directory uri
 redirect-trailing-slash = true
 
+#### Hidden files and symlinks
+include-hidden = false
+follow-symlinks = false
+
 #### Use relative root (skip root canonicalization at startup)
 use-relative-root = false
-
-#### Check for existing pre-compressed files
-compression-static = true
 
 #### Health-check endpoints (GET or HEAD `/livez` and `/readyz`)
 health = false
 
+#### Prometheus metrics endpoint (`/metrics`)
+metrics = false
+
 #### Markdown content negotiation
 accept-markdown = false
 
-#### Default charset for text responses (enabled by default)
-# text-charset = false
+#### Default charset for text responses
+text-charset = true
 
-#### List of index files
-# index-files = "index.html, index.htm"
 #### Maintenance Mode
-
 maintenance-mode = false
-# maintenance-mode-status = 503
+maintenance-mode-status = 503
 # maintenance-mode-file = "./maintenance.html"
 
 ### Windows Only
@@ -154,6 +176,13 @@ maintenance-mode = false
 # [[advanced.headers]]
 # source = "**/*.{jpg,jpeg,png,ico,gif}"
 # headers.Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+
+#### d. Only for some response statuses, and for every response (not only files)
+# [[advanced.headers]]
+# source = "**"
+# status = [404]
+# scope = "all"
+# headers.Cache-Control = "no-store"
 
 
 ### URL Redirects (examples only)
@@ -196,7 +225,7 @@ maintenance-mode = false
 # capacity = 100
 # ttl = 1800      # 30 minutes
 # tti = 300       # 5 minutes
-# max-file-size = 8192  # 8 MiB
+# max-file-size = 8192  # in KiB (8 MiB)
 ```
 
 ### General options

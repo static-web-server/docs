@@ -8,11 +8,11 @@
 > - The option value can be a single index or comma-separated when multiple values.
 > - The default value is `index.html`.
 
-This feature is disabled by default and can be controlled by the string list `--index-files` option or the equivalent [SERVER_INDEX_FILES](./../configuration/env.md#server_index_files) env.
+This feature is disabled by default and can be controlled by the string list `--index-files` option or the equivalent [SERVER_INDEX_FILES](./../configuration/env.md#server-index-files) env.
 
 Here is an example:
 
 ```sh
-static-web-server -p 8787 -d ./public \
+static-web-server -p 8080 -d ./public \
     --index-files="index.html, index.htm, default.html"
 ```

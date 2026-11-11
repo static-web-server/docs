@@ -6,26 +6,37 @@ outline: deep
 
 **`SWS`** provides [`Gzip`](https://datatracker.ietf.org/doc/html/rfc1952), [`Deflate`](https://datatracker.ietf.org/doc/html/rfc1950), [`Brotli`](https://www.ietf.org/rfc/rfc7932.txt) and [`Zstandard` (zstd)](https://datatracker.ietf.org/doc/html/rfc8878) compression of HTTP responses on the fly (dynamically).
 
-This feature is enabled by default and can be controlled by the boolean `-x, --compression` option or the equivalent [SERVER_COMPRESSION](../configuration/env#server_compression) env.
+This feature is enabled by default and can be controlled by the boolean `-x, --compression` option or the equivalent [SERVER_COMPRESSION](../configuration/env#server-compression) env.
 
 > [!TIP] Independent from static compression
 >
 > Dynamic (on-the-fly) compression operates **independently** from [pre-compressed files serving](compression-static.md). Both features can be enabled individually or combined: static compression is tried first (zero CPU cost), and if no pre-compressed variant is found, dynamic compression kicks in automatically.
 
 ```sh
-static-web-server --port 8787 --root ./my-public-dir --compression
+static-web-server --port 8080 --root ./my-public-dir --compression
 ```
 
 ## Choice of compression algorithm
 
 The compression algorithm is determined by the [`Accept-Encoding`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) header and the compression support built into SWS. By default SWS builds with support for `Gzip`, `Deflate`, `Brotli` and `Zstandard` algorithms.
 
-SWS honors the qualities specified by the client to choose the algorithm. In case of equal quality for several algorithms (or no qualities at all), the internal priority will be selected according to this list:
+SWS honors the qualities specified by the client to choose the algorithm, and never uses one marked with `q=0`. In case of equal quality for several algorithms (or no qualities at all), the internal priority will be selected according to this list:
 
 1. `Zstandard`
 2. `Brotli`
 3. `Gzip`
 4. `Deflate`
+
+## When responses are not compressed
+
+SWS sends a response uncompressed when:
+
+- its MIME type is not in the [list below](#mime-types-compressed),
+- it is smaller than `200` bytes, where compression saves little,
+- it is partial content (`206` or a `Content-Range` header), so byte ranges stay valid,
+- it has no content (`1xx`, `204`, `304` or an empty body).
+
+A `HEAD` response gets the same `Content-Encoding` and `Vary` headers as the matching `GET`.
 
 ## MIME types compressed
 
@@ -51,4 +62,4 @@ Compression is only applied to files with the MIME types listed below, indicatin
 
 ## Compression level
 
-SWS allows selecting the compression level via `--compression-level` command line option or the equivalent [SERVER_COMPRESSION_LEVEL](../configuration/env#server_compression_level) env. The available values are `fastest`, `best` and `default`. `fastest` will result in the lowest CPU load but also the worst compression factor. `best` will attempt to compress the data as much as possible (not recommended with `Brotli` or `Zstandard` compression, will be very slow). `default` tries to strike a balance, choosing a compression level where compression factor is already fairly good but the CPU load is still low.
+SWS allows selecting the compression level via `--compression-level` command line option or the equivalent [SERVER_COMPRESSION_LEVEL](../configuration/env#server-compression-level) env. The available values are `fastest`, `best` and `default`. `fastest` will result in the lowest CPU load but also the worst compression factor. `best` will attempt to compress the data as much as possible (not recommended with `Brotli` or `Zstandard` compression, will be very slow). `default` tries to strike a balance, choosing a compression level where compression factor is already fairly good but the CPU load is still low.

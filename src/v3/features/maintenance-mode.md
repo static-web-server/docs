@@ -4,7 +4,7 @@
 
 This is useful to allow the server to be taken offline without disrupting the service.
 
-The feature is disabled by default and can be controlled by the boolean `--maintenance-mode` option or the equivalent [SERVER_MAINTENANCE_MODE](./../configuration/env.md#server_maintenance_mode) env.
+The feature is disabled by default and can be controlled by the boolean `--maintenance-mode` option or the equivalent [SERVER_MAINTENANCE_MODE](./../configuration/env.md#server-maintenance-mode) env.
 
 ## How it works
 
@@ -12,13 +12,13 @@ When the feature is enabled, SWS will respond _always_ with the specified (or de
 
 ## HTTP Status Code
 
-The `--maintenance-mode-status` or the equivalent [SERVER_MAINTENANCE_MODE_STATUS](./../configuration/env.md#server_maintenance_mode_status) env variable can be used to tell SWS to reply with a specific status code.
+The `--maintenance-mode-status` or the equivalent [SERVER_MAINTENANCE_MODE_STATUS](./../configuration/env.md#server-maintenance-mode-status) env variable can be used to tell SWS to reply with a specific status code.
 
 When not specified, the server will reply with the `503 Service Unavailable` status.
 
 ## HTML Page
 
-The `--maintenance-mode-file` or the equivalent [SERVER_MAINTENANCE_MODE_FILE](./../configuration/env.md#server_maintenance_mode_file) env variable can be also used to customize the response content.
+The `--maintenance-mode-file` or the equivalent [SERVER_MAINTENANCE_MODE_FILE](./../configuration/env.md#server-maintenance-mode-file) env variable can be also used to customize the response content.
 
 The value should be an existing local HTML file path. When not provided a generic message will be displayed.
 
@@ -35,7 +35,7 @@ The value should be an existing local HTML file path. When not provided a generi
 For instance, the server will respond with a `503 Service Unavailable` status code and a custom message.
 
 ```sh
-static-web-server -p 8787 -d ./public \
+static-web-server -p 8080 -d ./public \
     --maintenance-mode \
     # optional status code, `503` by default
     --maintenance-mode-status=503 \

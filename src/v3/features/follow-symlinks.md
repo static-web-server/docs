@@ -8,7 +8,7 @@ outline: deep
 
 As a result, SWS will respond with a `403 Forbidden` status if a symlink is requested and that symlink won't also be shown in the [directory listing](./../features/directory-listing.md) (if enabled).
 
-This behaviour is controlled by the boolean `--follow-symlinks` option (disabled by default) or the equivalent [SERVER_FOLLOW_SYMLINKS](./../configuration/env#server_follow_symlinks) env.
+This behaviour is controlled by the boolean `--follow-symlinks` option (disabled by default) or the equivalent [SERVER_FOLLOW_SYMLINKS](./../configuration/env#server-follow-symlinks) env.
 
 > [!INFO] Important
 >
@@ -21,6 +21,8 @@ SWS applies a **layered security model** on every request, in this order:
 1. **Containment**: Verifies that the resolved (canonical) file path lives inside the web root directory.
 2. **Symlink policy**: When `--follow-symlinks` is disabled (the default), walks each component of the requested path and checks whether any of them is a symbolic link.
 3. **Hidden file policy**: When `--include-hidden` is disabled (the default), rejects dotfiles with a `404 Not Found`.
+
+These checks run on the file actually served, not only the requested path: a [pre-compressed variant](./compression-static.md), a directory's index file or a `.html` sibling (e.g. `/about` served from `about.html`).
 
 > [!NOTE] Note
 > Regardless of the `--follow-symlinks` setting, SWS **always** refuses to serve symlinks that resolve outside the web root. The containment check is always enforced.
@@ -58,7 +60,7 @@ In practice, the performance impact is **negligible** for almost all deployments
 ## Example
 
 ```sh
-static-web-server --port 8787 --root ./public --follow-symlinks
+static-web-server --port 8080 --root ./public --follow-symlinks
 ```
 
 [symlink_metadata]: https://doc.rust-lang.org/std/fs/fn.symlink_metadata.html

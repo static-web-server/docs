@@ -2,11 +2,11 @@
 
 **`SWS`** provides automatic trailing slash redirect support for directory requests.
 
-This feature is enabled by default and can be controlled by the boolean `--redirect-trailing-slash` option or the equivalent [SERVER_REDIRECT_TRAILING_SLASH](../configuration/env.md#server_redirect_trailing_slash) env.
+This feature is enabled by default and can be controlled by the boolean `--redirect-trailing-slash` option or the equivalent [SERVER_REDIRECT_TRAILING_SLASH](../configuration/env.md#server-redirect-trailing-slash) env.
 
 ```sh
 static-web-server \
-    --port 8787 \
+    --port 8080 \
     --root ./my-public-dir \
     --redirect-trailing-slash true
 ```

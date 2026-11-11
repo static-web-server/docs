@@ -8,7 +8,7 @@ This page lists every default and the reasoning behind it. For changing a defaul
 
 When running `static-web-server` with no flags, you get:
 
-- Serves `./public/` on port `8787`, all interfaces.
+- Serves the current directory (`.`) on port `8080`, all interfaces (IPv6 and IPv4).
 - `index.html` as the directory index.
 - `404.html` and `50x.html` as error pages (if they exist).
 - Gzip/Brotli/Zstd compression for text content.
@@ -23,12 +23,12 @@ When running `static-web-server` with no flags, you get:
 
 ## Network & binding
 
-| Setting                 | Default                             | Rationale                                                                        |
-| ----------------------- | ----------------------------------- | -------------------------------------------------------------------------------- |
-| Host                    | `[::]` (all interfaces, dual-stack) | Reachable from any network interface. IPv4-mapped IPv6 makes it work everywhere. |
-| Port                    | `8787`                              | Non-privileged port, no `root` needed.                                           |
-| Unix socket             | disabled                            | TCP is the common case; UDS is opt-in for reverse-proxy setups.                  |
-| File descriptor passing | disabled                            | Only needed in inetd/systemd/launchd sandboxing scenarios.                       |
+| Setting                 | Default                           | Rationale                                                                        |
+| ----------------------- | --------------------------------- | -------------------------------------------------------------------------------- |
+| Host                    | `::` (all interfaces, dual-stack) | Reachable from any network interface, over IPv6 and IPv4 where the OS allows it. |
+| Port                    | `8080`                            | Non-privileged port, no `root` needed.                                           |
+| Unix socket             | disabled                          | TCP is the common case; UDS is opt-in for reverse-proxy setups.                  |
+| File descriptor passing | disabled                          | Only needed in inetd/systemd/launchd sandboxing scenarios.                       |
 
 ## Concurrency
 
@@ -41,14 +41,14 @@ When running `static-web-server` with no flags, you get:
 
 | Setting                  | Default                   | Rationale                                                                            |
 | ------------------------ | ------------------------- | ------------------------------------------------------------------------------------ |
-| Root directory           | `./public`                | Predictable relative path and works immediately after `cd` into a project.           |
+| Root directory           | `.` (current directory)   | Works immediately after `cd` into the directory to serve.                            |
 | Index files              | `index.html`              | Matches every static-site generator and web server convention.                       |
 | Custom 404 page          | `./404.html` (if present) | Drop a file and it's picked up; falls back to a generic built-in message.            |
 | Custom 50x page          | `./50x.html` (if present) | Same pattern as 404.                                                                 |
 | Fallback page            | disabled                  | Only needed for SPAs with client-side routing.                                       |
 | Directory listing        | disabled                  | Prevents information disclosure. Enable it explicitly when needed.                   |
 | Directory listing order  | unordered (`6`)           | No default sort avoids the cost of reading every directory entry's metadata.         |
-| Directory listing format | `html`                    | Human-readable in a browser; switch to `json` for programmatic use.                  |
+| Directory listing format | `html`                    | Human-readable in a browser; use `json` or `auto` for programmatic use.              |
 | Directory download       | disabled                  | Opt-in feature; prevents unintended bulk downloads.                                  |
 | Trailing slash redirect  | enabled                   | Normalizes directory URLs (`/blog` to `/blog/`), which keeps relative links working. |
 
@@ -97,7 +97,7 @@ The types considered compressible include all `text/*` MIME types, plus `applica
 | Log format                      | `json`   | Machine-parseable for production log aggregators (Loki, ELK, etc.). Use `pretty` for development. |
 | ANSI colors                     | disabled | Off by default since `json` format doesn't use them. Only meaningful with `pretty` format.        |
 | Remote address logging          | disabled | Privacy-conscious default. Enable to log client IPs at `info` level.                              |
-| `X-Real-IP` / `X-Forwarded-For` | disabled | Only needed behind a reverse proxy. Configure `trusted-proxies` when enabling.                    |
+| `X-Real-IP` / `X-Forwarded-For` | disabled | Only needed behind a reverse proxy. Logged only for IPs listed in `trusted-proxies`.              |
 | File logging                    | disabled | Logs go to `stderr`. Opt into file output with an explicit path.                                  |
 
 ## Other features
@@ -105,6 +105,7 @@ The types considered compressible include all `text/*` MIME types, plus `applica
 | Setting                      | Default         | Rationale                                                                                                          |
 | ---------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------ |
 | Health endpoints             | disabled        | Opt-in via `--health`. Returns `200 OK` at `/livez` and `/readyz` with no log noise. For Kubernetes probes.        |
+| Open in browser              | disabled        | Opt-in via `--open` for local development.                                                                         |
 | Metrics endpoint             | disabled        | Opt-in via `--metrics`. Exposes Prometheus metrics at `/metrics`.                                                  |
 | Markdown content negotiation | disabled        | Opt-in. When enabled, serves `.md` files for `Accept: text/markdown` requests.                                     |
 | Maintenance mode             | disabled        | Opt-in for planned downtime. Returns `503` with a custom page.                                                     |

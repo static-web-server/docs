@@ -97,7 +97,7 @@ Below is an example of how to run the server with TLS enabled (HTTP/1 over TLS).
 ```sh
 static-web-server \
     --host 127.0.0.1 \
-    --port 8787 \
+    --port 8080 \
     --root ./my-public-dir \
     --tls \
     --tls-cert ./my-tls.cert \

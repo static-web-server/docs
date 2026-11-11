@@ -8,7 +8,7 @@ outline: deep
 
 SWS can look up existing pre-compressed file variants (`.gz`, `.br` or `.zst`) on disk and serve them directly with **zero CPU cost** with no on-the-fly compression overhead.
 
-This feature can be controlled by the boolean `--compression-static` option or the equivalent [SERVER_COMPRESSION_STATIC](./../configuration/env#server_compression_static) env. It is **disabled by default**.
+This feature can be controlled by the boolean `--compression-static` option or the equivalent [SERVER_COMPRESSION_STATIC](./../configuration/env#server-compression-static) env. It is **enabled by default**.
 
 > [!TIP] Independent from dynamic compression
 >
@@ -19,12 +19,12 @@ Otherwise, if the pre-compressed file is not found then SWS just continues the n
 
 > [!INFO] Compressed file type
 >
-> The pre-compressed file type is determined by the [`Accept-Encoding`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) header value.
+> The pre-compressed file type is determined by the [`Accept-Encoding`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) header value. A `.gz` file is served only to clients accepting `gzip`, `.br` for `br` and `.zst` for `zstd`. Encodings with `q=0` are not acceptable.
 
 Here is an example:
 
 ```sh
-static-web-server --port 8787 --root /public --compression-static -g trace
+static-web-server --port 8080 --root /public --compression-static -g trace
 ```
 
 Below are some relevant log entries to show how the feature works.

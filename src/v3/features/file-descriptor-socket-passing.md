@@ -10,7 +10,7 @@ outline: deep
 >
 > The [Socket Activation](http://0pointer.de/blog/projects/socket-activation.html) model is an alternative to TCP port binding.
 
-Socket activation is supported by the `-f, --fd` option or the equivalent [SERVER_LISTEN_FD](./../configuration/env.md#server_listen_fd) env.
+Socket activation is supported by the `-f, --fd` option or the equivalent [SERVER_LISTEN_FD](./../configuration/env.md#server-listen-fd) env.
 
 If you are using `inetd`, its "`wait`" option should be used in conjunction with static-web-server's `--fd 0`
 option.
